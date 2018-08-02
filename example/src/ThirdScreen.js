@@ -28,9 +28,9 @@ class ThirdScreen extends Component{
         overflow: 'hidden',
         opacity: headerOpacity,
         height: headerHeight,
-        backgroundColor: '#0f0'
+        backgroundColor: '#0f05'
       },
-      style: { backgroundColor: '#f00' },
+      // style: { backgroundColor: '#f00' },
       // headerTransparent: true,
       // headerTitleStyle: {color: 'black'},
       // headerTintColor: 'black', 
@@ -83,28 +83,19 @@ class ThirdScreen extends Component{
     });
 
     return (
-      [
-        <SafeAreaView key={'screen'} style={{flex: 1, overflow: 'visible'}}>
-          <AnimatedFlatList 
-            style={{flex: 1, marginTop: -30, overflow: 'visible'}}
-            // contentContainerStyle={{paddingTop: headerHeight}}
-            data={this.state.data}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => String(index)}
-            onScroll={Animated.event(
-              [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
-              {useNativeDriver: true, listener: this.onScroll})
-            } 
-            />
-        </SafeAreaView>,
-        // <Animated.View 
-        //   key={'headerBG'} 
-        //   style={{transform: [{translateY: headerTranslate}], position: 'absolute', width: '100%', height: statusBarHeight + headerHeight}}>
-        //   <Animated.View style={{backgroundColor: 'red', flex: 1}}>
-        //     <StatusBar/>
-        //   </Animated.View>
-        // </Animated.View>
-      ]
+      <Animated.View style={{flex: 1, transform:[{translateY: headerTranslate}]}}>
+        <AnimatedFlatList 
+          style={{flex: 1, marginBottom: -headerHeight, overflow: 'hidden'}}
+          // contentContainerStyle={{paddingTop: headerHeight}}
+          data={this.state.data}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => String(index)}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
+            {useNativeDriver: true, listener: this.onScroll})
+          } 
+          />
+      </Animated.View>
     )
   }
 }

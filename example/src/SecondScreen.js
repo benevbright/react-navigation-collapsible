@@ -2,42 +2,20 @@ import React, {Component} from 'react';
 import { Text, FlatList, View, SafeAreaView, Animated, StatusBar, Platform } from 'react-native';
 import withOrientation from 'react-navigation/src/views/withOrientation';
 
+import { headerHeight, bounceHeight } from './App';
+
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const headerHeight = 44;
-const bounceHeight = Platform.select({ios: 250, android: headerHeight});
 
 class SecondScreen extends Component{
   static navigationOptions = props => {
-    const { headerY } = props.navigation.state.params ? props.navigation.state.params : { headerY: null };
-    const headerOpacity = !headerY ? 1 : headerY.interpolate({
-      inputRange: [bounceHeight - headerHeight, bounceHeight],
-      outputRange: [1, 0],
-      extrapolate: 'clamp'
-    });
-    const headerTranslate = !headerY ? 0 : headerY.interpolate({
-      inputRange: [bounceHeight - headerHeight, bounceHeight],
-      outputRange: [0, -headerHeight],
-      extrapolate: 'clamp'
-    });
-
     return ({
       title: 'Second Screen', 
       headerStyle: {
-        transform: headerY ? [{translateY: headerTranslate}] : [],
-        overflow: 'hidden',
-        opacity: headerOpacity,
-        height: headerHeight,
-        backgroundColor: '#0f0'
+        backgroundColor: '#080'
       },
-      headerTransparent: true,
-      headerTitleStyle: {color: 'black'},
-      headerTintColor: 'black', 
     });
   }
-
-  
-  // scrollYNoNativeRender = new Animated.Value(0);
 
   constructor(props){
     super(props);
@@ -53,6 +31,9 @@ class SecondScreen extends Component{
 
     this.scrollY = new Animated.Value(0);
     this.headerY = Animated.diffClamp(this.scrollY, 0, bounceHeight);
+  }
+
+  componentDidMount(){
     this.props.navigation.setParams({headerY: this.headerY});
   }
 
