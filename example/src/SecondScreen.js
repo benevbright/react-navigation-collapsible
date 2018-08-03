@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
-import { Text, FlatList, View, SafeAreaView, Animated, StatusBar, Platform } from 'react-native';
+import { Text, FlatList, View, SafeAreaView, Animated } from 'react-native';
 import withOrientation from 'react-navigation/src/views/withOrientation';
 
-import { headerHeight, bounceHeight } from './App';
+import { CollapsibleHeaderBackView, makeCollapsibleParams, withCollapsibleOptions, defaultHeaderHeight } from 'react-navigation-collapsible';
 
+const headerHeight = defaultHeaderHeight;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
 
 class SecondScreen extends Component{
   static navigationOptions = props => {
-    return ({
-      title: 'Second Screen', 
-      headerStyle: {
-        backgroundColor: '#080'
-      },
+    return withCollapsibleOptions(props, {
+      title: 'Second Screen',
     });
   }
 
@@ -21,7 +18,7 @@ class SecondScreen extends Component{
     super(props);
 
     const data = [];
-    for(let i = 0 ; i < 30 ; i++){
+    for(let i = 0 ; i < 60 ; i++){
       data.push(i);
     }
 
@@ -30,41 +27,22 @@ class SecondScreen extends Component{
     }
 
     this.scrollY = new Animated.Value(0);
-    this.headerY = Animated.diffClamp(this.scrollY, 0, bounceHeight);
+    this.props.navigation.setParams(makeCollapsibleParams(
+      this.scrollY, headerHeight, 'black'));
   }
 
-  componentDidMount(){
-    this.props.navigation.setParams({headerY: this.headerY});
-  }
-
-  renderItem = ({item, index}) => (
+  renderItem = ({item}) => (
     <View style={{width: '100%', height: 50, borderBottomColor: '#0002', borderBottomWidth: 0.5, paddingHorizontal: 20, justifyContent: 'center'}}>
       <Text style={{fontSize: 22}}>{item}</Text>
     </View>
   )
 
-  onScroll = (e) => {
-    // this.scrollYNoNativeRender.setValue(e.nativeEvent.contentOffset.y);
-  }
-
   render(){
-    const { isLandscape } = this.props;
-    const statusBarHeight = isLandscape ? 0 : 20;
-    // const headerColor = this.scrollYNoNativeRender.interpolate({
-    //   inputRange: [0, headerHeight],
-    //   outputRange: ['#f00', '#000'],
-    //   extrapolate: 'clamp',
-    // });
-
-    const headerTranslate = this.headerY.interpolate({
-      inputRange: [bounceHeight - headerHeight, bounceHeight],
-      outputRange: [0, -headerHeight],
-      extrapolate: 'clamp'
-    });
+    const { navigation } = this.props;
 
     return (
-      [
-        <SafeAreaView key={'screen'} style={{flex: 1}}>
+      <View style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1}}>
           <AnimatedFlatList 
             style={{flex: 1}}
             contentContainerStyle={{paddingTop: headerHeight}}
@@ -73,18 +51,12 @@ class SecondScreen extends Component{
             keyExtractor={(item, index) => String(index)}
             onScroll={Animated.event(
               [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
-              {useNativeDriver: true, listener: this.onScroll})
+              {useNativeDriver: true})
             } 
             />
-        </SafeAreaView>,
-        <Animated.View 
-          key={'headerBG'} 
-          style={{transform: [{translateY: headerTranslate}], position: 'absolute', width: '100%', height: statusBarHeight + headerHeight}}>
-          <Animated.View style={{backgroundColor: 'red', flex: 1}}>
-            <StatusBar/>
-          </Animated.View>
-        </Animated.View>
-      ]
+        </SafeAreaView>
+        <CollapsibleHeaderBackView navigation={navigation} />
+      </View>
     )
   }
 }

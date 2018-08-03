@@ -1,0 +1,20 @@
+{
+  "name": "react-navigation-collapsible",
+  "version": "0.0.1",
+  "description": "React Navigation Extension for Collapsible Header",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "react-navigation",
+    "collapsible",
+    "collapsible header",
+    "hide header"
+  ],
+  "author": "Bright Lee",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-native": "^0.56.0",
+    "react-navigation": "^2.10.0"
+  }
+}
