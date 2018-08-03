@@ -5,7 +5,10 @@ See this [Example](https://github.com/benevbright/react-navigation-collapsible/t
 
 ## Getting started
 
-`$ cd example  \n
-$ npm install  \n
-$ react-native run-ios  \n
+`$ cd example
+
+$ npm install
+
+$ react-native run-ios
+
 $ react-native run-android`
