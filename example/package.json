@@ -11,7 +11,7 @@
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-navigation": "^2.9.3",
-    "react-navigation-collapsible": "file:.."
+    "react-navigation-collapsible": "https://github.com/benevbright/react-navigation-collapsible.git"
   },
   "devDependencies": {
     "babel-jest": "23.4.2",
