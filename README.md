@@ -5,10 +5,7 @@ See this [Example](https://github.com/benevbright/react-navigation-collapsible/t
 
 ## Getting started
 
-`$ cd example
-
+```$ cd example
 $ npm install
-
 $ react-native run-ios
-
-$ react-native run-android`
+$ react-native run-android```
