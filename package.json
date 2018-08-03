@@ -12,7 +12,7 @@
   ],
   "author": "Bright Lee",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "react": "^16.4.2",
     "react-native": "^0.56.0",
     "react-navigation": "^2.10.0"
