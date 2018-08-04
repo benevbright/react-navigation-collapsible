@@ -42,8 +42,9 @@ const TopTabNavigator = createMaterialTopTabNavigator(
 
 const tabNavigationOptions = props => {
   const { routes, index } = props.navigation.state;
+  console.log('TabN', index, routes[index].params);
   const newOptions = withCollapsibleOptions(props.navigationOptions, {} , routes[index].params);
-  console.log('TN', newOptions);
+  // console.log('TN', newOptions);
   // console.log('TN children', props.navigation.getChildNavigation());
   return newOptions;
 }
