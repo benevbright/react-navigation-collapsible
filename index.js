@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
-import { Animated, Platform } from 'react-native';
+import { Animated, Platform, Dimensions } from 'react-native';
 import withOrientation from 'react-navigation/src/views/withOrientation';
 
 export const defaultHeaderHeight = Platform.select({ios: 44, android: 56});
+const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window');
+const IS_IPHONE_X =
+  Platform.OS === 'ios' &&
+  !Platform.isPad &&
+  !Platform.isTVOS &&
+  (WINDOW_HEIGHT === 812 || WINDOW_WIDTH === 812);
 
 const getBounceHeight = (headerHeight) => {
   if(Platform.OS === 'android') return headerHeight + 100;
@@ -11,7 +17,7 @@ const getBounceHeight = (headerHeight) => {
 
 const getNavigationHeight = (isLandscape, headerHeight) => {
   if(isLandscape) return headerHeight;
-  else return headerHeight + Platform.select({ios: 20, android: 0});
+  else return headerHeight + Platform.select({ios: IS_IPHONE_X ? 44 : 20, android: 0});
 }
 
 export const makeCollapsibleParams = (animated, headerHeight, iOSCollapsedColor) => {
