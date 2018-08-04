@@ -35,12 +35,18 @@ class _CollapsibleHeaderBackView extends Component {
 
   componentDidMount(){
     const { navigation } = this.props;
+    this.subscribe_willFocus = navigation.addListener('willFocus', () => {
+      this.setState({showFloorHeader: true});
+    });
     this.subscribe_willBlur = navigation.addListener('willBlur', () => {
       this.setState({showFloorHeader: false});
     });
-
   }
   componentWillUnmount(){
+    if(this.subscribe_willFocus){
+      this.subscribe_willFocus.remove();
+      this.subscribe_willFocus = null;
+    }
     if(this.subscribe_willBlur){
       this.subscribe_willBlur.remove();
       this.subscribe_willBlur = null;
@@ -80,12 +86,16 @@ class _CollapsibleHeaderBackView extends Component {
 const CollapsibleHeaderBackView = withOrientation(_CollapsibleHeaderBackView);
 export { CollapsibleHeaderBackView };
 
-export const withCollapsibleOptions = (props, navigationOptions) => {
-  const { navigation } = props;
-  if(!navigation || !navigation.state.params)
-    return navigationOptions;
+export const withCollapsibleOptions = (srcNavigationOptions, newNavigationOptions, navigationParams) => {
+  if(!navigationParams){
+    console.log('navigationParams is null');
+    return {
+      ...srcNavigationOptions,
+      ...newNavigationOptions
+    }
+  }
 
-  const { headerHeight, headerY } = navigation.state.params;
+  const { headerHeight, headerY } = navigationParams;
   const bounceHeight = getBounceHeight(headerHeight);
 
   const headerOpacity = headerY.interpolate({
@@ -99,17 +109,20 @@ export const withCollapsibleOptions = (props, navigationOptions) => {
     extrapolate: 'clamp'
   });
 
-  return ({
-    ...props.navigationOptions,
-    ...navigationOptions,
+  const newOptions = {
+    ...srcNavigationOptions,
+    ...newNavigationOptions,
     headerStyle: {
-      ...props.navigationOptions.headerStyle,
-      ...navigationOptions.headerStyle,
+      ...srcNavigationOptions.headerStyle,
+      ...newNavigationOptions.headerStyle,
       transform: [{translateY: headerTranslate}],
       overflow: 'hidden',
       opacity: Platform.select({ios: headerOpacity, android: 1}),
       height: headerHeight,
     },
     headerTransparent: true, 
-  });
+  };
+
+  console.log('N', newOptions);
+  return newOptions;
 }
