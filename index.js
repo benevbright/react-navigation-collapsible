@@ -88,7 +88,7 @@ export { CollapsibleHeaderBackView };
 
 export const withCollapsibleOptions = (srcNavigationOptions, newNavigationOptions, navigationParams) => {
   if(!navigationParams){
-    console.log('navigationParams is null');
+    // console.log('navigationParams is null');
     return {
       ...srcNavigationOptions,
       ...newNavigationOptions
@@ -123,6 +123,6 @@ export const withCollapsibleOptions = (srcNavigationOptions, newNavigationOption
     headerTransparent: true, 
   };
 
-  console.log('N', newOptions);
+  // console.log('N', newOptions);
   return newOptions;
 }

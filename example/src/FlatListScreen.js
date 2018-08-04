@@ -8,14 +8,13 @@ const headerHeight = defaultHeaderHeight;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export default class FlatListScreen extends Component{
-  static navigationOptions = props => {
-    console.log('check', props.navigation.state.params);
+  static navigationOptions = ({navigationOptions, navigation}) => {
     return withCollapsibleOptions(
-      props.navigationOptions, 
+      navigationOptions, 
       {
         title: 'Second Screen',
       },
-      props.navigation.state.params
+      navigation.state.params
     );
   }
 
@@ -32,14 +31,27 @@ export default class FlatListScreen extends Component{
     }
 
     this.scrollY = new Animated.Value(0);
-    // console.log('navigation ON FLATLIST', this.props.navigation.state);
-    this.props.navigation.setParams(makeCollapsibleParams(
-      this.scrollY, headerHeight, 'black'));
   }
 
-  renderItem = ({item}) => (
+  componentDidMount(){
+    this.subscribe_willFocus = this.props.navigation.addListener('willFocus', () => {
+      this.props.navigation.setParams(makeCollapsibleParams(
+        this.scrollY, headerHeight, 'black'));
+      }
+    );
+  }
+  componentWillUnmount(){
+    // if(this.subscribe_willFocus){
+    //   this.subscribe_willFocus.remove();
+    //   this.subscribe_willFocus = null;
+    // }
+  }
+
+  renderItem = ({item, index}) => (
     <TouchableOpacity 
-      onPress={() => this.props.navigation.navigate('DetailScreen')}
+      onPress={() => {
+        this.props.navigation.navigate('DetailScreen');
+      }}
       style={{width: '100%', height: 50, borderBottomColor: '#0002', borderBottomWidth: 0.5, paddingHorizontal: 20, justifyContent: 'center'}}>
       <Text style={{fontSize: 22}}>{item}</Text>
     </TouchableOpacity>
