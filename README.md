@@ -1,5 +1,7 @@
 # react-navigation-collapsible
 
+Make `react-navigation` header collapsible.
+
 See this [Example](https://github.com/benevbright/react-navigation-collapsible/tree/master/example) for basic usage.
 
 
@@ -11,3 +13,9 @@ $ npm install
 $ react-native run-ios
 $ react-native run-android
 ```
+
+## Task
+
+- (done) Basic header 
+- Nested Stack+Tab
+- Image header
