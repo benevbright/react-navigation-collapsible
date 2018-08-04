@@ -8,10 +8,9 @@ const headerHeight = defaultHeaderHeight;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export default class FlatListScreen extends Component{
-  static navigationOptions = ({navigationOptions, navigation}) => {
-    console.log('A');
+  static navigationOptions = ({navigation}) => {
+    // console.log('A');
     return withCollapsibleOptions(
-      navigationOptions, 
       {
         title: 'Second Screen',
         headerStyle: { backgroundColor: 'red' }
@@ -34,32 +33,10 @@ export default class FlatListScreen extends Component{
 
     this.scrollY = new Animated.Value(0);
     this.props.navigation.setParams(makeCollapsibleParams(
-      this.scrollY, headerHeight, 'black'));
+      this.scrollY, headerHeight, '#0002'));
   }
 
-  componentDidMount(){
-    this.subscribe_willFocus = this.props.navigation.addListener('willFocus', (a) => {
-      console.log('focus', a);
-      // this.props.navigation.setParams(makeCollapsibleParams(
-      //   this.scrollY, headerHeight, 'black'));
-    });
-    this.subscribe_willBlur = this.props.navigation.addListener('willBlur', (a) => {
-      console.log('blur', a);
-      // this.props.navigation.setParams(null);
-    });
-  }
-  componentWillUnmount(){
-    if(this.subscribe_willFocus){
-      this.subscribe_willFocus.remove();
-      this.subscribe_willFocus = null;
-    }
-    if(this.subscribe_willBlur){
-      this.subscribe_willBlur.remove();
-      this.subscribe_willBlur = null;
-    }
-  }
-
-  renderItem = ({item, index}) => (
+  renderItem = ({item}) => (
     <TouchableOpacity 
       onPress={() => {
         this.props.navigation.navigate('DetailScreen');
@@ -76,6 +53,7 @@ export default class FlatListScreen extends Component{
       <View style={{flex: 1}}>
         <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
           <AnimatedFlatList 
+            trigger={this.scrollY}
             style={{flex: 1}}
             contentContainerStyle={{paddingTop: headerHeight}}
             data={this.state.data}

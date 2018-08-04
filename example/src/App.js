@@ -22,7 +22,16 @@ export default class App extends Component{
 
 const TopTabNavigator = createMaterialTopTabNavigator(
   {
-    Screen1: { screen: FlatListScreen },
+    Screen1: { screen: FlatListScreen, navigationOptions: props => {
+      // console.log('DDDD', props);
+      return {
+        tabBarOptions: {
+          style:{
+            backgroundColor: 'purple'
+          }
+        }
+      }
+    } },
     Screen2: { screen: MainScreen },
   },
   {
@@ -33,17 +42,22 @@ const TopTabNavigator = createMaterialTopTabNavigator(
       },
       style: {
         // height: 40,
+        // marginTop:50,
+        // transform:[{translateY: -20}],
+        position: 'absolute',
+        width: '100%',
+        height: 40,
         borderTopColor: 'transparent', borderTopWidth: 0, elevation: 0,
         backgroundColor: backgroundColor
       },
-    },
+    }
   }
 );
 
 const tabNavigationOptions = props => {
   const { routes, index } = props.navigation.state;
-  console.log('TabN', index, routes[index].params);
-  const newOptions = withCollapsibleOptions(props.navigationOptions, {} , routes[index].params);
+  // console.log('TabN', index, routes[index].params);
+  const newOptions = withCollapsibleOptions({} , routes[index].params);
   // console.log('TN', newOptions);
   // console.log('TN children', props.navigation.getChildNavigation());
   return newOptions;

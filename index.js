@@ -10,7 +10,7 @@ const IS_IPHONE_X =
   !Platform.isTVOS &&
   (WINDOW_HEIGHT === 812 || WINDOW_WIDTH === 812);
 
-const getBounceHeight = (headerHeight) => {
+const getSafeBounceHeight = (headerHeight) => {
   if(Platform.OS === 'android') return headerHeight + 100;
   else return headerHeight + 300;
 }
@@ -22,7 +22,7 @@ const getNavigationHeight = (isLandscape, headerHeight) => {
 
 export const makeCollapsibleParams = (animated, headerHeight, iOSCollapsedColor) => {
   return {
-    headerY: Animated.diffClamp(animated, 0, getBounceHeight(headerHeight)),
+    headerY: Animated.diffClamp(animated, 0, getSafeBounceHeight(headerHeight)),
     headerHeight: headerHeight,
     iOSCollapsedColor: iOSCollapsedColor
   }
@@ -63,7 +63,7 @@ class _CollapsibleHeaderBackView extends Component {
 
     const { headerHeight, iOSCollapsedColor, headerY } = navigation.state.params;
     const navigationHeight = getNavigationHeight(isLandscape, headerHeight);
-    const bounceHeight = getBounceHeight(headerHeight);
+    const bounceHeight = getSafeBounceHeight(headerHeight);
 
     const headerTranslate = headerY.interpolate({
       inputRange: [bounceHeight - headerHeight, bounceHeight],
@@ -86,17 +86,16 @@ class _CollapsibleHeaderBackView extends Component {
 const CollapsibleHeaderBackView = withOrientation(_CollapsibleHeaderBackView);
 export { CollapsibleHeaderBackView };
 
-export const withCollapsibleOptions = (srcNavigationOptions, newNavigationOptions, navigationParams) => {
+export const withCollapsibleOptions = (newNavigationOptions, navigationParams) => {
   if(!navigationParams){
-    console.log('navigationParams is null');
+    // console.log('navigationParams is null');
     return {
-      // ...srcNavigationOptions,
       ...newNavigationOptions
     }
   }
 
   const { headerHeight, headerY } = navigationParams;
-  const bounceHeight = getBounceHeight(headerHeight);
+  const bounceHeight = getSafeBounceHeight(headerHeight);
 
   const headerOpacity = headerY.interpolate({
     inputRange: [bounceHeight - headerHeight, bounceHeight],
@@ -110,10 +109,8 @@ export const withCollapsibleOptions = (srcNavigationOptions, newNavigationOption
   });
 
   const newOptions = {
-    // ...srcNavigationOptions,
     ...newNavigationOptions,
     headerStyle: {
-      // ...srcNavigationOptions.headerStyle,
       ...newNavigationOptions.headerStyle,
       transform: [{translateY: headerTranslate}],
       overflow: 'hidden',
@@ -123,6 +120,6 @@ export const withCollapsibleOptions = (srcNavigationOptions, newNavigationOption
     headerTransparent: true, 
   };
 
-  console.log('N', newOptions);
+  // console.log('newOptions', newOptions);
   return newOptions;
 }
