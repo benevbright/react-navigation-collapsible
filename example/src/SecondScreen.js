@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Text, FlatList, View, SafeAreaView, Animated } from 'react-native';
+import { Text, FlatList, View, Animated } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 import withOrientation from 'react-navigation/src/views/withOrientation';
 
 import { CollapsibleHeaderBackView, makeCollapsibleParams, withCollapsibleOptions, defaultHeaderHeight } from 'react-navigation-collapsible';
@@ -42,7 +43,7 @@ class SecondScreen extends Component{
 
     return (
       <View style={{flex: 1}}>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
           <AnimatedFlatList 
             style={{flex: 1}}
             contentContainerStyle={{paddingTop: headerHeight}}
