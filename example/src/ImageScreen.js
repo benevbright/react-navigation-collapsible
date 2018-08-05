@@ -1,20 +1,27 @@
 import React, {Component} from 'react';
-import { Text, FlatList, View, Animated, TouchableOpacity } from 'react-native';
+import { Text, FlatList, View, Animated, TouchableOpacity, Image, Platform } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
+import { HeaderBackButton } from 'react-navigation';
 
-import { CollapsibleHeaderBackView, makeCollapsibleParams, withCollapsibleOptions, defaultHeaderHeight } from 'react-navigation-collapsible';
+import { CollapsibleHeaderBackView, makeCollapsibleParams, withCollapsibleOptions } from 'react-navigation-collapsible';
 
-const headerHeight = defaultHeaderHeight;
+const headerHeight = 200;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default class FlatListScreen extends Component{
+export default class ImageScreen extends Component{
   static navigationOptions = ({navigationOptions, navigation}) => {
-    // console.log('A');
     return withCollapsibleOptions(
       navigationOptions,
       {
-        title: 'Second Screen',
-        headerStyle: { backgroundColor: 'red' }
+        header:
+          <View style={{width: '100%', height: '100%'}}>
+            <Image source={require('./../asset/cat.jpg')} 
+              resizeMode={'cover'}
+              style={{width: '100%', height: '100%'}}/>
+            <View style={{position: 'absolute', top: Platform.select({ios: 20, android: 0}), left: 0}}>
+              <HeaderBackButton tintColor={'white'} onPress={() => navigation.goBack()}/>                
+            </View> 
+          </View>
       },
       navigation.state.params
     );
@@ -34,7 +41,7 @@ export default class FlatListScreen extends Component{
 
     this.scrollY = new Animated.Value(0);
     this.props.navigation.setParams(makeCollapsibleParams(
-      this.scrollY, headerHeight, '#0005'));
+      this.scrollY, headerHeight, 'purple'));
   }
 
   renderItem = ({item}) => (

@@ -15,9 +15,13 @@ const getSafeBounceHeight = (headerHeight) => {
   else return headerHeight + 300;
 }
 
+const getStatusBarHeight = (isLandscape) => {
+  if(Platform.OS === 'android') return 0;
+  if(isLandscape) return 0;
+  return IS_IPHONE_X ? 44 : 20;
+}
 const getNavigationHeight = (isLandscape, headerHeight) => {
-  if(isLandscape) return headerHeight;
-  else return headerHeight + Platform.select({ios: IS_IPHONE_X ? 44 : 20, android: 0});
+  return headerHeight + getStatusBarHeight(isLandscape);
 }
 
 export const makeCollapsibleParams = (animated, headerHeight, iOSCollapsedColor) => {
@@ -86,11 +90,16 @@ class _CollapsibleHeaderBackView extends Component {
 const CollapsibleHeaderBackView = withOrientation(_CollapsibleHeaderBackView);
 export { CollapsibleHeaderBackView };
 
-export const withCollapsibleOptions = (newNavigationOptions, navigationParams) => {
+export const withCollapsibleOptions = (srcNavigationOptions, newNavigationOptions, navigationParams) => {
   if(!navigationParams){
     // console.log('navigationParams is null');
     return {
-      ...newNavigationOptions
+      ...srcNavigationOptions,
+      ...newNavigationOptions,
+      headerStyle:{
+        ...srcNavigationOptions.headerStyle,
+        ...newNavigationOptions.headerStyle
+      }
     }
   }
 
@@ -109,8 +118,10 @@ export const withCollapsibleOptions = (newNavigationOptions, navigationParams) =
   });
 
   const newOptions = {
+    ...srcNavigationOptions,
     ...newNavigationOptions,
     headerStyle: {
+      ...srcNavigationOptions.headerStyle,
       ...newNavigationOptions.headerStyle,
       transform: [{translateY: headerTranslate}],
       overflow: 'hidden',
@@ -119,6 +130,14 @@ export const withCollapsibleOptions = (newNavigationOptions, navigationParams) =
     },
     headerTransparent: true, 
   };
+  if(newOptions.header){
+    newOptions.header = 
+      <Animated.View style={[newOptions.headerStyle, 
+        {position: 'absolute', top: 0, width: '100%', height: newOptions.headerStyle.height + getStatusBarHeight(false)}]}> 
+        {/* todo: support landscape */}
+        {newOptions.header}
+      </Animated.View>
+  }
 
   // console.log('newOptions', newOptions);
   return newOptions;

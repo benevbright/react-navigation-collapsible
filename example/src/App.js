@@ -4,6 +4,7 @@ import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navig
 
 import MainScreen from './MainScreen.js'
 import FlatListScreen from './FlatListScreen.js'
+import ImageScreen from './ImageScreen.js'
 import { withCollapsibleOptions } from 'react-navigation-collapsible';
 
 const backgroundColor = '#060';
@@ -54,10 +55,10 @@ const TopTabNavigator = createMaterialTopTabNavigator(
   }
 );
 
-const tabNavigationOptions = props => {
-  const { routes, index } = props.navigation.state;
+const tabNavigationOptions = ({navigationOptions, navigation}) => {
+  const { routes, index } = navigation.state;
   // console.log('TabN', index, routes[index].params);
-  const newOptions = withCollapsibleOptions({} , routes[index].params);
+  const newOptions = withCollapsibleOptions(navigationOptions, {} , routes[index].params);
   // console.log('TN', newOptions);
   // console.log('TN children', props.navigation.getChildNavigation());
   return newOptions;
@@ -66,6 +67,7 @@ const tabNavigationOptions = props => {
 const routeConfig = {
   MainScreen: { screen: MainScreen },
   FlatListScreen: { screen: FlatListScreen },
+  ImageScreen: { screen: ImageScreen },
   TopTabScreen: { screen: TopTabNavigator, navigationOptions: tabNavigationOptions },
   DetailScreen: { screen: MainScreen },
 };
