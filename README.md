@@ -17,5 +17,5 @@ $ react-native run-android
 ## Task
 
 - ~~Basic header~~ (done)
+- ~~Image header~~ (done)
 - Nested Stack+Tab
-- Image header
