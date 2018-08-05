@@ -10,6 +10,11 @@ const IS_IPHONE_X =
   !Platform.isTVOS &&
   (WINDOW_HEIGHT === 812 || WINDOW_WIDTH === 812);
 
+const isOrientationLandscape = () => {
+  const window = Dimensions.get('window');
+  return window.width > window.height;
+} 
+
 const getSafeBounceHeight = (headerHeight) => {
   if(Platform.OS === 'android') return headerHeight + 100;
   else return headerHeight + 300;
@@ -24,11 +29,11 @@ const getNavigationHeight = (isLandscape, headerHeight) => {
   return headerHeight + getStatusBarHeight(isLandscape);
 }
 
-export const makeCollapsibleParams = (animated, headerHeight, iOSCollapsedColor) => {
+export const makeCollapsibleParams = (animated, headerHeight, iOSCollapsedColor = null) => {
   return {
     headerY: Animated.diffClamp(animated, 0, getSafeBounceHeight(headerHeight)),
-    headerHeight: headerHeight,
-    iOSCollapsedColor: iOSCollapsedColor
+    headerHeight,
+    iOSCollapsedColor
   }
 }
 
@@ -130,15 +135,24 @@ export const withCollapsibleOptions = (srcNavigationOptions, newNavigationOption
     },
     headerTransparent: true, 
   };
-  if(newOptions.header){
-    newOptions.header = 
-      <Animated.View style={[newOptions.headerStyle, 
-        {position: 'absolute', top: 0, width: '100%', height: newOptions.headerStyle.height + getStatusBarHeight(false)}]}> 
-        {/* todo: support landscape */}
-        {newOptions.header}
-      </Animated.View>
+  if(newOptions.collapsibleCustomHeader){
+    newOptions.header = getCustomHeader(newOptions);
   }
 
-  // console.log('newOptions', newOptions);
   return newOptions;
+}
+
+const getCustomHeader = options => props => {
+  const {position, layout, isLandscape, mode} = props;
+  const headerTranslate = mode === 'float' ? position.interpolate({
+    inputRange: [0, 1],
+    outputRange: [layout.initWidth, 0]
+  }) : 0;
+  const statusBarHeight = getStatusBarHeight(isLandscape);
+  return (
+    <Animated.View style={[options.headerStyle, 
+      {transform:[...options.headerStyle.transform, {translateX: headerTranslate}], position: 'absolute', top: 0, width: '100%', height: options.headerStyle.height + statusBarHeight}]}> 
+      {options.collapsibleCustomHeader}
+    </Animated.View>
+  )
 }

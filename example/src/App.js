@@ -73,6 +73,7 @@ const routeConfig = {
 };
 
 const navigatorConfig = {
+  // headerMode: 'float',
   navigationOptions: {
     headerStyle: {
       backgroundColor: backgroundColor,

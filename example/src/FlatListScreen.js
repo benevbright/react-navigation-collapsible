@@ -34,7 +34,7 @@ export default class FlatListScreen extends Component{
 
     this.scrollY = new Animated.Value(0);
     this.props.navigation.setParams(makeCollapsibleParams(
-      this.scrollY, headerHeight, '#0005'));
+      this.scrollY, headerHeight, 'gray'));
   }
 
   renderItem = ({item}) => (

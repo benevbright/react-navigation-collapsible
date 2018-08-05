@@ -13,8 +13,8 @@ export default class ImageScreen extends Component{
     return withCollapsibleOptions(
       navigationOptions,
       {
-        header:
-          <View style={{width: '100%', height: '100%'}}>
+        collapsibleCustomHeader: 
+          <View style={{width: '100%', height:'100%'}}>
             <Image source={require('./../asset/cat.jpg')} 
               resizeMode={'cover'}
               style={{width: '100%', height: '100%'}}/>
