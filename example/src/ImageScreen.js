@@ -18,9 +18,9 @@ export default class ImageScreen extends Component{
             <Image source={require('./../asset/cat.jpg')} 
               resizeMode={'cover'}
               style={{width: '100%', height: '100%'}}/>
-            <View style={{position: 'absolute', top: Platform.select({ios: 20, android: 0}), left: 0}}>
+            <SafeAreaView style={{position: 'absolute'}}>
               <HeaderBackButton tintColor={'white'} onPress={() => navigation.goBack()}/>                
-            </View> 
+            </SafeAreaView> 
           </View>
       },
       navigation.state.params
