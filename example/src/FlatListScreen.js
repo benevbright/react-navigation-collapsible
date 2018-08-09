@@ -2,22 +2,24 @@ import React, {Component} from 'react';
 import { Text, FlatList, View, Animated, TouchableOpacity } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 
-import { CollapsibleHeaderBackView, makeCollapsibleParams, withCollapsibleOptions, defaultHeaderHeight } from 'react-navigation-collapsible';
+import { 
+  CollapsibleHeaderBackView, 
+  createCollapsibleParams, 
+  collapsibleOptions, 
+  getCollapsibleHeaderHeight,
+  getCollapsibleTabHeight
+} from 'react-navigation-collapsible';
 
-const headerHeight = defaultHeaderHeight;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export default class FlatListScreen extends Component{
-  static navigationOptions = ({navigationOptions, navigation}) => {
-    // console.log('A');
-    return withCollapsibleOptions(
-      navigationOptions,
-      {
-        title: 'Second Screen',
-        headerStyle: { backgroundColor: 'red' }
-      },
-      navigation.state.params
-    );
+  static navigationOptions = (props) => {
+    const {navigationOptions, navigation} = props;
+
+    const userOptions = {
+      title: 'Second Screen',
+    };
+    return collapsibleOptions(navigationOptions, userOptions, navigation.state.params, navigation);
   }
 
   constructor(props){
@@ -33,8 +35,8 @@ export default class FlatListScreen extends Component{
     }
 
     this.scrollY = new Animated.Value(0);
-    this.props.navigation.setParams(makeCollapsibleParams(
-      this.scrollY, headerHeight, 'gray'));
+    this.props.navigation.setParams(createCollapsibleParams(
+      this.scrollY, '#031'));
   }
 
   renderItem = ({item}) => (
@@ -54,12 +56,13 @@ export default class FlatListScreen extends Component{
       <View style={{flex: 1}}>
         <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
           <AnimatedFlatList 
-            trigger={this.scrollY}
             style={{flex: 1}}
-            contentContainerStyle={{paddingTop: headerHeight}}
+            contentContainerStyle={{paddingTop: getCollapsibleHeaderHeight(navigation) + getCollapsibleTabHeight(navigation)}}
             data={this.state.data}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => String(index)}
+
+            dummyTrigger={this.scrollY}
             onScroll={Animated.event(
               [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
               {useNativeDriver: true})
