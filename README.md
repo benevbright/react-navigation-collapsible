@@ -18,4 +18,4 @@ $ react-native run-android
 
 - ~~Basic header~~ (done)
 - ~~Image header~~ (done)
-- Nested Stack+Tab
+- ~~Nested Stack+Tab~~ (done)
