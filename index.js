@@ -143,9 +143,9 @@ export const withCollapsibleOptions = (srcNavigationOptions, newNavigationOption
 }
 
 const getCustomHeader = options => props => {
-  const {position, layout, isLandscape, mode} = props;
+  const {position, layout, isLandscape, mode, index} = props;
   const headerTranslate = mode === 'float' ? position.interpolate({
-    inputRange: [0, 1],
+    inputRange: [index - 1, index],
     outputRange: [layout.initWidth, 0]
   }) : 0;
   const statusBarHeight = getStatusBarHeight(isLandscape);
