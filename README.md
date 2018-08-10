@@ -5,6 +5,7 @@ Make `react-navigation` header collapsible.
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo.gif?raw=true">
 
 
+Try [Expo](https://snack.expo.io/@benevbright/react-navigation-collapsible)
 Try [Example](https://github.com/benevbright/react-navigation-collapsible/tree/master/example).
 
 
