@@ -2,7 +2,10 @@
 
 Make `react-navigation` header collapsible.
 
-See this [Example](https://github.com/benevbright/react-navigation-collapsible/tree/master/example) for basic usage.
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo.gif?raw=true">
+
+
+Try [Example](https://github.com/benevbright/react-navigation-collapsible/tree/master/example).
 
 
 ## Getting started
@@ -16,6 +19,12 @@ $ react-native run-android
 
 ## Task
 
-- ~~Basic header~~ (done)
-- ~~Image header~~ (done)
+- ~~Regular Header~~ (done)
+- ~~Image Header~~ (done)
 - ~~Nested Stack+Tab~~ (done)
+- ~~Extra Header~~ (done)
+
+
+## Contribution
+
+I need your help to make this module better and capables more use cases.

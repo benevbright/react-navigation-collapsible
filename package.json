@@ -1,16 +1,24 @@
 {
   "name": "react-navigation-collapsible",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "React Navigation Extension for Collapsible Header",
   "main": "index.js",
   "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benevbright/react-navigation-collapsible.git"
+  },
   "keywords": [
+    "react-native",
     "react-navigation",
+    "navigation",
     "collapsible",
     "collapsible header",
-    "hide header"
+    "hide header",
+    "animate header",
+    "hide navigation"
   ],
-  "author": "Bright Lee",
+  "author": "Bright Lee <benevbright@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
     "react": "*",
