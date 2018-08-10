@@ -12,7 +12,7 @@ const IS_IPHONE_X =
 
 const defaultHeaderHeight = Platform.select({ios: 44, android: 56});
 const defaultTabHeight = 50;
-const getSafeBounceHeight = Platform.select({ios: 300, android: 100});
+const safeBounceHeight = Platform.select({ios: 300, android: 100});
 
 export const isOrientationLandscape = ({ width, height }) => width > height;
 
@@ -25,25 +25,54 @@ const getNavigationHeight = (isLandscape, headerHeight) => {
   return headerHeight + getStatusBarHeight(isLandscape);
 }
 
-export const createCollapsibleParams = (animated, iOSCollapsedColor = null) => {
+export const createCollapsibleParams = (animated) => {
   return {
-    headerY: Animated.diffClamp(animated, 0, getSafeBounceHeight),
-    iOSCollapsedColor
+    scrollY: animated,
+    headerY: Animated.diffClamp(animated, 0, safeBounceHeight)
   }
+}
+export const createCollapsibleAnimated = (animated) => {
+  return Animated.diffClamp(animated, 0, safeBounceHeight);
+}
+
+export const CollapsibleExtraHeader = props => {
+  const { children, extraHeaderY, style } = props;
+  const height = style.height || 0;
+  const headerTranslate = extraHeaderY.interpolate({
+    inputRange: [safeBounceHeight - height, safeBounceHeight],
+    outputRange: [0, -height],
+    extrapolate: 'clamp'
+  });
+  const headerOpacity = extraHeaderY.interpolate({
+    inputRange: [safeBounceHeight - height, safeBounceHeight],
+    outputRange: [1, 0],
+    extrapolate: 'clamp'
+  });
+  return (
+    <Animated.View style={[style, {
+      width: '100%', 
+      zIndex: 100,
+      position: 'absolute',
+      transform: [{translateY: headerTranslate}]}]}>
+      <Animated.View style={{width: '100%', height: '100%', opacity: headerOpacity}}>
+        {children}
+      </Animated.View>
+    </Animated.View>
+  )
 }
 
 class _CollapsibleHeaderBackView extends Component {
   state = {
-    showFloorHeader: true
+    isShow: true
   }
 
   componentDidMount(){
     const { navigation } = this.props;
     this.subscribe_willFocus = navigation.addListener('willFocus', () => {
-      this.setState({showFloorHeader: true});
+      this.setState({isShow: true});
     });
     this.subscribe_willBlur = navigation.addListener('willBlur', () => {
-      this.setState({showFloorHeader: false});
+      this.setState({isShow: false});
     });
   }
   componentWillUnmount(){
@@ -61,16 +90,15 @@ class _CollapsibleHeaderBackView extends Component {
     if(Platform.OS === 'android')
       return null;
 
-    const { isLandscape, navigation } = this.props;
-    if(!navigation || !navigation.state.params || !navigation.state.params.headerY || !navigation.state.params.headerHeight || !this.state.showFloorHeader)
+    const { isLandscape, navigation, iOSCollapsedColor } = this.props;
+    if(!this.state.isShow || !navigation || !navigation.state.params || !navigation.state.params.headerY || !navigation.state.params.headerHeight)
       return null;
 
-    const { headerHeight, iOSCollapsedColor, headerY } = navigation.state.params;
+    const { headerHeight, headerY } = navigation.state.params;
     const navigationHeight = getNavigationHeight(isLandscape, headerHeight);
-    const bounceHeight = getSafeBounceHeight;
 
     const headerTranslate = headerY.interpolate({
-      inputRange: [bounceHeight - headerHeight, bounceHeight],
+      inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
       outputRange: [0, -headerHeight],
       extrapolate: 'clamp'
     });
@@ -78,6 +106,7 @@ class _CollapsibleHeaderBackView extends Component {
     return (
       <Animated.View 
         style={{
+          zIndex: 100,
           transform: [{translateY: headerTranslate}], 
           backgroundColor: iOSCollapsedColor, 
           position: 'absolute', 
@@ -96,7 +125,7 @@ export { CollapsibleHeaderBackView };
 
 
 
-export const collapsibleOptions = (configOptions, userOptions, navigationParams, navigation) => {
+export const collapsibleOptions = (configOptions, userOptions, navigation) => {
 
   userOptions = {
     ...configOptions,
@@ -106,6 +135,8 @@ export const collapsibleOptions = (configOptions, userOptions, navigationParams,
       ...userOptions.headerStyle
     }
   };
+
+  const navigationParams = navigation.state.params;
 
   if(!navigationParams || !navigationParams.headerY){
     // console.log('navigationParams is null');
@@ -118,17 +149,20 @@ export const collapsibleOptions = (configOptions, userOptions, navigationParams,
     ? userOptions.headerStyle.height
     : defaultHeaderHeight;
   if(navigation){
-    if(navigationParams.headerHeight !== headerHeight) navigation.setParams({headerHeight});
+    if(navigationParams.headerHeight !== headerHeight) 
+      navigation.setParams({
+        headerHeight,
+        headerY: Animated.diffClamp(navigationParams.scrollY, 0, safeBounceHeight + headerHeight)
+      });
   }
-  const bounceHeight = getSafeBounceHeight;
 
   const headerOpacity = headerY.interpolate({
-    inputRange: [bounceHeight - headerHeight, bounceHeight],
+    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
     outputRange: [1, 0],
     extrapolate: 'clamp'
   });
   const headerTranslate = headerY.interpolate({
-    inputRange: [bounceHeight - headerHeight, bounceHeight],
+    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
     outputRange: [0, -headerHeight],
     extrapolate: 'clamp'
   });
@@ -155,7 +189,8 @@ export const collapsibleOptions = (configOptions, userOptions, navigationParams,
       ? collapsibleOptions.tabBarOptions.style.height
       : defaultTabHeight;
     if(navigation){
-      if(navigationParams.tabHeight !== tabHeight) navigation.setParams({tabHeight});
+      if(navigationParams.tabHeight !== tabHeight) 
+        navigation.setParams({tabHeight});
     }
     const isLandscape = navigation.state.params && navigation.state.params.isLandscape
       ? navigation.state.params.isLandscape
@@ -165,6 +200,7 @@ export const collapsibleOptions = (configOptions, userOptions, navigationParams,
       ...collapsibleOptions.tabBarOptions,
       style:{
         ...tabStyle,
+        zIndex: 100,
         position: 'absolute',
         top: getStatusBarHeight(isLandscape) + collapsibleOptions.headerStyle.height,
         height: tabHeight,
@@ -212,7 +248,14 @@ const getCustomHeader = options => {
 export const collapsibleOptionsForTab = (props, userOptions) => {
   const {navigationOptions, navigation} = props;
   const { routes, index } = navigation.state;
-  return collapsibleOptions(navigationOptions, userOptions, routes[index].params);
+  const dummyNavigation = {
+    setParams: () => {},
+    addListener: () => {},
+    state: {
+      params: routes[index].params
+    }
+  }
+  return collapsibleOptions(navigationOptions, userOptions, dummyNavigation);
 }
 
 export const collapsibleTabConfig = (config) => {

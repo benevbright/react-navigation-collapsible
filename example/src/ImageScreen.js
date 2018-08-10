@@ -10,7 +10,6 @@ import {
   getCollapsibleHeaderHeight
 } from 'react-navigation-collapsible';
 
-// const headerHeight = 200;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export default class ImageScreen extends Component{
@@ -27,7 +26,7 @@ export default class ImageScreen extends Component{
           </SafeAreaView> 
         </View>
     };
-    return collapsibleOptions(navigationOptions, userOptions, navigation.state.params, navigation);
+    return collapsibleOptions(navigationOptions, userOptions, navigation);
   }
 
   constructor(props){
@@ -43,8 +42,8 @@ export default class ImageScreen extends Component{
     }
 
     this.scrollY = new Animated.Value(0);
-    this.props.navigation.setParams(createCollapsibleParams(
-      this.scrollY, 'purple'));
+    // enable Collapsible Header
+    this.props.navigation.setParams(createCollapsibleParams(this.scrollY));
   }
 
   renderItem = ({item}) => (
@@ -62,21 +61,22 @@ export default class ImageScreen extends Component{
 
     return (
       <View style={{flex: 1}}>
+        <CollapsibleHeaderBackView iOSCollapsedColor={'purple'} navigation={navigation} />
         <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
           <AnimatedFlatList 
-            trigger={this.scrollY}
             style={{flex: 1}}
             contentContainerStyle={{paddingTop: getCollapsibleHeaderHeight(navigation)}}
             data={this.state.data}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => String(index)}
+
+            collapsibleTrigger_mustAddThis={this.scrollY}
             onScroll={Animated.event(
               [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
               {useNativeDriver: true})
             } 
             />
         </SafeAreaView>
-        <CollapsibleHeaderBackView navigation={navigation} />
       </View>
     )
   }

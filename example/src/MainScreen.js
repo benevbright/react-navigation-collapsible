@@ -12,13 +12,16 @@ export default class MainScreen extends Component{
     return (
       <View>
         <TouchableOpacity style={{margin: 20}} onPress={() => navigation.navigate('FlatListScreen')}>
-          <Text>FlatList Screen</Text>
+          <Text>Regular Header Screen</Text>
         </TouchableOpacity>
         <TouchableOpacity style={{margin: 20}} onPress={() => navigation.navigate('ImageScreen')}>
-          <Text>Image Screen</Text>
+          <Text>Image Header Screen</Text>
         </TouchableOpacity>
         <TouchableOpacity style={{margin: 20}} onPress={() => navigation.navigate('TopTabScreen')}>
-          <Text>Top Tab Screen</Text>
+          <Text>Material Tab Screen</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{margin: 20}} onPress={() => navigation.navigate('ExtraHeaderScreen')}>
+          <Text>Extra Header Screen</Text>
         </TouchableOpacity>
       </View>
     )

@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import { StatusBar } from 'react-native';
 import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 
-import MainScreen from './MainScreen.js'
-import FlatListScreen from './FlatListScreen.js'
-import ImageScreen from './ImageScreen.js'
-import DetailScreen from './DetailScreen.js'
+import MainScreen from './MainScreen.js';
+import FlatListScreen from './FlatListScreen.js';
+import ImageScreen from './ImageScreen.js';
+import DetailScreen from './DetailScreen.js';
+import ExtraHeaderScreen from './ExtraHeaderScreen.js';
 import { collapsibleOptionsForTab, collapsibleTabConfig } from 'react-navigation-collapsible';
 
 const backgroundColor = '#061';
@@ -25,7 +26,7 @@ export default class App extends Component{
 const TopTabNavigator = createMaterialTopTabNavigator(
   {
     Screen1: { screen: FlatListScreen },
-    Screen2: { screen: MainScreen },
+    Screen2: { screen: DetailScreen },
   },
   collapsibleTabConfig({
     animationEnabled: true,
@@ -43,8 +44,9 @@ const routeConfig = {
   MainScreen: { screen: MainScreen },
   FlatListScreen: { screen: FlatListScreen },
   ImageScreen: { screen: ImageScreen },
-  TopTabScreen: { screen: TopTabNavigator, navigationOptions: props => collapsibleOptionsForTab(props, {title: 'Tab'}) },
+  TopTabScreen: { screen: TopTabNavigator, navigationOptions: props => collapsibleOptionsForTab(props, {title: 'Material Tab'}) },
   DetailScreen: { screen: DetailScreen },
+  ExtraHeaderScreen: { screen: ExtraHeaderScreen }
 };
 
 const navigatorConfig = {

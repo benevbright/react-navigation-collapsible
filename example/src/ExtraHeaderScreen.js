@@ -3,24 +3,16 @@ import { Text, FlatList, View, Animated, TouchableOpacity } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 
 import { 
-  CollapsibleHeaderBackView, 
-  createCollapsibleParams, 
-  collapsibleOptions, 
-  getCollapsibleHeaderHeight,
-  getCollapsibleTabHeight
+  CollapsibleExtraHeader,
+  createCollapsibleAnimated
 } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default class FlatListScreen extends Component{
-  static navigationOptions = (props) => {
-    const {navigationOptions, navigation} = props;
-
-    const userOptions = {
-      title: 'Flatlist'
-    };
-    return collapsibleOptions(navigationOptions, userOptions, navigation);
-  }
+export default class ExtraHeaderScreen extends Component{
+  static navigationOptions = {
+    title: 'Extra Header'
+  };
 
   constructor(props){
     super(props);
@@ -35,8 +27,8 @@ export default class FlatListScreen extends Component{
     }
 
     this.scrollY = new Animated.Value(0);
-    // enable Collapsible Header
-    this.props.navigation.setParams(createCollapsibleParams(this.scrollY));
+    //enable Collapsible Extra Header
+    this.extraHeaderY = createCollapsibleAnimated(this.scrollY);
   }
 
   renderItem = ({item}) => (
@@ -50,15 +42,21 @@ export default class FlatListScreen extends Component{
   )
 
   render(){
-    const { navigation } = this.props;
+    const extraHeaderHeight = 50;
 
     return (
       <View style={{flex: 1}}>
-        <CollapsibleHeaderBackView iOSCollapsedColor={'#031'} navigation={navigation} />
         <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
+          <CollapsibleExtraHeader style={{height: extraHeaderHeight, backgroundColor: '#061'}} extraHeaderY={this.extraHeaderY}>
+            <View style={{width: '100%', height: '100%', paddingHorizontal: 20, paddingVertical: 10}}>
+              <View style={{backgroundColor: 'white', flex: 1, borderRadius: 15, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{color: 'gray'}}>Search Here</Text>
+              </View>
+            </View>
+          </CollapsibleExtraHeader>
           <AnimatedFlatList 
             style={{flex: 1}}
-            contentContainerStyle={{paddingTop: getCollapsibleHeaderHeight(navigation) + getCollapsibleTabHeight(navigation)}}
+            contentContainerStyle={{paddingTop: extraHeaderHeight}}
             data={this.state.data}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => String(index)}
