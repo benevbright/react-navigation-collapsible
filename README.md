@@ -36,6 +36,7 @@ $ react-native run-android
 
 ### Stack
 
+(MyScreen.js)
 ```
 import { withCollapsible } from 'react-navigation-collapsible';
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -59,8 +60,48 @@ class MyScreen extends Component{
   }
 }
 
-export default withCollapsible(FlatListScreen, {iOSCollapsedColor: '#031'});
+export default withCollapsible(MyScreen, {iOSCollapsedColor: '#031'});
 ```
+
+
+### Stack + Material Tab
+
+(MyScreen.js)
+```
+...
+export default withCollapsible(MyScreen, {iOSCollapsedColor: '#031'});
+```
+
+(Your Navigator.js)
+```
+
+const TopTabNavigator = createMaterialTopTabNavigator(
+  {
+    Screen1: { screen: MyScreen },
+    Screen2: { screen: OtherScreen },
+  },
+  collapsibleTabConfig({
+    navigationOptions:{
+      tabBarOptions: {
+        indicatorStyle: { backgroundColor: 'white' },
+        style: { backgroundColor: 'green' },
+      }
+    }
+  })
+);
+
+const routeConfig = {
+  MainScreen: { screen: MainScreen },
+  TopTabScreen: { screen: TopTabNavigator, navigationOptions: props => collapsibleOptionsForTab(props, {title: 'Material Tab'}) },
+};
+
+const StackNavigator = createStackNavigator(routeConfig);
+```
+
+### Extra Header
+
+See Example
+
 
 ## Contribution
 
