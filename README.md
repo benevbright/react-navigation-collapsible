@@ -32,6 +32,35 @@ $ react-native run-android
 - [x] HOC
 - [ ] Flow
 
+## Usage
+
+### Stack
+
+```
+import { withCollapsible } from 'react-navigation-collapsible';
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
+class MyScreen extends Component{
+  static navigationOptions = {
+    title: 'Awesome Screen'
+  };
+
+  render(){
+    const { paddingHeight, scrollY, onScroll } = this.props.collapsible;
+
+    return (
+      <AnimatedFlatList 
+        ...
+        contentContainerStyle={{paddingTop: paddingHeight}}
+        onScroll={onScroll} 
+        _mustAddThis={scrollY}
+        />
+    )
+  }
+}
+
+export default withCollapsible(FlatListScreen, {iOSCollapsedColor: '#031'});
+```
 
 ## Contribution
 
