@@ -4,7 +4,7 @@
 
 
 React Navigation Extension for Collapsible Header.
-Make header of `react-navigation` collapsible.
+Make your header of `react-navigation` collapsible.
 
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo.gif?raw=true">
 
