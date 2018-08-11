@@ -99,9 +99,11 @@ const routeConfig = {
 const StackNavigator = createStackNavigator(routeConfig);
 ```
 
-### Extra Header
+### Custom Header
+See [ImageScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ImageScreen.js)
 
-See Example
+### Extra Header
+See [ExtraHeaderScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ExtraHeaderScreen.js)
 
 
 ## Contribution
