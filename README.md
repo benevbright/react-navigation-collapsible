@@ -4,7 +4,6 @@
 
 
 React Navigation Extension for Collapsible Header.
-
 Make header of `react-navigation` collapsible.
 
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo.gif?raw=true">
@@ -30,6 +29,8 @@ $ react-native run-android
 - ~~Image Header~~ (done)
 - ~~Nested Stack+Tab~~ (done)
 - ~~Extra Header~~ (done)
+- ~~HOC~~ (done)
+- Flow
 
 
 ## Contribution
