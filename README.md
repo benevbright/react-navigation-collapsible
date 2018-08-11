@@ -25,12 +25,12 @@ $ react-native run-android
 
 ## Task
 
-- ~~Regular Header~~ (done)
-- ~~Image Header~~ (done)
-- ~~Nested Stack+Tab~~ (done)
-- ~~Extra Header~~ (done)
-- ~~HOC~~ (done)
-- Flow
+- [x] Regular Header
+- [x] Image Header
+- [x] Nested Stack+Tab
+- [x] Extra Header
+- [x] HOC
+- [ ] Flow
 
 
 ## Contribution
