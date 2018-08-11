@@ -1,26 +1,14 @@
 import React, {Component} from 'react';
-import { Text, FlatList, View, Animated, TouchableOpacity } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
+import { Text, FlatList, Animated, TouchableOpacity } from 'react-native';
 
-import { 
-  CollapsibleHeaderBackView, 
-  createCollapsibleParams, 
-  collapsibleOptions, 
-  getCollapsibleHeaderHeight,
-  getCollapsibleTabHeight
-} from 'react-navigation-collapsible';
+import { withCollapsible } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default class FlatListScreen extends Component{
-  static navigationOptions = (props) => {
-    const {navigationOptions, navigation} = props;
-
-    const userOptions = {
-      title: 'Flatlist'
-    };
-    return collapsibleOptions(navigationOptions, userOptions, navigation);
-  }
+class FlatListScreen extends Component{
+  static navigationOptions = {
+    title: 'Flatlist'
+  };
 
   constructor(props){
     super(props);
@@ -33,10 +21,6 @@ export default class FlatListScreen extends Component{
     this.state = {
       data: data
     }
-
-    this.scrollY = new Animated.Value(0);
-    // enable Collapsible Header
-    this.props.navigation.setParams(createCollapsibleParams(this.scrollY));
   }
 
   renderItem = ({item}) => (
@@ -50,27 +34,19 @@ export default class FlatListScreen extends Component{
   )
 
   render(){
-    const { navigation } = this.props;
-
     return (
-      <View style={{flex: 1}}>
-        <CollapsibleHeaderBackView iOSCollapsedColor={'#031'} navigation={navigation} />
-        <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
-          <AnimatedFlatList 
-            style={{flex: 1}}
-            contentContainerStyle={{paddingTop: getCollapsibleHeaderHeight(navigation) + getCollapsibleTabHeight(navigation)}}
-            data={this.state.data}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => String(index)}
+      <AnimatedFlatList 
+        style={{flex: 1}}
+        data={this.state.data}
+        renderItem={this.renderItem}
+        keyExtractor={(item, index) => String(index)}
 
-            collapsibleTrigger_mustAddThis={this.scrollY}
-            onScroll={Animated.event(
-              [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
-              {useNativeDriver: true})
-            } 
-            />
-        </SafeAreaView>
-      </View>
+        contentContainerStyle={{paddingTop: this.props.paddingHeight}}
+        onScroll={this.props.onScroll} 
+        _mustAddThis={this.props.scrollY}
+        />
     )
   }
 }
+
+export default withCollapsible(FlatListScreen, {iOSCollapsedColor: '#031'});

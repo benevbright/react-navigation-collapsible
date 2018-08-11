@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import { Animated, Platform, Dimensions } from 'react-native';
+import { Animated, Platform, Dimensions, View } from 'react-native';
 import withOrientation from 'react-navigation/src/views/withOrientation';
+import hoistNonReactStatic from 'hoist-non-react-statics';
+import SafeAreaView from 'react-native-safe-area-view';
 
 const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window');
 const IS_IPHONE_X =
@@ -14,7 +16,7 @@ const defaultHeaderHeight = Platform.select({ios: 44, android: 56});
 const defaultTabHeight = 50;
 const safeBounceHeight = Platform.select({ios: 300, android: 100});
 
-export const isOrientationLandscape = ({ width, height }) => width > height;
+const isOrientationLandscape = ({ width, height }) => width > height;
 
 const getStatusBarHeight = (isLandscape) => {
   if(Platform.OS === 'android') return 0;
@@ -25,25 +27,25 @@ const getNavigationHeight = (isLandscape, headerHeight) => {
   return headerHeight + getStatusBarHeight(isLandscape);
 }
 
-export const createCollapsibleParams = (animated) => {
+const createCollapsibleParams = (animated) => {
   return {
     scrollY: animated,
     headerY: Animated.diffClamp(animated, 0, safeBounceHeight)
   }
 }
-export const createCollapsibleAnimated = (animated) => {
-  return Animated.diffClamp(animated, 0, safeBounceHeight);
-}
 
-export const CollapsibleExtraHeader = props => {
-  const { children, extraHeaderY, style } = props;
+const CollapsibleExtraHeader = props => {
+  const { headerY, children, style } = props;
+  if(!headerY)
+    return null;
+
   const height = style.height || 0;
-  const headerTranslate = extraHeaderY.interpolate({
+  const headerTranslate = headerY.interpolate({
     inputRange: [safeBounceHeight - height, safeBounceHeight],
     outputRange: [0, -height],
     extrapolate: 'clamp'
   });
-  const headerOpacity = extraHeaderY.interpolate({
+  const headerOpacity = headerY.interpolate({
     inputRange: [safeBounceHeight - height, safeBounceHeight],
     outputRange: [1, 0],
     extrapolate: 'clamp'
@@ -117,7 +119,6 @@ class _CollapsibleHeaderBackView extends Component {
 }
 
 const CollapsibleHeaderBackView = withOrientation(_CollapsibleHeaderBackView);
-export { CollapsibleHeaderBackView };
 
 
 
@@ -125,7 +126,7 @@ export { CollapsibleHeaderBackView };
 
 
 
-export const collapsibleOptions = (configOptions, userOptions, navigation) => {
+const collapsibleOptions = (configOptions, userOptions, navigation) => {
 
   userOptions = {
     ...configOptions,
@@ -268,13 +269,71 @@ export const collapsibleTabConfig = (config) => {
   }
 }
 
-export const getCollapsibleHeaderHeight = (navigation) => {
+const getCollapsibleHeaderHeight = (navigation) => {
   return (navigation.state.params && navigation.state.params.headerHeight
   ? navigation.state.params.headerHeight
   : 0);
 }
-export const getCollapsibleTabHeight = (navigation) => {
+const getCollapsibleTabHeight = (navigation) => {
   return (navigation.state.params && navigation.state.params.tabHeight
   ? navigation.state.params.tabHeight
   : 0);
+}
+
+
+
+export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
+  class _withCollapsible extends Component{
+    constructor(props){
+      super(props);
+
+      this.scrollY = new Animated.Value(0);
+      if(!collapsibleParams.extraHeader){
+        this.props.navigation.setParams(createCollapsibleParams(this.scrollY));
+      }else{
+        this.headerY = createCollapsibleParams(this.scrollY).headerY;
+      }
+    }
+
+    render(){
+      const { navigation } = this.props;
+      const props = {
+        ...this.props,
+        paddingHeight: !collapsibleParams.extraHeader 
+          ? getCollapsibleHeaderHeight(navigation) + getCollapsibleTabHeight(navigation)
+          : collapsibleParams.extraHeaderStyle.height,
+        scrollY: this.scrollY,
+        onScroll: Animated.event(
+          [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
+          {useNativeDriver: true})
+      }
+      return (
+        <View style={{flex: 1}}>
+          {!collapsibleParams.extraHeader 
+            ? <CollapsibleHeaderBackView iOSCollapsedColor={collapsibleParams.iOSCollapsedColor} navigation={navigation} />
+            : (<CollapsibleExtraHeader headerY={this.headerY} style={collapsibleParams.extraHeaderStyle}>
+              {collapsibleParams.extraHeader(navigation)}
+              </CollapsibleExtraHeader>)
+          }
+          <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
+            <WrappedScreen {...props}/>
+          </SafeAreaView>
+        </View>
+      );
+    }
+  }
+
+  const hoist = hoistNonReactStatic(_withCollapsible, WrappedScreen);
+
+  hoist.navigationOptions = props => {
+    const userOptions = typeof WrappedScreen.navigationOptions === 'function'
+      ? WrappedScreen.navigationOptions(props) 
+      : (WrappedScreen.navigationOptions ? WrappedScreen.navigationOptions : {});
+    userOptions.collapsibleCustomHeader = userOptions.header;
+    
+    const {navigationOptions, navigation} = props;
+    return collapsibleOptions(navigationOptions, userOptions, navigation);
+  }
+
+  return hoist;
 }

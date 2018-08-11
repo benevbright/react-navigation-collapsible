@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
 import { Text, FlatList, View, Animated, TouchableOpacity } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
 
 import { 
-  CollapsibleExtraHeader,
-  createCollapsibleAnimated
+  withCollapsible
 } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default class ExtraHeaderScreen extends Component{
+class ExtraHeaderScreen extends Component{
   static navigationOptions = {
-    title: 'Extra Header'
+    title: 'Extra Header',
   };
 
   constructor(props){
@@ -25,10 +23,6 @@ export default class ExtraHeaderScreen extends Component{
     this.state = {
       data: data
     }
-
-    this.scrollY = new Animated.Value(0);
-    //enable Collapsible Extra Header
-    this.extraHeaderY = createCollapsibleAnimated(this.scrollY);
   }
 
   renderItem = ({item}) => (
@@ -42,33 +36,36 @@ export default class ExtraHeaderScreen extends Component{
   )
 
   render(){
-    const extraHeaderHeight = 50;
-
     return (
-      <View style={{flex: 1}}>
-        <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
-          <CollapsibleExtraHeader style={{height: extraHeaderHeight, backgroundColor: '#061'}} extraHeaderY={this.extraHeaderY}>
-            <View style={{width: '100%', height: '100%', paddingHorizontal: 20, paddingVertical: 10}}>
-              <View style={{backgroundColor: 'white', flex: 1, borderRadius: 15, justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{color: 'gray'}}>Search Here</Text>
-              </View>
-            </View>
-          </CollapsibleExtraHeader>
-          <AnimatedFlatList 
-            style={{flex: 1}}
-            contentContainerStyle={{paddingTop: extraHeaderHeight}}
-            data={this.state.data}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => String(index)}
+      <AnimatedFlatList 
+        style={{flex: 1}}
+        data={this.state.data}
+        renderItem={this.renderItem}
+        keyExtractor={(item, index) => String(index)}
 
-            collapsibleTrigger_mustAddThis={this.scrollY}
-            onScroll={Animated.event(
-              [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
-              {useNativeDriver: true})
-            } 
-            />
-        </SafeAreaView>
-      </View>
+        contentContainerStyle={{paddingTop: this.props.paddingHeight}}
+        
+        onScroll={this.props.onScroll} 
+        _mustAddThis={this.props.scrollY}
+        />
     )
   }
 }
+
+const ExtraHeader = ({navigation}) => (
+  <View style={{width: '100%', height: '100%', paddingHorizontal: 20, paddingVertical: 10}}>
+    <View style={{backgroundColor: 'white', flex: 1, borderRadius: 15, justifyContent: 'center', alignItems: 'center'}}>
+      <Text style={{color: 'gray'}}>Search Here</Text>
+    </View>
+  </View>
+);
+
+const collapsibleParams = {
+  extraHeader: ExtraHeader,
+  extraHeaderStyle: {
+    height: 50, 
+    backgroundColor: '#061'
+  }
+}
+
+export default withCollapsible(ExtraHeaderScreen, collapsibleParams);

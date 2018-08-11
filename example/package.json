@@ -10,7 +10,6 @@
   "dependencies": {
     "react": "16.4.1",
     "react-native": "0.56.0",
-    "react-native-safe-area-view": "^0.9.0",
     "react-navigation": "^2.11.2",
     "react-navigation-collapsible": "https://github.com/benevbright/react-navigation-collapsible.git"
   },

@@ -1,33 +1,27 @@
 import React, {Component} from 'react';
-import { Text, FlatList, View, Animated, TouchableOpacity, Image } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
+import { Text, FlatList, View, Animated, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 
-import { 
-  CollapsibleHeaderBackView, 
-  createCollapsibleParams, 
-  collapsibleOptions, 
-  getCollapsibleHeaderHeight
-} from 'react-navigation-collapsible';
+import { withCollapsible } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default class ImageScreen extends Component{
-  static navigationOptions = ({navigationOptions, navigation}) => {
-    const userOptions = {
-      headerStyle: {height: 200},
-      collapsibleCustomHeader: 
-        <View style={{width: '100%', height:'100%'}}>
-          <Image source={require('./../asset/cat.jpg')} 
-            resizeMode={'cover'}
-            style={{width: '100%', height: '100%'}}/>
-          <SafeAreaView style={{position: 'absolute'}}>
-            <HeaderBackButton tintColor={'white'} onPress={() => navigation.goBack()}/>                
-          </SafeAreaView> 
-        </View>
-    };
-    return collapsibleOptions(navigationOptions, userOptions, navigation);
-  }
+// const ImgSource = {uri:'https://ravishly-9ac9.kxcdn.com/cdn/farfuture/edYzCuowlJVcDos1RjXSa8_1o5tGDQBE4ebEFE6R1OE/mtime:1479930604/sites/default/files/maxresdefault_2.jpg'};
+const ImgSource = require('./../asset/cat.jpg');
+
+class ImageScreen extends Component{
+  static navigationOptions = ({navigation}) => ({
+    headerStyle: {height: 200},
+    header: 
+      <View style={{width: '100%', height:'100%'}}>
+        <Image source={ImgSource} 
+          resizeMode={'cover'}
+          style={{width: '100%', height: '100%'}}/>
+        <SafeAreaView style={{position: 'absolute'}}>
+          <HeaderBackButton tintColor={'white'} onPress={() => navigation.goBack()}/>                
+        </SafeAreaView> 
+      </View>
+  })
 
   constructor(props){
     super(props);
@@ -40,10 +34,6 @@ export default class ImageScreen extends Component{
     this.state = {
       data: data
     }
-
-    this.scrollY = new Animated.Value(0);
-    // enable Collapsible Header
-    this.props.navigation.setParams(createCollapsibleParams(this.scrollY));
   }
 
   renderItem = ({item}) => (
@@ -57,27 +47,19 @@ export default class ImageScreen extends Component{
   )
 
   render(){
-    const { navigation } = this.props;
-
     return (
-      <View style={{flex: 1}}>
-        <CollapsibleHeaderBackView iOSCollapsedColor={'purple'} navigation={navigation} />
-        <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
-          <AnimatedFlatList 
-            style={{flex: 1}}
-            contentContainerStyle={{paddingTop: getCollapsibleHeaderHeight(navigation)}}
-            data={this.state.data}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => String(index)}
+      <AnimatedFlatList 
+        style={{flex: 1}}
+        data={this.state.data}
+        renderItem={this.renderItem}
+        keyExtractor={(item, index) => String(index)}
 
-            collapsibleTrigger_mustAddThis={this.scrollY}
-            onScroll={Animated.event(
-              [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
-              {useNativeDriver: true})
-            } 
-            />
-        </SafeAreaView>
-      </View>
+        contentContainerStyle={{paddingTop: this.props.paddingHeight}}
+        onScroll={this.props.onScroll} 
+        _mustAddThis={this.props.scrollY}
+        />
     )
   }
 }
+
+export default withCollapsible(ImageScreen, {iOSCollapsedColor: 'purple'});
