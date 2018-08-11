@@ -53,7 +53,6 @@ const CollapsibleExtraHeader = props => {
   return (
     <Animated.View style={[style, {
       width: '100%', 
-      zIndex: 100,
       position: 'absolute',
       transform: [{translateY: headerTranslate}]}]}>
       <Animated.View style={{width: '100%', height: '100%', opacity: headerOpacity}}>
@@ -144,7 +143,6 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
     return userOptions;
   }
 
-
   const { headerY } = navigationParams;
   const headerHeight = userOptions.headerStyle && userOptions.headerStyle.height 
     ? userOptions.headerStyle.height
@@ -193,8 +191,8 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
       if(navigationParams.tabHeight !== tabHeight) 
         navigation.setParams({tabHeight});
     }
-    const isLandscape = navigation.state.params && navigation.state.params.isLandscape
-      ? navigation.state.params.isLandscape
+    const isLandscape = navigationParams.isLandscape !== undefined
+      ? navigationParams.isLandscape
       : isOrientationLandscape(Dimensions.get('window'));
     const tabStyle = collapsibleOptions.tabBarOptions ? collapsibleOptions.tabBarOptions.style : {};
     collapsibleOptions.tabBarOptions = {
@@ -209,19 +207,6 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
         transform: [{translateY: headerTranslate}],
       }
     }  
-  }
-
-  if(navigationParams.isLandscape === undefined && navigation){
-    const orientationListner = ({window}) => {
-      navigation.setParams({isLandscape: isOrientationLandscape(window)})
-    }
-
-    navigation.addListener('willFocus', () => {
-      Dimensions.addEventListener('change', orientationListner);
-    });  
-    navigation.addListener('willBlur', () => {
-      Dimensions.removeEventListener('change', orientationListner);
-    });  
   }
 
   return collapsibleOptions;
@@ -282,6 +267,9 @@ const getCollapsibleTabHeight = (navigation) => {
 
 
 
+
+
+
 export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
   class _withCollapsible extends Component{
     constructor(props){
@@ -293,6 +281,16 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
       }else{
         this.headerY = createCollapsibleParams(this.scrollY).headerY;
       }
+    }
+
+    componentDidMount(){
+      Dimensions.addEventListener('change', this.orientationListner);
+    }
+    componentWillUnmount(){
+      Dimensions.removeEventListener('change', this.orientationListner);
+    }
+    orientationListner = ({window}) => {
+      this.props.navigation.setParams({isLandscape: isOrientationLandscape(window)})
     }
 
     render(){
@@ -311,15 +309,15 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
       }
       return (
         <View style={{flex: 1}}>
+          <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
+            <WrappedScreen {...props}/>
+          </SafeAreaView>
           {!collapsibleParams.extraHeader 
             ? <CollapsibleHeaderBackView iOSCollapsedColor={collapsibleParams.iOSCollapsedColor} navigation={navigation} />
             : (<CollapsibleExtraHeader headerY={this.headerY} style={collapsibleParams.extraHeaderStyle}>
               {collapsibleParams.extraHeader(navigation)}
               </CollapsibleExtraHeader>)
           }
-          <SafeAreaView style={{flex: 1}} forceInset={{bottom: 'never'}}>
-            <WrappedScreen {...props}/>
-          </SafeAreaView>
         </View>
       );
     }
