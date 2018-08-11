@@ -74,6 +74,7 @@ export default withCollapsible(MyScreen, {iOSCollapsedColor: '#031'});
 
 (Your Navigator.js)
 ```
+import { collapsibleOptionsForTab, collapsibleTabConfig } from 'react-navigation-collapsible';
 
 const TopTabNavigator = createMaterialTopTabNavigator(
   {
