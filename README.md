@@ -1,6 +1,7 @@
+# react-navigation-collapsible
+
 [![npm](https://img.shields.io/npm/v/react-navigation-collapsible.svg)](https://www.npmjs.com/package/react-navigation-collapsible) [![npm](https://img.shields.io/npm/dm/react-navigation-collapsible.svg)](https://www.npmjs.com/package/react-navigation-collapsible)
 
-# react-navigation-collapsible
 
 React Navigation Extension for Collapsible Header.
 
