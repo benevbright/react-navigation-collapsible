@@ -34,6 +34,8 @@ class FlatListScreen extends Component{
   )
 
   render(){
+    const { paddingHeight, scrollY, onScroll } = this.props.collapsible;
+
     return (
       <AnimatedFlatList 
         style={{flex: 1}}
@@ -41,9 +43,9 @@ class FlatListScreen extends Component{
         renderItem={this.renderItem}
         keyExtractor={(item, index) => String(index)}
 
-        contentContainerStyle={{paddingTop: this.props.paddingHeight}}
-        onScroll={this.props.onScroll} 
-        _mustAddThis={this.props.scrollY}
+        contentContainerStyle={{paddingTop: paddingHeight}}
+        onScroll={onScroll} 
+        _mustAddThis={scrollY}
         />
     )
   }

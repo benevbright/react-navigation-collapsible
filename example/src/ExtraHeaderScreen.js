@@ -36,6 +36,8 @@ class ExtraHeaderScreen extends Component{
   )
 
   render(){
+    const { paddingHeight, scrollY, onScroll } = this.props.collapsible;
+
     return (
       <AnimatedFlatList 
         style={{flex: 1}}
@@ -43,10 +45,10 @@ class ExtraHeaderScreen extends Component{
         renderItem={this.renderItem}
         keyExtractor={(item, index) => String(index)}
 
-        contentContainerStyle={{paddingTop: this.props.paddingHeight}}
+        contentContainerStyle={{paddingTop: paddingHeight}}
         
-        onScroll={this.props.onScroll} 
-        _mustAddThis={this.props.scrollY}
+        onScroll={onScroll} 
+        _mustAddThis={scrollY}
         />
     )
   }

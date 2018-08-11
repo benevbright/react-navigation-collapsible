@@ -299,13 +299,15 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
       const { navigation } = this.props;
       const props = {
         ...this.props,
-        paddingHeight: !collapsibleParams.extraHeader 
-          ? getCollapsibleHeaderHeight(navigation) + getCollapsibleTabHeight(navigation)
-          : collapsibleParams.extraHeaderStyle.height,
-        scrollY: this.scrollY,
-        onScroll: Animated.event(
-          [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
-          {useNativeDriver: true})
+        collapsible:{
+          paddingHeight: !collapsibleParams.extraHeader 
+            ? getCollapsibleHeaderHeight(navigation) + getCollapsibleTabHeight(navigation)
+            : collapsibleParams.extraHeaderStyle.height,
+          scrollY: this.scrollY,
+          onScroll: Animated.event(
+            [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
+            {useNativeDriver: true})
+        }
       }
       return (
         <View style={{flex: 1}}>
