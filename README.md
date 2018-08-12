@@ -118,7 +118,7 @@ Please help and let's make it better so that this module can capable more use ca
 - create issue or PR with a sample react-navigation code or Expo Snack that are not working with this module.
 - If you improved module, please set `/example`'s `react-navigation-collapsible` package url to be linked to your forked repo and PR.
 
-## Dependency Versions of Example
+## Compatible Versions with Example
 
 - React Native 0.56
 - React Navigation 2.11.2
