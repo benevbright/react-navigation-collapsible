@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import { Text, FlatList, View, Animated, TouchableOpacity } from 'react-native';
 
-import { 
-  withCollapsible
-} from 'react-navigation-collapsible';
+import { withCollapsible } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
