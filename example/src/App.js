@@ -9,6 +9,11 @@ import DetailScreen from './DetailScreen.js';
 import ExtraHeaderScreen from './ExtraHeaderScreen.js';
 import { collapsibleOptionsForTab, collapsibleTabConfig } from 'react-navigation-collapsible';
 
+/* Support Expo */
+// import { setExpoStatusBarHeight } from 'react-navigation-collapsible';
+// import { Constants } from 'expo';
+// setExpoStatusBarHeight(Constants.statusBarHeight);
+
 const backgroundColor = '#061';
 
 export default class App extends Component{

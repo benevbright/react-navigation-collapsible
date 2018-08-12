@@ -4,6 +4,12 @@ import withOrientation from 'react-navigation/src/views/withOrientation';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import SafeAreaView from 'react-native-safe-area-view';
 
+let expoStatusBarHeight = 0;
+export const setExpoStatusBarHeight = height => {
+  if(Platform.OS === 'android' && global.Expo)
+    expoStatusBarHeight = height;
+}
+
 const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window');
 const IS_IPHONE_X =
   Platform.OS === 'ios' &&
@@ -174,7 +180,7 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
       ...userOptions.headerStyle,
       transform: [{translateY: headerTranslate}],
       overflow: 'hidden',
-      opacity: Platform.select({ios: headerOpacity, android: 1}),
+      opacity: Platform.select({ios: headerOpacity, android: global.Expo ? headerOpacity : 1}),
       height: headerHeight,
     },
     headerTransparent: true, 
@@ -195,15 +201,17 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
       ? navigationParams.isLandscape
       : isOrientationLandscape(Dimensions.get('window'));
     const tabStyle = collapsibleOptions.tabBarOptions ? collapsibleOptions.tabBarOptions.style : {};
+    const paddingTop = getStatusBarHeight(isLandscape) + collapsibleOptions.headerStyle.height;
     collapsibleOptions.tabBarOptions = {
       ...collapsibleOptions.tabBarOptions,
       style:{
         ...tabStyle,
         zIndex: 100,
         position: 'absolute',
-        top: getStatusBarHeight(isLandscape) + collapsibleOptions.headerStyle.height,
-        height: tabHeight,
+        top: 0,
+        height: paddingTop + tabHeight + expoStatusBarHeight,
         width: '100%',
+        paddingTop: paddingTop + expoStatusBarHeight,
         transform: [{translateY: headerTranslate}],
       }
     }  
@@ -223,7 +231,11 @@ const getCustomHeader = options => {
     const statusBarHeight = getStatusBarHeight(isLandscape);
     return (
       <Animated.View style={[options.headerStyle, 
-        {transform:[...options.headerStyle.transform, {translateX: headerTranslate}], position: 'absolute', top: 0, width: '100%', height: options.headerStyle.height + statusBarHeight}]}> 
+        {transform:[...options.headerStyle.transform, {translateX: headerTranslate}], 
+        position: 'absolute', 
+        top: 0, 
+        width: '100%', 
+        height: options.headerStyle.height + statusBarHeight + expoStatusBarHeight}]}> 
         {options.collapsibleCustomHeader}
       </Animated.View>
     )
@@ -255,9 +267,10 @@ export const collapsibleTabConfig = (config) => {
 }
 
 const getCollapsibleHeaderHeight = (navigation) => {
-  return (navigation.state.params && navigation.state.params.headerHeight
+  let height = (navigation.state.params && navigation.state.params.headerHeight
   ? navigation.state.params.headerHeight
   : 0);
+  return height + expoStatusBarHeight;
 }
 const getCollapsibleTabHeight = (navigation) => {
   return (navigation.state.params && navigation.state.params.tabHeight
