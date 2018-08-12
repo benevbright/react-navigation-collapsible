@@ -108,6 +108,7 @@ Because `react-navigation-capable` combines your screen's navigationOptions with
 - [x] Extra Header
 - [x] HOC
 - [ ] Flow
+- [ ] Split code
 
 ## Contribution
 
