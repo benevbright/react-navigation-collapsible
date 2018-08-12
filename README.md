@@ -25,7 +25,7 @@ $ react-native run-android
 
 ### Expo
 
-If you use Expo, add this line on your App.js
+If you use Expo, add this lines in your App.js. (It only affects Android)
 
 ```
 /* Support Expo */
@@ -108,7 +108,7 @@ See [Example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 
 ## API
 
-- withCollapsible (userScreen) `HOC`
+- `HOC` withCollapsible (wrappedUserScreen, collapsibleParams = {})
 - collapsibleOptionsForTab (props, userOptions)
 - collapsibleTabConfig (userConfig)
 - setExpoStatusBarHeight (height)
