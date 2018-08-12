@@ -120,5 +120,5 @@ Please help and let's make it better so that this module can capable more use ca
 
 ## Compatible Versions with Example
 
-- React Native 0.56
-- React Navigation 2.11.2
+- `react-native` 0.56
+- `react-navigation` 2.11.2
