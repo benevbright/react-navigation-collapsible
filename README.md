@@ -9,12 +9,10 @@ Make your header of `react-navigation` collapsible.
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo.gif?raw=true">
 
 
-Try [Expo](https://snack.expo.io/@benevbright/react-navigation-collapsible)
+Try [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible)
 
 Try [Example](https://github.com/benevbright/react-navigation-collapsible/tree/master/example).
 
-
-## Getting started
 
 ```
 $ cd example
@@ -23,7 +21,7 @@ $ react-native run-ios
 $ react-native run-android
 ```
 
-## Task
+### Tasks
 
 - [x] Regular Header
 - [x] Image Header
@@ -32,9 +30,9 @@ $ react-native run-android
 - [x] HOC
 - [ ] Flow
 
-## Usage
+# Usage
 
-### Stack
+### StackNavigator
 
 (MyScreen.js)
 ```
@@ -64,7 +62,7 @@ export default withCollapsible(MyScreen, {iOSCollapsedColor: '#031'});
 ```
 
 
-### Stack + Material Tab
+### StackNavigator + MaterialTopTabNavigator
 
 (MyScreen.js)
 ```
@@ -99,13 +97,23 @@ const routeConfig = {
 const StackNavigator = createStackNavigator(routeConfig);
 ```
 
-### Custom Header
-See [ImageScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ImageScreen.js)
-
-### Extra Header
-See [ExtraHeaderScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ExtraHeaderScreen.js)
+### Custom or Image Header with StackNavigator
+See [Example/src/ImageScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ImageScreen.js)
 
 
-## Contribution
+### Extra Header(eg. SearchBar) with StackNavigator
+See [Example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ExtraHeaderScreen.js)
 
-I need your help to make this module better and capables more use cases.
+
+# Limitation
+
+Because `react-navigation-capable` combines your screen's navigationOptions with `{headerTransparent: true}`, there is some layout issue on transition to other screen which is using `{headerTransparent: false}`.
+
+
+# Contribution
+
+This module is just publised.
+Please help and let's make it better so that this module can capable more use cases.
+
+- create issue or PR with a sample react-navigation code or Expo Snack that are not working with this module.
+- If you improved module, please set `/example`'s `react-navigation-collapsible` package url to be linked to your forked repo and PR.
