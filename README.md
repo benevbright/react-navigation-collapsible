@@ -21,7 +21,7 @@ $ react-native run-ios
 $ react-native run-android
 ```
 
-### Tasks
+## Tasks
 
 - [x] Regular Header
 - [x] Image Header
@@ -30,7 +30,7 @@ $ react-native run-android
 - [x] HOC
 - [ ] Flow
 
-# Usage
+## Usage
 
 ### StackNavigator
 
@@ -105,15 +105,21 @@ See [Example/src/ImageScreen.js](https://github.com/benevbright/react-navigation
 See [Example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ExtraHeaderScreen.js)
 
 
-# Limitation
+## Limitation
 
 Because `react-navigation-capable` combines your screen's navigationOptions with `{headerTransparent: true}`, there is some layout issue on transition to other screen which is using `{headerTransparent: false}`.
 
 
-# Contribution
+## Contribution
 
 This module is just publised.
 Please help and let's make it better so that this module can capable more use cases.
 
 - create issue or PR with a sample react-navigation code or Expo Snack that are not working with this module.
 - If you improved module, please set `/example`'s `react-navigation-collapsible` package url to be linked to your forked repo and PR.
+
+
+## Example Version
+
+React Native 0.56
+React Navigation 2.11.2
