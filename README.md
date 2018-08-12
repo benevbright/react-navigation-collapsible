@@ -98,7 +98,7 @@ See [Example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 
 ## Limitation
 
-Because `react-navigation-capable` combines your screen's navigationOptions with `{headerTransparent: true}`, there is some layout issue on transition to other screen which is using `{headerTransparent: false}`.
+Because `react-navigation-capable` combines your screen's navigationOptions with `{headerTransparent: true}`, there is some layout issue on a transition to other screens which is using `{headerTransparent: false}`.
 
 ## Tasks
 
@@ -111,14 +111,13 @@ Because `react-navigation-capable` combines your screen's navigationOptions with
 
 ## Contribution
 
-This module is just publised.
+This module is just published.
 Please help and let's make it better so that this module can capable more use cases.
 
 - create issue or PR with a sample react-navigation code or Expo Snack that are not working with this module.
 - If you improved module, please set `/example`'s `react-navigation-collapsible` package url to be linked to your forked repo and PR.
 
-## Example Version
+## Dependency Versions of Example
 
-React Native 0.56
-
-React Navigation 2.11.2
+- React Native 0.56
+- React Navigation 2.11.2
