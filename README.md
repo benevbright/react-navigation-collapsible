@@ -23,6 +23,17 @@ $ react-native run-android
 
 ## Usage
 
+### Expo
+
+If you use Expo, add this line on your App.js
+
+```
+/* Support Expo */
+import { setExpoStatusBarHeight } from 'react-navigation-collapsible';
+import { Constants } from 'expo';
+setExpoStatusBarHeight(Constants.statusBarHeight);
+```
+
 ### StackNavigator
 
 (MyScreen.js)
@@ -95,6 +106,12 @@ See [Example/src/ImageScreen.js](https://github.com/benevbright/react-navigation
 ### Extra Header(eg. SearchBar) with StackNavigator
 See [Example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ExtraHeaderScreen.js)
 
+## API
+
+- withCollapsible (userScreen) `HOC`
+- collapsibleOptionsForTab (props, userOptions)
+- collapsibleTabConfig (userConfig)
+- setExpoStatusBarHeight (height)
 
 ## Limitation
 

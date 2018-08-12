@@ -256,11 +256,11 @@ export const collapsibleOptionsForTab = (props, userOptions) => {
   return collapsibleOptions(navigationOptions, userOptions, dummyNavigation);
 }
 
-export const collapsibleTabConfig = (config) => {
+export const collapsibleTabConfig = (userConfig) => {
   return {
-    ...config,
+    ...userConfig,
     navigationOptions:{
-      ...config.navigationOptions,
+      ...userConfig.navigationOptions,
       hasTab: true
     }
   }
