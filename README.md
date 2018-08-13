@@ -53,8 +53,13 @@ class MyScreen extends Component{
       <AnimatedFlatList 
         ...
         contentContainerStyle={{paddingTop: paddingHeight}}
-        onScroll={onScroll} 
         _mustAddThis={scrollY}
+        onScroll={onScroll} 
+        
+        // if you want to use 'onScroll' callback.
+        // onScroll={Animated.event(
+        //   [{nativeEvent: {contentOffset: {y: scrollY}}}],
+        //   {useNativeDriver:true, listener:this.onScroll})} 
         />
     )
   }

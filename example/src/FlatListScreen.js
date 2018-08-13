@@ -33,6 +33,10 @@ class FlatListScreen extends Component{
     </TouchableOpacity>
   )
 
+  // onScroll = e => {
+  //   console.log(e.nativeEvent.contentOffset);
+  // }
+
   render(){
     const { paddingHeight, scrollY, onScroll } = this.props.collapsible;
 
@@ -45,6 +49,10 @@ class FlatListScreen extends Component{
 
         contentContainerStyle={{paddingTop: paddingHeight}}
         onScroll={onScroll} 
+        // if you want to use 'onScroll' callback.
+        // onScroll={Animated.event(
+        //   [{nativeEvent: {contentOffset: {y: scrollY}}}],
+        //   {useNativeDriver:true, listener:this.onScroll})} 
         _mustAddThis={scrollY}
         />
     )
