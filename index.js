@@ -123,11 +123,27 @@ class _CollapsibleHeaderBackView extends Component {
 
 const CollapsibleHeaderBackView = withOrientation(_CollapsibleHeaderBackView);
 
-
-
-
-
-
+const getCustomHeader = options => {
+  const CustomHeader = props => {
+    const {position, layout, isLandscape, mode, index} = props;
+    const headerTranslate = mode === 'float' ? position.interpolate({
+      inputRange: [index - 1, index],
+      outputRange: [layout.initWidth, 0]
+    }) : 0;
+    const statusBarHeight = getStatusBarHeight(isLandscape);
+    return (
+      <Animated.View style={[options.headerStyle, 
+        {transform:[...options.headerStyle.transform, {translateX: headerTranslate}], 
+        position: 'absolute', 
+        top: 0, 
+        width: '100%', 
+        height: options.headerStyle.height + statusBarHeight + expoStatusBarHeight}]}> 
+        {options.collapsibleCustomHeader}
+      </Animated.View>
+    )
+  }
+  return CustomHeader;
+}
 
 const collapsibleOptions = (configOptions, userOptions, navigation) => {
 
@@ -216,29 +232,6 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
   }
 
   return collapsibleOptions;
-}
-
-
-const getCustomHeader = options => {
-  const CustomHeader = props => {
-    const {position, layout, isLandscape, mode, index} = props;
-    const headerTranslate = mode === 'float' ? position.interpolate({
-      inputRange: [index - 1, index],
-      outputRange: [layout.initWidth, 0]
-    }) : 0;
-    const statusBarHeight = getStatusBarHeight(isLandscape);
-    return (
-      <Animated.View style={[options.headerStyle, 
-        {transform:[...options.headerStyle.transform, {translateX: headerTranslate}], 
-        position: 'absolute', 
-        top: 0, 
-        width: '100%', 
-        height: options.headerStyle.height + statusBarHeight + expoStatusBarHeight}]}> 
-        {options.collapsibleCustomHeader}
-      </Animated.View>
-    )
-  }
-  return CustomHeader;
 }
 
 export const collapsibleOptionsForTab = (props, userOptions) => {
