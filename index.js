@@ -339,9 +339,13 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
   const hoist = hoistNonReactStatic(_withCollapsible, WrappedScreen);
 
   hoist.navigationOptions = props => {
-    const userOptions = typeof WrappedScreen.navigationOptions === 'function'
-      ? WrappedScreen.navigationOptions(props) 
-      : (WrappedScreen.navigationOptions ? WrappedScreen.navigationOptions : {});
+    const wrapScreenNavOptions = WrappedScreen.navigationOptions
+      ? WrappedScreen.navigationOptions
+      : {};
+    const userOptions =
+      typeof WrappedScreen.navigationOptions === 'function'
+        ? WrappedScreen.navigationOptions(props)
+        : wrapScreenNavOptions;
     userOptions.collapsibleCustomHeader = userOptions.header;
     
     const {navigationOptions, navigation} = props;
