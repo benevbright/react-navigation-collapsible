@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Animated, Platform, Dimensions, View } from 'react-native';
-import withOrientation from 'react-navigation/src/views/withOrientation';
+import withOrientation, {isOrientationLandscape} from 'react-navigation/src/views/withOrientation';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import SafeAreaView from 'react-native-safe-area-view';
 
@@ -21,8 +21,6 @@ const IS_IPHONE_X =
 const defaultHeaderHeight = Platform.select({ios: 44, android: 56});
 const defaultTabHeight = 50;
 const safeBounceHeight = Platform.select({ios: 300, android: 100});
-
-const isOrientationLandscape = ({ width, height }) => width > height;
 
 const getStatusBarHeight = (isLandscape) => {
   if(Platform.OS === 'android') return 0;
