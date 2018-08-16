@@ -53,6 +53,7 @@ class MyScreen extends Component{
       <AnimatedFlatList 
         ...
         contentContainerStyle={{paddingTop: paddingHeight}}
+        scrollIndicatorInsets={{top: paddingHeight}}
         _mustAddThis={scrollY}
         onScroll={onScroll} 
         
