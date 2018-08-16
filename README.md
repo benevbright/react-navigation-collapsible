@@ -106,11 +106,11 @@ const StackNavigator = createStackNavigator(routeConfig);
 ```
 
 ### Custom or Image Header with StackNavigator
-See [Example/src/ImageScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ImageScreen.js)
+See [example/src/ImageScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ImageScreen.js)
 
 
 ### Extra Header(eg. SearchBar) with StackNavigator
-See [Example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ExtraHeaderScreen.js)
+See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/ExtraHeaderScreen.js)
 
 ## API
 
@@ -121,7 +121,11 @@ See [Example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 
 ## Limitation
 
-Because `react-navigation-capable` combines your screen's navigationOptions with `{headerTransparent: true}`, there is some layout issue on a transition to other screens which is using `{headerTransparent: false}`.
+Because `react-navigation-capable` converts your screen's navigationOptions to `{headerTransparent: true}`, there is some layout issue on a transition with other screens not using `{headerTransparent: true}`. (iOS)
+
+If you want make transition between screens natural on iOS, you have two options. (See `example/src/App.js`)
+- 1. Set `headerTransparent: true` in `navigatorConfig` and set paddingTop on every screen.
+- 2. Set `headerMode: 'screen'` in `navigatorConfig`.
 
 ## Tasks
 

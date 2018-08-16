@@ -55,12 +55,13 @@ const routeConfig = {
 };
 
 const navigatorConfig = {
+  // headerMode: 'screen',
   navigationOptions: {
     headerStyle: { backgroundColor: backgroundColor, borderBottomColor: 'transparent', borderBottomWidth: 0, elevation: 0 },
     headerTitleStyle: { color: 'white' },
-    headerTintColor: 'white', 
-  },
-  headerTransparent: true, 
+    headerTintColor: 'white',
+    // headerTransparent: true, 
+  }, 
 };
 
 const StackNavigator = createStackNavigator(routeConfig, navigatorConfig);
