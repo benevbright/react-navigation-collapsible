@@ -57,6 +57,7 @@ class ImageScreen extends Component{
         keyExtractor={(item, index) => String(index)}
 
         contentContainerStyle={{paddingTop: paddingHeight}}
+        scrollIndicatorInsets={{top: paddingHeight}}
         onScroll={onScroll} 
         _mustAddThis={scrollY}
         />

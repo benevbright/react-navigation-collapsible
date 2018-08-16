@@ -48,6 +48,7 @@ class FlatListScreen extends Component{
         keyExtractor={(item, index) => String(index)}
 
         contentContainerStyle={{paddingTop: paddingHeight}}
+        scrollIndicatorInsets={{top: paddingHeight}}
         onScroll={onScroll} 
         // if you want to use 'onScroll' callback.
         // onScroll={Animated.event(
