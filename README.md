@@ -125,7 +125,9 @@ Because `react-navigation-collapsible` converts your screen's navigationOptions 
 
 If you want make transition between screens natural on iOS, you have two options. (See [example/src/App.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/App.js))
 1. Set `headerTransparent: true` in `navigatorConfig` and set paddingTop on every screen.
+
 or
+
 2. Set `headerMode: 'screen'` in `navigatorConfig`.
 
 ## Tasks
