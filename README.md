@@ -150,5 +150,5 @@ Please help and let's make it better so that this module can capable more use ca
 
 ## Compatible Versions with Example
 
-- `react-native` 0.56
-- `react-navigation` 2.11.2
+- `react-native`: 0.56, `latest`: [![npm](https://img.shields.io/npm/v/react-native.svg)](https://www.npmjs.com/package/react-native)
+- `react-navigation`: 2.11.2, `latest`: [![npm](https://img.shields.io/npm/v/react-navigation.svg)](https://www.npmjs.com/package/react-navigation)
