@@ -19,3 +19,5 @@ install:
 
 script:
   - npm run lint
+  - cd example
+  - npm run lint
