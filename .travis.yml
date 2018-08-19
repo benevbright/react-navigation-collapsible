@@ -5,16 +5,11 @@ node_js:
 cache:
   directories:
     - node_modules
-env:
-  - CXX=g++-4.8
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
+    - example/node_modules
 
 install:
+  - npm install
+  - cd example
   - npm install
 
 script:
