@@ -11,8 +11,10 @@ install:
   - npm install
   - cd example
   - npm install
+  - cd ..
 
 script:
   - npm run lint
   - cd example
   - npm run lint
+  - cd ..
