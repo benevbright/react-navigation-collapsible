@@ -52,7 +52,7 @@ class ExtraHeaderScreen extends Component{
   }
 }
 
-const ExtraHeader = ({navigation}) => (
+const ExtraHeader = (/*{navigation}*/) => (
   <View style={{width: '100%', height: '100%', paddingHorizontal: 20, paddingVertical: 10}}>
     <View style={{backgroundColor: 'white', flex: 1, borderRadius: 15, justifyContent: 'center', alignItems: 'center'}}>
       <Text style={{color: 'gray'}}>Search Here</Text>
