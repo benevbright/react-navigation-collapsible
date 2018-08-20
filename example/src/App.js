@@ -18,6 +18,7 @@ const backgroundColor = '#061';
 
 export default class App extends Component{
   render(){
+    const a = 3; //test travis lint
     return (
       [
         <StackNavigator key='navigator'/>,
