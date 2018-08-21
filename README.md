@@ -139,6 +139,8 @@ or
 - [x] HOC
 - [ ] Flow
 - [ ] Split code
+- [ ] iOS 11 Style Header
+- [ ] Big Header <-> Regular Header
 
 ## Contribution
 
