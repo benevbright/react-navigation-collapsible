@@ -114,10 +114,10 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 
 ## API
 
-- `HOC` withCollapsible (wrappedUserScreen, ?collapsibleParams: {?iOSCollapsedColor, ?extraHeader, ?extraHeaderStyle})
-- collapsibleOptionsForTab (props, userOptions)
-- collapsibleTabConfig (userConfig)
-- setExpoStatusBarHeight (height)
+- `HOC` withCollapsible (`wrappedUserScreen`, `?collapsibleParams: {?iOSCollapsedColor, ?extraHeader, ?extraHeaderStyle}`)
+- collapsibleOptionsForTab (`props`, `userOptions`)
+- collapsibleTabConfig (`userConfig`)
+- setExpoStatusBarHeight (`height`)
 
 ## Limitation
 
