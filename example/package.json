@@ -9,7 +9,7 @@
     "android:emulator": "cd $ANDROID_HOME/tools && emulator -list-avds && emulator -avd Pixel_XL_API_26"
   },
   "dependencies": {
-    "react": "16.4.2",
+    "react": "16.4.1",
     "react-native": "0.56.0",
     "react-navigation": "2.11.2",
     "react-navigation-collapsible": "git+https://github.com/benevbright/react-navigation-collapsible.git"
