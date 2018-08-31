@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, FlatList, View, Animated, TouchableOpacity } from 'react-native';
+import { Text, FlatList, View, Animated, TouchableOpacity, TextInput } from 'react-native';
 
 import { withCollapsible } from 'react-navigation-collapsible';
 
@@ -15,7 +15,7 @@ class ExtraHeaderScreen extends Component{
 
     const data = [];
     for(let i = 0 ; i < 60 ; i++){
-      data.push(i);
+      data.push(i.toString());
     }
 
     this.state = {
@@ -35,11 +35,13 @@ class ExtraHeaderScreen extends Component{
 
   render(){
     const { paddingHeight, scrollY, onScroll } = this.props.collapsible;
+    const { searchText } = this.props.navigation.state.params ? this.props.navigation.state.params : {};
+    const data = searchText ? this.state.data.filter(item => item.includes(searchText)) : this.state.data;
 
     return (
       <AnimatedFlatList 
         style={{flex: 1}}
-        data={this.state.data}
+        data={data}
         renderItem={this.renderItem}
         keyExtractor={(item, index) => String(index)}
 
@@ -52,13 +54,19 @@ class ExtraHeaderScreen extends Component{
   }
 }
 
-const ExtraHeader = (/*{navigation}*/) => (
-  <View style={{width: '100%', height: '100%', paddingHorizontal: 20, paddingVertical: 10}}>
-    <View style={{backgroundColor: 'white', flex: 1, borderRadius: 15, justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{color: 'gray'}}>Search Here</Text>
+const ExtraHeader = ({navigation}) => {  
+  const { searchText } = navigation.state.params ? navigation.state.params : {};
+  return (
+    <View style={{width: '100%', height: '100%', paddingHorizontal: 20, paddingVertical: 10}}>
+      <View style={{backgroundColor: 'white', flex: 1, borderRadius: 15, justifyContent: 'center'}}>
+        <TextInput style={{paddingHorizontal: 20}}
+          placeholder='Search'
+          value={searchText}
+          onChangeText={text => navigation.setParams({searchText: text})}/>
+      </View>
     </View>
-  </View>
-);
+  );
+}
 
 const collapsibleParams = {
   extraHeader: ExtraHeader,
