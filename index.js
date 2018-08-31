@@ -321,7 +321,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
           {!collapsibleParams.extraHeader 
             ? <CollapsibleHeaderBackView iOSCollapsedColor={collapsibleParams.iOSCollapsedColor} navigation={navigation} />
             : (<CollapsibleExtraHeader headerY={this.headerY} style={collapsibleParams.extraHeaderStyle}>
-              {collapsibleParams.extraHeader(props)}
+                <collapsibleParams.extraHeader {...props}/>
               </CollapsibleExtraHeader>)
           }
         </View>
