@@ -20,12 +20,12 @@ const IS_IPHONE_X =
   (WINDOW_HEIGHT === 812 || WINDOW_WIDTH === 812);
 
 
-const defaultHeaderHeight = Platform.select({ios: 44, android: 56});
+const defaultHeaderHeight = Platform.select({ios: 44, android: 56, web: 50});
 const defaultTabHeight = 50;
-const safeBounceHeight = Platform.select({ios: 300, android: 100});
+const safeBounceHeight = Platform.select({ios: 300, android: 100, web: 200});
 
 const getStatusBarHeight = (isLandscape) => {
-  if(Platform.OS === 'android') return 0;
+  if(Platform.OS.match(/android|web/)) return 0;
   if(isLandscape) return 0;
   return IS_IPHONE_X ? 44 : 20;
 }
@@ -94,7 +94,7 @@ class _CollapsibleHeaderBackView extends Component {
   }
 
   render(){
-    if(Platform.OS === 'android')
+    if(Platform.OS.match(/android|web/))
       return null;
 
     const { isLandscape, navigation, iOSCollapsedColor } = this.props;
@@ -196,7 +196,7 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
       ...userOptions.headerStyle,
       transform: [{translateY: headerTranslate}],
       overflow: 'hidden',
-      opacity: Platform.select({ios: headerOpacity, android: global.Expo ? headerOpacity : 1}),
+      opacity: Platform.select({ios: headerOpacity, android: global.Expo ? headerOpacity : 1, web: 1}),
       height: headerHeight,
     },
     headerTransparent: true, 
@@ -310,7 +310,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
           scrollY: this.scrollY,
           onScroll: Animated.event(
             [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
-            {useNativeDriver: true})
+            {useNativeDriver: Platform.select({ios: true, android: true, web: false})})
         }
       }
       return (

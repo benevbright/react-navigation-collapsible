@@ -2,10 +2,6 @@ sudo: false
 language: node_js
 node_js:
   - "stable"
-cache:
-  directories:
-    - node_modules
-    - example/node_modules
 
 install:
   - npm install
