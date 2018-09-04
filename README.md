@@ -119,12 +119,12 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 - collapsibleTabConfig (`userConfig`)
 - setExpoStatusBarHeight (`height`)
 
-## Limitation
+## Limitation (iOS)
 
-Because `react-navigation-collapsible` converts your screen's navigationOptions to `{headerTransparent: true}`, there is a layout issue on a transition with other screens not using `{headerTransparent: true}`. (iOS)
+Because `react-navigation-collapsible` converts your screen's navigationOptions to `{headerTransparent: true}`, there is a layout issue on a transition with other screens not using `{headerTransparent: true}`.
 
 If you want make transition between screens natural on iOS, you have two options. (See [example/src/App.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/App.js))
-1. Set `headerTransparent: true` in `navigatorConfig` and set paddingTop on every screen.
+1. Set `headerTransparent: true` in `navigatorConfig` and set paddingTop on every screen in the same StackNavigator.
 
 or
 
@@ -137,7 +137,6 @@ or
 - [x] Nested Stack+Tab
 - [x] Extra Header
 - [x] HOC
-- [ ] Flow
 - [ ] Split code
 - [ ] iOS 11 Style Header
 - [ ] Big Header <-> Regular Header
