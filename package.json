@@ -33,7 +33,7 @@
     "react-native-safe-area-view": "^0.9.0"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.6",
+    "babel-eslint": "^9.0.0",
     "eslint": "^5.4.0",
     "eslint-plugin-react": "^7.11.1"
   }
