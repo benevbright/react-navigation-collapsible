@@ -287,6 +287,9 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
       }else{
         this.headerY = createCollapsibleParams(this.scrollY).headerY;
       }
+      this.onScroll = Animated.event(
+        [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
+        {useNativeDriver: Platform.select({ios: true, android: true, web: false})});
     }
 
     componentDidMount(){
@@ -294,6 +297,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
     }
     componentWillUnmount(){
       Dimensions.removeEventListener('change', this.orientationListner);
+      this.props.navigation.state.params = undefined;
     }
     orientationListner = ({window}) => {
       this.props.navigation.setParams({isLandscape: isOrientationLandscape(window)})
@@ -308,9 +312,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
             ? getCollapsibleHeaderHeight(navigation) + getCollapsibleTabHeight(navigation)
             : collapsibleParams.extraHeaderStyle.height,
           scrollY: this.scrollY,
-          onScroll: Animated.event(
-            [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
-            {useNativeDriver: Platform.select({ios: true, android: true, web: false})})
+          onScroll: this.onScroll
         }
       }
       return (
