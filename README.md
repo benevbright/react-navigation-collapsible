@@ -25,7 +25,7 @@ $ react-native run-android
 
 ### Expo
 
-If you use Expo, add this lines in your App.js. (It only affects Android)
+If you use Expo, add this lines to your App.js. (It only affects Android)
 
 ```
 /* Support Expo */
@@ -123,7 +123,7 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 
 Because `react-navigation-collapsible` converts your screen's navigationOptions to `{headerTransparent: true}`, there is a layout issue on a transition with other screens not using `{headerTransparent: true}`.
 
-If you want make transition between screens natural on iOS, you have two options. (See [example/src/App.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/App.js))
+If you want to make the transition between screens natural on iOS, you have two options. (See [example/src/App.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/App.js))
 1. Set `headerTransparent: true` in `navigatorConfig` and set paddingTop on every screen in the same StackNavigator.
 
 or
@@ -147,9 +147,11 @@ This module is just published.
 Please help and let's make it better so that this module can capable more use cases.
 
 - create issue or PR with a sample react-navigation code or Expo Snack that are not working with this module.
-- If you improved module, please set `/example`'s `react-navigation-collapsible` package url to be linked to your forked repo and PR.
+- If you improved module, please set `/example`'s `react-navigation-collapsible` package URL to be linked to your forked repo and PR.
 
-## Compatible Versions with Example
+## Dependencies Version of Example
 
 - `react-native`: 0.56, `latest`: [![npm](https://img.shields.io/npm/v/react-native.svg)](https://www.npmjs.com/package/react-native)
 - `react-navigation`: 2.11.2, `latest`: [![npm](https://img.shields.io/npm/v/react-navigation.svg)](https://www.npmjs.com/package/react-navigation)
+
+I've ensured this module is compatible with `react-native` >=0.56 and `react-navigation` >=2.11.2. But it does not mean it's not compatible with older versions.
