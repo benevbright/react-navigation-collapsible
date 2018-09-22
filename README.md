@@ -121,14 +121,14 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 
 ## Limitation (iOS)
 
-~~Because `react-navigation-collapsible` converts your screen's navigationOptions to `{headerTransparent: true}`, there is a layout issue on a transition with other screens not using `{headerTransparent: true}`.
+~~Because `react-navigation-collapsible` converts your screen's navigationOptions to `{headerTransparent: true}`, there is a layout issue on a transition with other screens not using `{headerTransparent: true}`.~~
 
-~~If you want to make the transition between screens natural on iOS, you have two options. (See [example/src/App.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/App.js))
-1. Set `headerTransparent: true` in `navigatorConfig` and set paddingTop on every screen in the same StackNavigator.
+~~If you want to make the transition between screens natural on iOS, you have two options. (See [example/src/App.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/App.js))~~
+~~1. Set `headerTransparent: true` in `navigatorConfig` and set paddingTop on every screen in the same StackNavigator.~~
 
-~~or
+~~or~~
 
-~~2. Set `headerMode: 'screen'` in `navigatorConfig`.
+~~2. Set `headerMode: 'screen'` in `navigatorConfig`.~~
 
 ## Tasks
 
