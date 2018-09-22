@@ -121,14 +121,14 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 
 ## Limitation (iOS)
 
-Because `react-navigation-collapsible` converts your screen's navigationOptions to `{headerTransparent: true}`, there is a layout issue on a transition with other screens not using `{headerTransparent: true}`.
+~~Because `react-navigation-collapsible` converts your screen's navigationOptions to `{headerTransparent: true}`, there is a layout issue on a transition with other screens not using `{headerTransparent: true}`.
 
-If you want to make the transition between screens natural on iOS, you have two options. (See [example/src/App.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/App.js))
+~~If you want to make the transition between screens natural on iOS, you have two options. (See [example/src/App.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/App.js))
 1. Set `headerTransparent: true` in `navigatorConfig` and set paddingTop on every screen in the same StackNavigator.
 
-or
+~~or
 
-2. Set `headerMode: 'screen'` in `navigatorConfig`.
+~~2. Set `headerMode: 'screen'` in `navigatorConfig`.
 
 ## Tasks
 
@@ -151,7 +151,7 @@ Please help and let's make it better so that this module can capable more use ca
 
 ## Dependencies Version of Example
 
-- `react-native`: 0.56, `latest`: [![npm](https://img.shields.io/npm/v/react-native.svg)](https://www.npmjs.com/package/react-native)
-- `react-navigation`: 2.11.2, `latest`: [![npm](https://img.shields.io/npm/v/react-navigation.svg)](https://www.npmjs.com/package/react-navigation)
+- `react-native`: 0.57, `latest`: [![npm](https://img.shields.io/npm/v/react-native.svg)](https://www.npmjs.com/package/react-native)
+- `react-navigation`: 2.16.0, `latest`: [![npm](https://img.shields.io/npm/v/react-navigation.svg)](https://www.npmjs.com/package/react-navigation)
 
 I've ensured this module is compatible with `react-native` >=0.56 and `react-navigation` >=2.11.2. But it does not mean it's not compatible with older versions.
