@@ -11,7 +11,7 @@
   "dependencies": {
     "react": "16.4.1",
     "react-native": "0.56.0",
-    "react-navigation": "2.11.2",
+    "react-navigation": "2.13.0",
     "react-navigation-collapsible": "git+https://github.com/benevbright/react-navigation-collapsible.git"
   },
   "devDependencies": {
