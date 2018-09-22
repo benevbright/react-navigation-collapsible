@@ -20,6 +20,7 @@ $ npm install
 $ react-native run-ios
 $ react-native run-android
 ```
+(XCode 10) If you fail building iOS with react-native-cli, please open XCode 10 and run one time for a workaround. it would be probably fixed from react-native soon.
 
 ## Usage
 
