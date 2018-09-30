@@ -46,18 +46,20 @@ const createCollapsibleParams = (animated) => {
 }
 
 const CollapsibleExtraHeader = props => {
-  const { headerY, children, style } = props;
-  if(!headerY)
-    return null;
+  const { children, style, navigation } = props;
+  
+  if(!navigation) return null;
+  const { headerY } = navigation.state.params || {};
+  if(!headerY) return null;
 
   const height = style.height || 0;
   const headerTranslate = headerY.interpolate({
-    inputRange: [safeBounceHeight - height, safeBounceHeight],
+    inputRange: [safeBounceHeight, safeBounceHeight + height],
     outputRange: [0, -height],
     extrapolate: 'clamp'
   });
   const headerOpacity = headerY.interpolate({
-    inputRange: [safeBounceHeight - height, safeBounceHeight],
+    inputRange: [safeBounceHeight, safeBounceHeight + height],
     outputRange: [1, 0],
     extrapolate: 'clamp'
   });
@@ -165,7 +167,7 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
 
   const navigationParams = navigation.state.params;
 
-  if(!navigationParams || !navigationParams.headerY){
+  if(!navigationParams || !navigationParams.headerY || navigationParams.isExtraHeader){
     // console.log('navigationParams is null');
     return userOptions;
   }
@@ -288,9 +290,16 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
 
       this.scrollY = new Animated.Value(0);
       if(!collapsibleParams.extraHeader){
-        this.props.navigation.setParams(createCollapsibleParams(this.scrollY));
-      }else{
-        this.headerY = createCollapsibleParams(this.scrollY).headerY;
+        this.props.navigation.setParams({
+          ...createCollapsibleParams(this.scrollY),
+          isExtraHeader: false
+        });
+      } else {
+        const headerHeight = collapsibleParams.extraHeaderStyle && collapsibleParams.extraHeaderStyle.height || 0;
+        this.props.navigation.setParams({
+          headerY: Animated.diffClamp(this.scrollY, 0, safeBounceHeight + headerHeight),
+          isExtraHeader: true
+        });
       }
       this.onScroll = Animated.event(
         [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
@@ -327,7 +336,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
           </SafeAreaView>
           {!collapsibleParams.extraHeader 
             ? <CollapsibleHeaderBackView iOSCollapsedColor={collapsibleParams.iOSCollapsedColor} navigation={navigation} />
-            : (<CollapsibleExtraHeader headerY={this.headerY} style={collapsibleParams.extraHeaderStyle}>
+            : (<CollapsibleExtraHeader navigation={navigation} style={collapsibleParams.extraHeaderStyle}>
                 <collapsibleParams.extraHeader {...props}/>
               </CollapsibleExtraHeader>)
           }
