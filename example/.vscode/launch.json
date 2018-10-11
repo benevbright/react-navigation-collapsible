@@ -1,0 +1,28 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug iOS",
+      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+      "type": "reactnative",
+      "request": "launch",
+      "platform": "ios",
+      "internalDebuggerPort": 9090,
+      "sourceMaps": true,
+      "outDir": "${workspaceRoot}/.vscode/.react"
+    },
+    {
+      "name": "Debug Android",
+      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+      "type": "reactnative",
+      "request": "launch",
+      "platform": "android",
+      "internalDebuggerPort": 9090,
+      "sourceMaps": true,
+      "outDir": "${workspaceRoot}/.vscode/.react"
+    }
+  ]
+}
