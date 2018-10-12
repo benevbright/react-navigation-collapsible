@@ -122,7 +122,7 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 
 ## Limitation
 
-### Transition between non-collapsible and collapsible (iOS)
+- Transition between non-collapsible and collapsible (iOS)
 
 ~~Because `react-navigation-collapsible` converts your screen's navigationOptions to `{headerTransparent: true}`, there is a layout issue on a transition with other screens not using `{headerTransparent: true}`.~~
 
@@ -134,9 +134,13 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 
 ~~2. Set `headerMode: 'screen'` in `navigatorConfig`.~~
 
-### With State persistence
+- With State persistence
 
-react-navigation provides [State persistence](https://reactnavigation.org/docs/en/state-persistence.html) as experimental feature. Unfortunately, collapsible header stops collapsible when you use it.
+react-navigation provides [State persistence](https://reactnavigation.org/docs/en/state-persistence.html) as experimental feature. Unfortunately, collapsible header stops collapsible when you use it. [#40](https://github.com/benevbright/react-navigation-collapsible/issues/40)
+
+- With SectionList
+
+[#37](https://github.com/benevbright/react-navigation-collapsible/issues/37)
 
 
 ## Tasks
