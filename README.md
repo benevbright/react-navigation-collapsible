@@ -120,16 +120,26 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 - `collapsibleTabConfig (userConfig)`
 - `setExpoStatusBarHeight (height)`
 
-## Limitation (iOS)
+## Limitation
+
+#### Transition between non-collapsible and collapsible (iOS)
 
 ~~Because `react-navigation-collapsible` converts your screen's navigationOptions to `{headerTransparent: true}`, there is a layout issue on a transition with other screens not using `{headerTransparent: true}`.~~
 
 ~~If you want to make the transition between screens natural on iOS, you have two options. (See [example/src/App.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/App.js))~~
+
 ~~1. Set `headerTransparent: true` in `navigatorConfig` and set paddingTop on every screen in the same StackNavigator.~~
 
 ~~or~~
 
 ~~2. Set `headerMode: 'screen'` in `navigatorConfig`.~~
+
+#### With State persistence [#40](https://github.com/benevbright/react-navigation-collapsible/issues/40)
+
+react-navigation provides [State persistence](https://reactnavigation.org/docs/en/state-persistence.html) as experimental feature. Unfortunately, collapsible header stops collapsible when you use it.
+
+#### With SectionList [#37](https://github.com/benevbright/react-navigation-collapsible/issues/37)
+
 
 ## Tasks
 
