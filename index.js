@@ -55,6 +55,13 @@ const getTranslateY = (headerY, headerHeight) => (
 const getTranslateProgress = (headerY, headerHeight) => (
   headerY && headerHeight && headerY.interpolate({
     inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
+    outputRange: [0, 1],
+    extrapolate: 'clamp'
+  }) 
+) || 0;
+const getOpacity = (headerY, headerHeight) => (
+  headerY && headerHeight && headerY.interpolate({
+    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
     outputRange: [1, 0],
     extrapolate: 'clamp'
   }) 
@@ -74,7 +81,7 @@ const CollapsibleExtraHeader = props => {
 
   const height = style.height || 0;
   const translateY = getTranslateY(headerY, height);
-  const opacity = getTranslateProgress(headerY, height);
+  const opacity = getOpacity(headerY, height);
   return (
     <Animated.View style={[style, {
       width: '100%', 
@@ -179,7 +186,7 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
     return userOptions;
   }
 
-  const { headerY, translateY, translateProgress } = navigationParams;
+  const { translateY, translateOpacity } = navigationParams;
   const headerHeight = userOptions.headerStyle && userOptions.headerStyle.height 
     ? userOptions.headerStyle.height
     : defaultHeaderHeight;
@@ -189,7 +196,8 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
       headerHeight,
       headerY,
       translateY: getTranslateY(headerY, headerHeight),
-      translateProgress: getTranslateProgress(headerY, headerHeight)
+      translateOpacity: getOpacity(headerY, headerHeight),
+      translateProgress: getTranslateProgress(headerY, headerHeight),
     });
     return userOptions;
   }
@@ -202,7 +210,7 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
       ...userOptions.headerStyle,
       transform: [{translateY}],
       overflow: 'hidden',
-      opacity: Platform.select({ios: translateProgress, android: global.Expo ? translateProgress : 1, web: 1}),
+      opacity: Platform.select({ios: translateOpacity, android: global.Expo ? translateOpacity : 1, web: 1}),
       height: headerHeight,
     },
     headerTransparent: true, 
@@ -318,7 +326,6 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
 
     render(){
       const { navigation } = this.props;
-      const { headerY, headerHeight } = navigation && navigation.state && navigation.state.params || {};
       const props = {
         ...this.props,
         collapsible:{

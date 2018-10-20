@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint *.js",
-    "update": "rm index.js && cp example/node_modules/react-navigation-collapsible/index.js ."
+    "update-original": "rm index.js && cp example/node_modules/react-navigation-collapsible/index.js .",
+    "update-copy": "cp index.js example/node_modules/react-navigation-collapsible/"
   },
   "repository": {
     "type": "git",

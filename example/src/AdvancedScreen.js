@@ -6,29 +6,32 @@ import { withCollapsible } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-// const ImgSource = {uri:'https://ravishly-9ac9.kxcdn.com/cdn/farfuture/edYzCuowlJVcDos1RjXSa8_1o5tGDQBE4ebEFE6R1OE/mtime:1479930604/sites/default/files/maxresdefault_2.jpg'};
-const ImgSource = require('./../asset/cat.jpg');
+// const imgSource = {uri:'https://ravishly-9ac9.kxcdn.com/cdn/farfuture/edYzCuowlJVcDos1RjXSa8_1o5tGDQBE4ebEFE6R1OE/mtime:1479930604/sites/default/files/maxresdefault_2.jpg'};
+const imgSource = require('./../asset/cat.jpg');
+const profileSource = [
+  {uri: 'https://www.mein-haustier.de/wp-content/uploads/2016/04/Baby-Katze-Wiese-780x356.jpg'},
+  {uri: 'https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350'}
+];
 
 class AdvancedScreen extends Component{
   static navigationOptions = ({navigation}) => {
-    const { width: WINDOW_WIDTH } = Dimensions.get('window');
-    const { translateProgress } = navigation.state.param || {};
-    const translateX = (translateProgress && Animated.multiply(Animated.subtract(new Animated.Value(1), translateProgress), WINDOW_WIDTH)) || 0;
+    const { translateProgress, selectedCatIndex } = navigation && navigation.state.params || {};
+    const profileScale = (translateProgress && Animated.subtract(new Animated.Value(1), translateProgress)) || 0;
+    const _selectedCatIndex = selectedCatIndex || 0;
     
     return {
-      headerStyle: {height: 150},
+      headerStyle: {height: 160},
       header: 
-        <View style={{width: '100%', height:'100%'}}>
-          <Image source={ImgSource} 
+        <View style={{width: '100%', height:'100%', justifyContent: 'center'}}>
+          <Image source={imgSource} 
             resizeMode={'cover'}
             style={{width: '100%', height: '100%', opacity: 0.5}}/>
-          <SafeAreaView style={{position: 'absolute'}}>
+          <SafeAreaView style={{position: 'absolute', top: 0}}>
             <HeaderBackButton tintColor={'white'} onPress={() => navigation.goBack()}/>                
           </SafeAreaView> 
-          <Animated.View style={{
-            position: 'absolute', bottom: 0, width: 6, height: 6, borderRadius: 3, backgroundColor: 'white',
-            transform: [{translateX}]
-          }}/>
+          <Animated.Image 
+            source={profileSource[_selectedCatIndex]} 
+            style={{position: 'absolute', alignSelf: 'center', width: 100, height: 100, borderWidth: 4, borderColor: 'white', borderRadius: 50, transform:[{scale: profileScale}]}}/>
         </View>
     };
   }
@@ -58,21 +61,27 @@ class AdvancedScreen extends Component{
 
   render(){
     const { paddingHeight, scrollY, onScroll } = this.props.collapsible;
-    const { translateY, translateProgress } = (this.props.navigation && this.props.navigation.state.params) || {};
+    const { translateY, translateProgress, selectedCatIndex } = (this.props.navigation && this.props.navigation.state.params) || {};
     const { width: WINDOW_WIDTH } = Dimensions.get('window');
+    const _selectedCatIndex = selectedCatIndex || 0;
 
-    const translateX = (translateProgress && Animated.multiply(Animated.subtract(new Animated.Value(1), translateProgress), WINDOW_WIDTH)) || 0;
+    const translateX = (translateProgress && Animated.multiply(translateProgress, WINDOW_WIDTH)) || 0;
     const tabHeight = 50;
     const Tab = () => (
       <Animated.View style={{
-        width: '100%', height: tabHeight, backgroundColor: '#252', position: 'absolute', marginTop: paddingHeight,
+        width: '100%', height: tabHeight, backgroundColor: '#252', position: 'absolute', marginTop: paddingHeight, alignItems: 'center', flexDirection: 'row',
         transform: [{translateY: translateY || 0}]
       }}>
         <Animated.View style={{
-          position: 'absolute', bottom: 0, width: 6, height: 6, borderRadius: 3, backgroundColor: 'white',
+          position: 'absolute', width: 5, left: -2.5, height: '100%', backgroundColor: '#fff8',
           transform: [{translateX}]
         }}/>
-
+        <TouchableOpacity style={{paddingHorizontal: 10, left: 5}} onPress={() => this.props.navigation.setParams({selectedCatIndex: 0})}>
+          <Text style={{color: _selectedCatIndex === 0 ? 'white' : 'gray'}}>Cat 1</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{paddingHorizontal: 10}} onPress={() => this.props.navigation.setParams({selectedCatIndex: 1})}>
+          <Text style={{color: _selectedCatIndex === 1 ? 'white' : 'gray'}}>Cat 2</Text>
+        </TouchableOpacity>
       </Animated.View>
     )
 
