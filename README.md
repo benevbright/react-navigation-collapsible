@@ -8,7 +8,7 @@ Make your header of `react-navigation` collapsible.
 
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo.gif?raw=true">
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo2.gif?raw=true">
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo2.gif?raw=true" width="300">
 
 
 Try [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible)
