@@ -121,7 +121,7 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 - `collapsibleTabConfig (userConfig)`
 - `setExpoStatusBarHeight (height)`
 
-`react-navigation-collapsible` set your `this.props.navigation` params with `{headerHeight: number, translateY: Animated, translateOpacity: Animated, translateProgress: Animted}`. You can create your desired screen with this params. For more infomation, see [example/src/AdvancedScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/AdvancedScreen.js).
+`react-navigation-collapsible` set your `this.props.navigation` params with `{headerHeight: number, translateY: Animated, translateOpacity: Animated, translateProgress: Animated}`. You can create your desired screen with this params. For more infomation, see [example/src/AdvancedScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/AdvancedScreen.js).
 
 ## Limitation
 
