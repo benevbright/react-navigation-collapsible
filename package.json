@@ -1,6 +1,6 @@
 {
   "name": "react-navigation-collapsible",
-  "version": "0.2.18",
+  "version": "0.3.1",
   "description": "React Navigation Extension for Collapsible Header",
   "main": "index.js",
   "scripts": {

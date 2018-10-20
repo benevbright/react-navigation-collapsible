@@ -45,3 +45,6 @@ local.properties
 buck-out/
 \.buckd/
 *.keystore
+
+/example
+*.gif

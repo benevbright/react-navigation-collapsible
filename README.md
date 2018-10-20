@@ -8,6 +8,8 @@ Make your header of `react-navigation` collapsible.
 
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo.gif?raw=true">
 
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/demo2.gif?raw=true">
+
 
 Try [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible)
 
@@ -20,7 +22,6 @@ $ npm install
 $ react-native run-ios
 $ react-native run-android
 ```
-(XCode 10) If you fail building iOS with react-native-cli, please open XCode 10 and run one time for a workaround. it would be probably fixed from react-native soon.
 
 ## Usage
 
@@ -119,6 +120,8 @@ See [example/src/ExtraHeaderScreen.js](https://github.com/benevbright/react-navi
 - `collapsibleOptionsForTab (props, userOptions)`
 - `collapsibleTabConfig (userConfig)`
 - `setExpoStatusBarHeight (height)`
+
+`react-navigation-collapsible` set your `this.props.navigation` params with `{headerHeight: number, translateY: Animated, translateOpacity: Animated, translateProgress: Animted}`. You can create your desired screen with this params. For more infomation, see [example/src/AdvancedScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/AdvancedScreen.js).
 
 ## Limitation
 
