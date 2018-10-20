@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import { StatusBar } from 'react-native';
 import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 
-import MainScreen from './MainScreen.js';
-import FlatListScreen from './FlatListScreen.js';
-import ImageScreen from './ImageScreen.js';
-import DetailScreen from './DetailScreen.js';
-import ExtraHeaderScreen from './ExtraHeaderScreen.js';
 import { collapsibleOptionsForTab, collapsibleTabConfig } from 'react-navigation-collapsible';
+
+import MainScreen from './MainScreen.js';
+import FlatListScreen from './FlatListScreen';
+import ImageScreen from './ImageScreen';
+import DetailScreen from './DetailScreen';
+import ExtraHeaderScreen from './ExtraHeaderScreen';
+import AdvancedScreen from './AdvancedScreen';
 
 /* Support Expo */
 // import { setExpoStatusBarHeight } from 'react-navigation-collapsible';
@@ -51,7 +53,8 @@ const routeConfig = {
   ImageScreen: { screen: ImageScreen },
   TopTabScreen: { screen: TopTabNavigator, navigationOptions: props => collapsibleOptionsForTab(props, {title: 'Material Tab'}) },
   DetailScreen: { screen: DetailScreen },
-  ExtraHeaderScreen: { screen: ExtraHeaderScreen }
+  ExtraHeaderScreen: { screen: ExtraHeaderScreen },
+  AdvancedScreen: { screen: AdvancedScreen }
 };
 
 const navigatorConfig = {
