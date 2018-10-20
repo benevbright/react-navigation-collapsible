@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
+
+const routeConfig = [
+  { navigateTo: 'FlatListScreen', title: 'Regular Header Screen' },
+  { navigateTo: 'ImageScreen', title: 'Image Header Screen' },
+  { navigateTo: 'TopTabScreen', title: 'Material Tab Screen' },
+  { navigateTo: 'ExtraHeaderScreen', title: 'Extra Header Screen' },
+  { navigateTo: 'AdvancedScreen', title: 'Advanced Header Screen' },
+];
 
 export default class MainScreen extends Component{
   static navigationOptions = {
@@ -9,21 +17,10 @@ export default class MainScreen extends Component{
   render(){
     const { navigation } = this.props;
 
-    return (
-      <View>
-        <TouchableOpacity style={{margin: 20}} onPress={() => navigation.navigate('FlatListScreen')}>
-          <Text>Regular Header Screen</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{margin: 20}} onPress={() => navigation.navigate('ImageScreen')}>
-          <Text>Image Header Screen</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{margin: 20}} onPress={() => navigation.navigate('TopTabScreen')}>
-          <Text>Material Tab Screen</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{margin: 20}} onPress={() => navigation.navigate('ExtraHeaderScreen')}>
-          <Text>Extra Header Screen</Text>
-        </TouchableOpacity>
-      </View>
-    )
+    return routeConfig.map(route => (
+      <TouchableOpacity key={route.navigateTo} style={{margin: 20}} onPress={() => navigation.navigate(route.navigateTo)}>
+        <Text>{route.title}</Text>
+      </TouchableOpacity>
+    ));
   }
 }

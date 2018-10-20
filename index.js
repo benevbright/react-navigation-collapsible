@@ -45,6 +45,26 @@ const createCollapsibleParams = (animated) => {
   }
 }
 
+const getTranslateY = (headerY, headerHeight) => (
+  headerY && headerHeight && headerY.interpolate({
+    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
+    outputRange: [0, -headerHeight],
+    extrapolate: 'clamp'
+  }) 
+) || 0;
+const getTranslateProgress = (headerY, headerHeight) => (
+  headerY && headerHeight && headerY.interpolate({
+    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
+    outputRange: [1, 0],
+    extrapolate: 'clamp'
+  }) 
+) || 0;
+
+
+
+
+
+
 const CollapsibleExtraHeader = props => {
   const { children, style, navigation } = props;
   
@@ -53,22 +73,14 @@ const CollapsibleExtraHeader = props => {
   if(!headerY) return null;
 
   const height = style.height || 0;
-  const headerTranslate = headerY.interpolate({
-    inputRange: [safeBounceHeight, safeBounceHeight + height],
-    outputRange: [0, -height],
-    extrapolate: 'clamp'
-  });
-  const headerOpacity = headerY.interpolate({
-    inputRange: [safeBounceHeight, safeBounceHeight + height],
-    outputRange: [1, 0],
-    extrapolate: 'clamp'
-  });
+  const translateY = getTranslateY(headerY, height);
+  const opacity = getTranslateProgress(headerY, height);
   return (
     <Animated.View style={[style, {
       width: '100%', 
       position: 'absolute',
-      transform: [{translateY: headerTranslate}]}]}>
-      <Animated.View style={{width: '100%', height: '100%', opacity: headerOpacity}}>
+      transform: [{translateY}]}]}>
+      <Animated.View style={{width: '100%', height: '100%', opacity}}>
         {children}
       </Animated.View>
     </Animated.View>
@@ -110,18 +122,13 @@ class _CollapsibleHeaderBackView extends Component {
 
     const { headerHeight, headerY } = navigation.state.params;
     const navigationHeight = getNavigationHeight(isLandscape, headerHeight);
-
-    const headerTranslate = headerY.interpolate({
-      inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
-      outputRange: [0, -headerHeight],
-      extrapolate: 'clamp'
-    });
+    const translateY = getTranslateY(headerY, headerHeight)
 
     return (
       <Animated.View 
         style={{
           zIndex: 100,
-          transform: [{translateY: headerTranslate}], 
+          transform: [{translateY: translateY}], 
           backgroundColor: iOSCollapsedColor, 
           position: 'absolute', 
           width: '100%', 
@@ -134,15 +141,15 @@ const CollapsibleHeaderBackView = withOrientation(_CollapsibleHeaderBackView);
 
 const getCustomHeader = options => {
   const CustomHeader = props => {
-    const {position, layout, isLandscape, mode, index} = props;
-    const headerTranslate = mode === 'float' ? position.interpolate({
+    const {position, /*progress,*/ layout, isLandscape, mode, index} = props;
+    const translateX = mode === 'float' ? position.interpolate({
       inputRange: [index - 1, index],
       outputRange: [layout.initWidth, 0]
     }) : 0;
     const statusBarHeight = getStatusBarHeight(isLandscape);
     return (
       <Animated.View style={[options.headerStyle, 
-        {transform:[...options.headerStyle.transform, {translateX: headerTranslate}], 
+        {transform:[...options.headerStyle.transform, {translateX}], 
         position: 'absolute', 
         top: 0, 
         width: '100%', 
@@ -172,28 +179,20 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
     return userOptions;
   }
 
-  const { headerY } = navigationParams;
+  const { headerY, translateY, translateProgress } = navigationParams;
   const headerHeight = userOptions.headerStyle && userOptions.headerStyle.height 
     ? userOptions.headerStyle.height
     : defaultHeaderHeight;
-  if(navigation){
-    if(navigationParams.headerHeight !== headerHeight) 
-      navigation.setParams({
-        headerHeight,
-        headerY: Animated.diffClamp(navigationParams.scrollY, 0, safeBounceHeight + headerHeight)
-      });
+  if(navigationParams.headerHeight !== headerHeight){
+    const headerY = Animated.diffClamp(navigationParams.scrollY, 0, safeBounceHeight + headerHeight);
+    navigation.setParams({
+      headerHeight,
+      headerY,
+      translateY: getTranslateY(headerY, headerHeight),
+      translateProgress: getTranslateProgress(headerY, headerHeight)
+    });
+    return userOptions;
   }
-
-  const headerOpacity = headerY.interpolate({
-    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
-    outputRange: [1, 0],
-    extrapolate: 'clamp'
-  });
-  const headerTranslate = headerY.interpolate({
-    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
-    outputRange: [0, -headerHeight],
-    extrapolate: 'clamp'
-  });
 
   const collapsibleOptions = {
     ...configOptions,
@@ -201,9 +200,9 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
     headerStyle: {
       ...configOptions.headerStyle,
       ...userOptions.headerStyle,
-      transform: [{translateY: headerTranslate}],
+      transform: [{translateY}],
       overflow: 'hidden',
-      opacity: Platform.select({ios: headerOpacity, android: global.Expo ? headerOpacity : 1, web: 1}),
+      opacity: Platform.select({ios: translateProgress, android: global.Expo ? translateProgress : 1, web: 1}),
       height: headerHeight,
     },
     headerTransparent: true, 
@@ -235,7 +234,7 @@ const collapsibleOptions = (configOptions, userOptions, navigation) => {
         height: paddingTop + tabHeight + expoStatusBarHeight,
         width: '100%',
         paddingTop: paddingTop + expoStatusBarHeight,
-        transform: [{translateY: headerTranslate}],
+        transform: [{translateY}],
       }
     }  
   }
@@ -319,6 +318,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
 
     render(){
       const { navigation } = this.props;
+      const { headerY, headerHeight } = navigation && navigation.state && navigation.state.params || {};
       const props = {
         ...this.props,
         collapsible:{
@@ -326,7 +326,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
             ? getCollapsibleHeaderHeight(navigation) + getCollapsibleTabHeight(navigation)
             : collapsibleParams.extraHeaderStyle.height,
           scrollY: this.scrollY,
-          onScroll: this.onScroll
+          onScroll: this.onScroll,
         }
       }
       return (

@@ -9,6 +9,7 @@
       "program": "${workspaceRoot}/.vscode/launchReactNative.js",
       "type": "reactnative",
       "request": "launch",
+      "target": "iPhone 6",
       "platform": "ios",
       "internalDebuggerPort": 9090,
       "sourceMaps": true,
