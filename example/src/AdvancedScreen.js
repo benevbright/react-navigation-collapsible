@@ -20,7 +20,7 @@ class AdvancedScreen extends Component{
     const _selectedCatIndex = selectedCatIndex || 0;
     
     return {
-      headerStyle: {height: 160},
+      headerStyle: {height: 200},
       header: 
         <View style={{width: '100%', height:'100%', justifyContent: 'center'}}>
           <Image source={imgSource} 
