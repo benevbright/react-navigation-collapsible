@@ -295,7 +295,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
     constructor(props){
       super(props);
 
-      this.scrollY = new Animated.Value(0);
+      this.scrollY = props.screenProps && props.screenProps.collapsible && props.screenProps.collapsible.scrollY || new Animated.Value(0);
       if(!collapsibleParams.extraHeader){
         this.props.navigation.setParams({
           ...createCollapsibleParams(this.scrollY),
