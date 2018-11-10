@@ -165,7 +165,7 @@ Please help and let's make it better so that this module can capable more use ca
 
 ## Dependencies Version of Example
 
-- `react-native`: 0.57.3, `latest`: [![npm](https://img.shields.io/npm/v/react-native.svg)](https://www.npmjs.com/package/react-native)
-- `react-navigation`: 2.18.0, `latest`: [![npm](https://img.shields.io/npm/v/react-navigation.svg)](https://www.npmjs.com/package/react-navigation)
+- `react-native`: 0.57.4, `latest`: [![npm](https://img.shields.io/npm/v/react-native.svg)](https://www.npmjs.com/package/react-native)
+- `react-navigation`: 2.18.2, `latest`: [![npm](https://img.shields.io/npm/v/react-navigation.svg)](https://www.npmjs.com/package/react-navigation)
 
 I've ensured this module is compatible with `react-native` >=0.56 and `react-navigation` >=2.11.2. But it does not mean it's not compatible with older versions.
