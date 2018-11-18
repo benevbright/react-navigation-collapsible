@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import { Animated, Platform, Dimensions, View } from 'react-native';
-import withOrientation, {isOrientationLandscape} from 'react-navigation/src/views/withOrientation';
+import { withOrientation, isOrientationLandscape } from '@react-navigation/native';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import SafeAreaView from 'react-native-safe-area-view';
 
