@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { StatusBar } from 'react-native';
-import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 
 import { collapsibleOptionsForTab, collapsibleTabConfig } from 'react-navigation-collapsible';
 
@@ -37,7 +37,7 @@ const TopTabNavigator = createMaterialTopTabNavigator(
   },
   collapsibleTabConfig({
     animationEnabled: true,
-    navigationOptions:{
+    defaultNavigationOptions:{
       tabBarOptions: {
         indicatorStyle: { backgroundColor: 'white' },
         style: { borderTopColor: 'transparent', borderTopWidth: 0, elevation: 0, backgroundColor: backgroundColor },
@@ -59,7 +59,7 @@ const routeConfig = {
 
 const navigatorConfig = {
   // headerMode: 'screen',
-  navigationOptions: {
+  defaultNavigationOptions: {
     headerStyle: { backgroundColor: backgroundColor, borderBottomColor: 'transparent', borderBottomWidth: 0, elevation: 0 },
     headerTitleStyle: { color: 'white' },
     headerTintColor: 'white',
@@ -67,5 +67,5 @@ const navigatorConfig = {
   }, 
 };
 
-const StackNavigator = createStackNavigator(routeConfig, navigatorConfig);
+const StackNavigator = createAppContainer(createStackNavigator(routeConfig, navigatorConfig));
 

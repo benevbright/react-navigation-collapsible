@@ -25,7 +25,7 @@ class AdvancedScreen extends Component{
         <View style={{width: '100%', height:'100%', justifyContent: 'center'}}>
           <Image source={imgSource} 
             resizeMode={'cover'}
-            style={{width: '100%', height: '100%', opacity: 0.5}}/>
+            style={{width: '100%', height: '100%'}}/>
           <SafeAreaView style={{position: 'absolute', top: 0}}>
             <HeaderBackButton tintColor={'white'} onPress={() => navigation.goBack()}/>                
           </SafeAreaView> 

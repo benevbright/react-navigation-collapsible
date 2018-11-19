@@ -10,8 +10,9 @@
   "dependencies": {
     "react": "^16.6.0-alpha.8af6728",
     "react-native": "^0.57.4",
-    "react-navigation": "^2.18.2",
-    "react-navigation-collapsible": "git+https://github.com/benevbright/react-navigation-collapsible.git"
+    "react-native-gesture-handler": "^1.0.9",
+    "react-navigation": "^3.0.0",
+    "react-navigation-collapsible": "git+https://github.com/benevbright/react-navigation-collapsible#v3"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

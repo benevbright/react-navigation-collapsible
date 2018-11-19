@@ -1,12 +1,12 @@
 {
   "name": "react-navigation-collapsible",
-  "version": "0.3.1",
+  "version": "3.0.0-alpha1",
   "description": "React Navigation Extension for Collapsible Header",
   "main": "index.js",
   "scripts": {
     "lint": "eslint *.js",
     "update-original": "rm index.js && cp example/node_modules/react-navigation-collapsible/index.js .",
-    "update-copy": "cp index.js example/node_modules/react-navigation-collapsible/"
+    "update-node-module": "cp index.js example/node_modules/react-navigation-collapsible/"
   },
   "repository": {
     "type": "git",
