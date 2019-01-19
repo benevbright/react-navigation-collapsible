@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import { Text, FlatList, Animated, TouchableOpacity } from 'react-native';
 
-import { withCollapsible, CollapsibleType } from 'react-navigation-collapsible';
-
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-class FlatListScreen extends Component{
+export default class TabChild1Screen extends Component{
   static navigationOptions = {
-    title: 'Flatlist'
+    title: 'Child 1'
   };
 
   constructor(props){
@@ -33,12 +31,8 @@ class FlatListScreen extends Component{
     </TouchableOpacity>
   )
 
-  // onScroll = e => {
-  //   console.log(e.nativeEvent.contentOffset);
-  // }
-
   render(){
-    const { paddingHeight, animatedY, onScroll } = this.props.collapsible;
+    const { animatedY, onScroll } = this.props.screenProps.collapsible;
 
     return (
       <AnimatedFlatList 
@@ -47,17 +41,9 @@ class FlatListScreen extends Component{
         renderItem={this.renderItem}
         keyExtractor={(item, index) => String(index)}
 
-        contentContainerStyle={{paddingTop: paddingHeight}}
-        scrollIndicatorInsets={{top: paddingHeight}}
         onScroll={onScroll} 
-        // if you want to use 'onScroll' callback.
-        // onScroll={Animated.event(
-        //   [{nativeEvent: {contentOffset: {y: animatedY}}}],
-        //   {useNativeDriver:true, listener:this.onScroll})} 
         _mustAddThis={animatedY}
-        />
+      />
     )
   }
 }
-
-export default withCollapsible(FlatListScreen, { type: CollapsibleType.regularHeader, iOSCollapsedColor: 'red' });

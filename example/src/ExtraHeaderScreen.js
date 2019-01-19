@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Text, FlatList, View, Animated, TouchableOpacity, TextInput } from 'react-native';
 
-import { withCollapsible } from 'react-navigation-collapsible';
+import { withCollapsible, CollapsibleType } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -34,7 +34,7 @@ class ExtraHeaderScreen extends Component{
   )
 
   render(){
-    const { paddingHeight, scrollY, onScroll } = this.props.collapsible;
+    const { paddingHeight, animatedY, onScroll } = this.props.collapsible;
     const { searchText } = this.props.navigation.state.params ? this.props.navigation.state.params : {};
     const data = searchText ? this.state.data.filter(item => item.includes(searchText)) : this.state.data;
 
@@ -48,13 +48,15 @@ class ExtraHeaderScreen extends Component{
         contentContainerStyle={{paddingTop: paddingHeight}}
         scrollIndicatorInsets={{top: paddingHeight}}        
         onScroll={onScroll} 
-        _mustAddThis={scrollY}
+        _mustAddThis={animatedY}
         />
     )
   }
 }
 
-const ExtraHeader = ({navigation}) => {  
+const SearchBar = ({navigation, collapsible}) => {
+  // eslint-disable-next-line no-unused-vars
+  const { translateY, translateOpacity, translateProgress } = collapsible;
   const { searchText } = navigation.state.params ? navigation.state.params : {};
   return (
     <View style={{width: '100%', height: '100%', paddingHorizontal: 15, justifyContent: 'center'}}>
@@ -69,8 +71,9 @@ const ExtraHeader = ({navigation}) => {
 }
 
 const collapsibleParams = {
-  extraHeader: ExtraHeader,
-  extraHeaderStyle: {
+  type: CollapsibleType.extraHeader,
+  collapsibleComponent: SearchBar,
+  collapsibleBackgroundStyle: {
     height: 60, 
     backgroundColor: '#061'
   }

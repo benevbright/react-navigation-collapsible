@@ -1,22 +1,20 @@
 import React, {Component} from 'react';
 import { StatusBar } from 'react-native';
-import { createAppContainer, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
-
-import { collapsibleOptionsForTab, collapsibleTabConfig } from 'react-navigation-collapsible';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 
 import MainScreen from './MainScreen.js';
 import FlatListScreen from './FlatListScreen';
-import ImageScreen from './ImageScreen';
 import DetailScreen from './DetailScreen';
 import ExtraHeaderScreen from './ExtraHeaderScreen';
-import AdvancedScreen from './AdvancedScreen';
+import TopTabScreen1 from './MaterialTopTabScreen';
+import TopTabScreen2 from './MaterialTopTabScreen2';
 
 /* Support Expo */
 // import { setExpoStatusBarHeight } from 'react-navigation-collapsible';
 // import { Constants } from 'expo';
 // setExpoStatusBarHeight(Constants.statusBarHeight);
 
-const backgroundColor = '#061';
+const navigationBackgroundColor = '#061';
 
 export default class App extends Component{
   render(){
@@ -29,38 +27,19 @@ export default class App extends Component{
   }
 }
 
-
-const TopTabNavigator = createMaterialTopTabNavigator(
-  {
-    Screen1: { screen: FlatListScreen },
-    Screen2: { screen: DetailScreen },
-  },
-  collapsibleTabConfig({
-    animationEnabled: true,
-    defaultNavigationOptions:{
-      tabBarOptions: {
-        indicatorStyle: { backgroundColor: 'white' },
-        style: { borderTopColor: 'transparent', borderTopWidth: 0, elevation: 0, backgroundColor: backgroundColor },
-      }
-    }
-  })
-);
-
-
 const routeConfig = {
   MainScreen: { screen: MainScreen },
   FlatListScreen: { screen: FlatListScreen },
-  ImageScreen: { screen: ImageScreen },
-  TopTabScreen: { screen: TopTabNavigator, navigationOptions: props => collapsibleOptionsForTab(props, {title: 'Material Tab'}) },
+  TopTabScreen1: { screen: TopTabScreen1 },
+  TopTabScreen2: { screen: TopTabScreen2 },
   DetailScreen: { screen: DetailScreen },
   ExtraHeaderScreen: { screen: ExtraHeaderScreen },
-  AdvancedScreen: { screen: AdvancedScreen }
 };
 
 const navigatorConfig = {
   // headerMode: 'screen',
   defaultNavigationOptions: {
-    headerStyle: { backgroundColor: backgroundColor, borderBottomColor: 'transparent', borderBottomWidth: 0, elevation: 0 },
+    headerStyle: { backgroundColor: navigationBackgroundColor, borderBottomColor: 'transparent', borderBottomWidth: 0, elevation: 0 },
     headerTitleStyle: { color: 'white' },
     headerTintColor: 'white',
     // headerTransparent: true, 
