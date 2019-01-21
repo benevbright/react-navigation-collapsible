@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Text, FlatList, View, Animated, TouchableOpacity, TextInput } from 'react-native';
 
-import { withCollapsible, CollapsibleType } from 'react-navigation-collapsible';
+import { withCollapsible } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -71,7 +71,6 @@ const SearchBar = ({navigation, collapsible}) => {
 }
 
 const collapsibleParams = {
-  type: CollapsibleType.extraHeader,
   collapsibleComponent: SearchBar,
   collapsibleBackgroundStyle: {
     height: 60, 

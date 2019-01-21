@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Text, FlatList, Animated, TouchableOpacity } from 'react-native';
 
-import { withCollapsible, CollapsibleType } from 'react-navigation-collapsible';
+import { withCollapsible } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -60,4 +60,4 @@ class FlatListScreen extends Component{
   }
 }
 
-export default withCollapsible(FlatListScreen, { type: CollapsibleType.regularHeader, iOSCollapsedColor: 'red' });
+export default withCollapsible(FlatListScreen, { iOSCollapsedColor: 'red' });
