@@ -5,9 +5,9 @@ import { withCollapsible } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-class FlatListScreen extends Component{
+class DefaultHeaderScreen extends Component{
   static navigationOptions = {
-    title: 'Flatlist'
+    title: 'Default Header'
   };
 
   constructor(props){
@@ -60,4 +60,4 @@ class FlatListScreen extends Component{
   }
 }
 
-export default withCollapsible(FlatListScreen, { iOSCollapsedColor: 'red' });
+export default withCollapsible(DefaultHeaderScreen, { iOSCollapsedColor: 'red' });

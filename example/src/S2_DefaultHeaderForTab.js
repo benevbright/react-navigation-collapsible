@@ -1,13 +1,13 @@
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import TabChild1Screen from './TabChild1Screen.js';
-import DetailScreen from './DetailScreen';
+import ContextScreen from './ContextScreen';
 import { withCollapsibleForTab } from 'react-navigation-collapsible';
 
 const TopTabNavigator = createMaterialTopTabNavigator(
   {
     Screen1: { screen: TabChild1Screen },
     Screen2: { screen: TabChild1Screen },
-    Screen3: { screen: DetailScreen },
+    Screen3: { screen: ContextScreen },
   },
   {
     animationEnabled: true,

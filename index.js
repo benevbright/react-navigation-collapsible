@@ -6,7 +6,7 @@ import { withOrientation } from '@react-navigation/native';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 const CollapsibleType = {
-  regularHeader: 0,
+  defaultHeader: 0,
   extraHeader: 1,
 }
 
@@ -204,7 +204,7 @@ const collapsibleNavigationOptions = (configOptions, userOptions, navigation) =>
 const getCollapsibleHeaderHeight = (navigationParams) => (navigationParams && navigationParams.headerHeight) || 0;
 
 export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
-  const collapsibleType = collapsibleParams.collapsibleComponent ? CollapsibleType.extraHeader : CollapsibleType.regularHeader;
+  const collapsibleType = collapsibleParams.collapsibleComponent ? CollapsibleType.extraHeader : CollapsibleType.defaultHeader;
 
   class _withCollapsible extends Component{
     constructor(props){
@@ -213,7 +213,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
       this.animatedY = new Animated.Value(0);
 
       switch (collapsibleType) {
-        case CollapsibleType.regularHeader:
+        case CollapsibleType.defaultHeader:
           this.props.navigation.setParams({
             ...createCollapsibleParams(this.animatedY),
           });
@@ -254,7 +254,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
       let paddingHeight = 0;
 
       switch (collapsibleType) {
-        case CollapsibleType.regularHeader: {
+        case CollapsibleType.defaultHeader: {
             const collapsibleHeaderHeight = getCollapsibleHeaderHeight(params);
             if (collapsibleHeaderHeight) {
               const isLandscape = isLandscape !== undefined ? isLandscape : isOrientationLandscape(Dimensions.get('window'));
@@ -281,7 +281,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
 
       let collapsibleComponent = null;
       switch (collapsibleType) {
-        case CollapsibleType.regularHeader:
+        case CollapsibleType.defaultHeader:
           collapsibleComponent = <CollapsibleHeaderBackView iOSCollapsedColor={collapsibleParams.iOSCollapsedColor} navigation={navigation} />;
           break;
         case CollapsibleType.extraHeader:
@@ -305,7 +305,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
   const hoist = hoistNonReactStatic(_withCollapsible, WrappedScreen);
 
   switch (collapsibleType) {
-    case CollapsibleType.regularHeader: 
+    case CollapsibleType.defaultHeader: 
       hoist.navigationOptions = props => {
         const wrapScreenNavOptions = WrappedScreen.navigationOptions ? WrappedScreen.navigationOptions : {};
         const userOptions = typeof wrapScreenNavOptions === 'function' ? wrapScreenNavOptions(props) : wrapScreenNavOptions;
@@ -322,7 +322,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
 }
 
 export const withCollapsibleForTab = (MaterialTopTabNavigator, collapsibleParams = {}) => {
-  const collapsibleType = collapsibleParams.collapsibleComponent ? CollapsibleType.extraHeader : CollapsibleType.regularHeader;
+  const collapsibleType = collapsibleParams.collapsibleComponent ? CollapsibleType.extraHeader : CollapsibleType.defaultHeader;
 
   class _withCollapsibleForTab extends Component{
     render() {
@@ -330,7 +330,7 @@ export const withCollapsibleForTab = (MaterialTopTabNavigator, collapsibleParams
       const { paddingHeight, translateY, translateOpacity, translateProgress } = this.props.collapsible;
       
       switch (collapsibleType) {
-        case CollapsibleType.regularHeader:
+        case CollapsibleType.defaultHeader:
           return (
             <Animated.View style={{ flex: 1, marginTop: paddingHeight, marginBottom: -paddingHeight, transform: [{ translateY }] }}>
               <MaterialTopTabNavigator

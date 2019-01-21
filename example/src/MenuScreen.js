@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 const routeConfig = [
-  { navigateTo: 'FlatListScreen', title: 'Regular Collapsible Header' },
-  { navigateTo: 'TopTabScreen1', title: 'Material Tab + Regular Collapsible Header' },
-  { navigateTo: 'TopTabScreen2', title: 'Material Tab + Extra Collapsible Header' },
-  { navigateTo: 'ExtraHeaderScreen', title: 'Extra Collapsible Header (Search Bar)' },
+  { navigateTo: 'S0_DefaultHeader', title: 'S0. Default Header' },
+  { navigateTo: 'S1_ExtraHeader', title: 'S1. Extra Header (Search Bar)' },
+  { navigateTo: 'S2_DefaultHeaderForTab', title: 'S2. Default Header With Tab' },
+  { navigateTo: 'S3_ExtraHeaderForTab', title: 'S3. Extra Header With Tab (Facebook Group)' },
 ];
 
-export default class MainScreen extends Component{
+export default class MenuScreen extends Component{
   static navigationOptions = {
     title: 'Collapsible',
   }
