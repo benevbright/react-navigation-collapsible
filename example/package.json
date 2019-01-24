@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react": "^16.6.0-alpha.8af6728",
-    "react-native": "^0.57.4",
+    "react-native": "^0.58.0",
     "react-navigation": "^2.18.2",
     "react-navigation-collapsible": "git+https://github.com/benevbright/react-navigation-collapsible.git"
   },
