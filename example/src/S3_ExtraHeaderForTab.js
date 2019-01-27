@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Animated } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import TabChild1Screen from './TabChild1Screen.js';
 import ContextScreen from './ContextScreen';
@@ -32,7 +32,8 @@ const GroupImageHeader = ({navigation, collapsible}) => {
   return (
     <View style={{width: '100%', height: '100%', justifyContent: 'center'}}>
       <Image source={require('./../asset/cat.jpg')} resizeMode="cover" style={{ position: 'absolute', width: '100%', height: '100%', opacity: 0.5 }}/>
-      <Image source={require('./../asset/cat.jpg')} resizeMode="cover" style={{ alignSelf: 'center', width: 100, height: 100, borderWidth: 4, borderColor: 'white', borderRadius: 50 }}/>
+      <Animated.Image source={require('./../asset/cat.jpg')} resizeMode="cover"
+        style={{ transform: [{ scale: translateOpacity }], alignSelf: 'center', width: 100, height: 100, borderWidth: 4, borderColor: 'white', borderRadius: 50 }}/>
     </View>
   );
 }
