@@ -5,9 +5,9 @@ import { withCollapsible } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-class FlatListScreen extends Component{
+class DefaultHeaderScreen extends Component{
   static navigationOptions = {
-    title: 'Flatlist'
+    title: 'Default Header'
   };
 
   constructor(props){
@@ -38,7 +38,7 @@ class FlatListScreen extends Component{
   // }
 
   render(){
-    const { paddingHeight, scrollY, onScroll } = this.props.collapsible;
+    const { paddingHeight, animatedY, onScroll } = this.props.collapsible;
 
     return (
       <AnimatedFlatList 
@@ -52,12 +52,12 @@ class FlatListScreen extends Component{
         onScroll={onScroll} 
         // if you want to use 'onScroll' callback.
         // onScroll={Animated.event(
-        //   [{nativeEvent: {contentOffset: {y: scrollY}}}],
+        //   [{nativeEvent: {contentOffset: {y: animatedY}}}],
         //   {useNativeDriver:true, listener:this.onScroll})} 
-        _mustAddThis={scrollY}
+        _mustAddThis={animatedY}
         />
     )
   }
 }
 
-export default withCollapsible(FlatListScreen, {iOSCollapsedColor: '#031'});
+export default withCollapsible(DefaultHeaderScreen, { iOSCollapsedColor: 'red' });
