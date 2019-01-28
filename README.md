@@ -79,13 +79,13 @@ See [example/src/S1_ExtraHeader.js](https://github.com/benevbright/react-navigat
 ### Default Header With Tab
 
 See [example/src/S2_DefaultHeaderForTab.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/S2_DefaultHeaderForTab.js)
-And [example/src/TabChild1Screen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/TabChild1Screen.js)
+and [example/src/TabChild1Screen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/TabChild1Screen.js)
 
 
 ### Extra Header With Tab (e.g Facebook Group)
 
 See [example/src/S3_ExtraHeaderForTab.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/S3_ExtraHeaderForTab.js)
-And [example/src/TabChild1Screen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/TabChild1Screen.js)
+and [example/src/TabChild1Screen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/TabChild1Screen.js)
 
 
 ## API
@@ -127,8 +127,6 @@ render () {
 }
 ```
 
-`react-navigation-collapsible` set your `this.props.navigation` params with `{headerHeight: number, translateY: Animated, translateOpacity: Animated, translateProgress: Animated}`. You can create your desired screen with this params. For more infomation, see [example/src/AdvancedScreen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/AdvancedScreen.js).
-
 
 ## Limitation
 
@@ -139,7 +137,7 @@ react-navigation provides [State persistence](https://reactnavigation.org/docs/e
 #### With SectionList [#37](https://github.com/benevbright/react-navigation-collapsible/issues/37)
 
 
-## Tasks
+## ToDo
 
 - [ ] iOS 11 Style Header
 - [ ] Hiding bottom tab
