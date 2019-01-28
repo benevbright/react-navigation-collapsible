@@ -1,6 +1,6 @@
 # react-navigation-collapsible
 
-[![npm](https://img.shields.io/npm/v/react-navigation-collapsible.svg)](https://www.npmjs.com/package/react-navigation-collapsible) [![npm](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.0.0-alpha1)](https://www.npmjs.com/package/react-navigation-collapsible/v/3.0.0-alpha1) [![npm](https://img.shields.io/npm/dm/react-navigation-collapsible.svg)](https://www.npmjs.com/package/react-navigation-collapsible) [![Greenkeeper badge](https://badges.greenkeeper.io/benevbright/react-navigation-collapsible.svg)](https://greenkeeper.io/)
+[![npm](https://img.shields.io/npm/v/react-navigation-collapsible.svg)](https://www.npmjs.com/package/react-navigation-collapsible) [![npm](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.0.0-beta2)](https://www.npmjs.com/package/react-navigation-collapsible/v/3.0.0-beta2) [![npm](https://img.shields.io/npm/dm/react-navigation-collapsible.svg)](https://www.npmjs.com/package/react-navigation-collapsible) [![Greenkeeper badge](https://badges.greenkeeper.io/benevbright/react-navigation-collapsible.svg)](https://greenkeeper.io/)
 
 
 React Navigation Extension for Collapsible Header.
