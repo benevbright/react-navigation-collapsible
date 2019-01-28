@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { Text, FlatList, Animated, TouchableOpacity } from 'react-native';
+import { withCollapsibleForTabChild } from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default class TabChild1Screen extends Component{
+class TabChild1Screen extends Component{
   static navigationOptions = {
     title: 'Child 1'
   };
@@ -32,7 +33,7 @@ export default class TabChild1Screen extends Component{
   )
 
   render(){
-    const { animatedY, onScroll } = this.props.screenProps.collapsible;
+    const { animatedY, onScroll } = this.props.collapsible;
 
     return (
       <AnimatedFlatList 
@@ -47,3 +48,5 @@ export default class TabChild1Screen extends Component{
     )
   }
 }
+
+export default withCollapsibleForTabChild(TabChild1Screen);

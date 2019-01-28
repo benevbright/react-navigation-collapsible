@@ -45,13 +45,6 @@ const getNavigationHeight = (isLandscape, headerHeight) => {
   return headerHeight + getStatusBarHeight(isLandscape);
 }
 
-const createCollapsibleParams = (animatedY) => {
-  return {
-    animatedY,
-    animatedDiffClampY: Animated.diffClamp(animatedY, 0, safeBounceHeight)
-  }
-}
-
 const getTranslateY = (animatedDiffClampY, headerHeight, offset = 0) => (
   animatedDiffClampY && headerHeight && animatedDiffClampY.interpolate({
     inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
@@ -164,7 +157,7 @@ const collapsibleNavigationOptions = (configOptions, userOptions, navigation) =>
 
   const navigationParams = navigation.state.params;
 
-  if(!navigationParams || !navigationParams.animatedDiffClampY ){
+  if(!navigationParams || !navigationParams.animatedYSum ){
     // console.log('navigationParams is null');
     return userOptions;
   }
@@ -174,7 +167,7 @@ const collapsibleNavigationOptions = (configOptions, userOptions, navigation) =>
     ? userOptions.headerStyle.height
     : defaultHeaderHeight;
   if(navigationParams.headerHeight !== headerHeight){
-    const animatedDiffClampY = Animated.diffClamp(navigationParams.animatedY, 0, safeBounceHeight + headerHeight);
+    const animatedDiffClampY = Animated.diffClamp(navigationParams.animatedYSum, 0, safeBounceHeight + headerHeight);
     navigation.setParams({
       headerHeight,
       animatedDiffClampY,
@@ -203,24 +196,32 @@ const collapsibleNavigationOptions = (configOptions, userOptions, navigation) =>
 
 const getCollapsibleHeaderHeight = (navigationParams) => (navigationParams && navigationParams.headerHeight) || 0;
 
-export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
+export const withCollapsible = (WrappedScreen, collapsibleParams = {}, tabNavigator = undefined) => {
+  const isForTabNavigator = tabNavigator != null;
   const collapsibleType = collapsibleParams.collapsibleComponent ? CollapsibleType.extraHeader : CollapsibleType.defaultHeader;
 
   class _withCollapsible extends Component{
     constructor(props){
       super(props);
 
-      this.animatedY = new Animated.Value(0);
+      this.animatedY = isForTabNavigator ? Object.keys(tabNavigator.router.childRouters).map(() => new Animated.Value(0)) : [ new Animated.Value(0) ];
+      this.animatedYSum = this.animatedY.reduce((a, b) => new Animated.add(a, b), new Animated.Value(0));
+      this.onScroll = this.animatedY.map(
+        animatedY => Animated.event(
+          [{nativeEvent: {contentOffset: {y: animatedY}}}],
+          {useNativeDriver: Platform.select({ios: true, android: true, web: false})}
+        )
+      );
 
       switch (collapsibleType) {
         case CollapsibleType.defaultHeader:
           this.props.navigation.setParams({
-            ...createCollapsibleParams(this.animatedY),
+            animatedYSum: this.animatedYSum,
           });
           break;
         case CollapsibleType.extraHeader: {
             const headerHeight = collapsibleParams.collapsibleBackgroundStyle && collapsibleParams.collapsibleBackgroundStyle.height || 0;
-            const animatedDiffClampY = Animated.diffClamp(this.animatedY, 0, safeBounceHeight + headerHeight);
+            const animatedDiffClampY = Animated.diffClamp(this.animatedYSum, 0, safeBounceHeight + headerHeight);
             this.props.navigation.setParams({
               animatedDiffClampY,
               collapsibleTranslateY: getTranslateY(animatedDiffClampY, headerHeight, headerHeight),
@@ -230,10 +231,6 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
           }
           break;
       }
-
-      this.onScroll = Animated.event(
-        [{nativeEvent: {contentOffset: {y: this.animatedY}}}],
-        {useNativeDriver: Platform.select({ios: true, android: true, web: false})});
     }
 
     componentDidMount(){
@@ -257,7 +254,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
         case CollapsibleType.defaultHeader: {
             const collapsibleHeaderHeight = getCollapsibleHeaderHeight(params);
             if (collapsibleHeaderHeight) {
-              const isLandscape = isLandscape !== undefined ? isLandscape : isOrientationLandscape(Dimensions.get('window'));
+              const isLandscape = isLandscape != null ? isLandscape : isOrientationLandscape(Dimensions.get('window'));
               paddingHeight = collapsibleHeaderHeight + getStatusBarHeight(isLandscape);
             }
           }
@@ -271,8 +268,8 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}) => {
         ...this.props,
         collapsible:{
           paddingHeight,
-          animatedY: this.animatedY,
-          onScroll: this.onScroll,
+          animatedY: isForTabNavigator ? this.animatedY : this.animatedY[0],
+          onScroll: isForTabNavigator ? this.onScroll : this.onScroll[0],
           translateY: params.collapsibleTranslateY || new Animated.Value(paddingHeight),
           translateOpacity: params.collapsibleTranslateOpacity || new Animated.Value(1),
           translateProgress: params.collapsibleTranslateProgress || new Animated.Value(0),
@@ -355,5 +352,26 @@ export const withCollapsibleForTab = (MaterialTopTabNavigator, collapsibleParams
 
   const hoist = hoistNonReactStatic(_withCollapsibleForTab, MaterialTopTabNavigator);
 
-  return withCollapsible(hoist, collapsibleParams);
+  return withCollapsible(hoist, collapsibleParams, MaterialTopTabNavigator);
+}
+
+export const withCollapsibleForTabChild = (WrappedScreen) => {
+  class _withCollapsibleForTabChild extends Component{
+    render() {
+      const key = this.props.navigation.state.key;
+      const index = this.props.screenProps.navigation.state.routes.findIndex(item => item.key === key);
+      const collapsible = {
+        ...this.props.screenProps,
+        animatedY: this.props.screenProps.collapsible.animatedY[index],
+        onScroll: this.props.screenProps.collapsible.onScroll[index],
+      };
+      return (
+        <WrappedScreen {...this.props} collapsible={collapsible}/>
+      );
+    }
+  }
+
+  const hoist = hoistNonReactStatic(_withCollapsibleForTabChild, WrappedScreen);
+
+  return hoist;
 }
