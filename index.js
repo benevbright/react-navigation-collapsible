@@ -183,9 +183,9 @@ const collapsibleNavigationOptions = (configOptions, userOptions, navigation) =>
     headerStyle: {
       ...configOptions.headerStyle,
       ...userOptions.headerStyle,
-      transform: [{translateY: collapsibleTranslateY}],
+      transform: [{translateY: collapsibleTranslateY || 0}],
       overflow: 'hidden',
-      opacity: Platform.select({ios: collapsibleTranslateOpacity, android: global.Expo ? collapsibleTranslateOpacity : 1, web: 1}),
+      opacity: Platform.select({ios: collapsibleTranslateOpacity || 1, android: global.Expo ? (collapsibleTranslateOpacity || 1) : 1, web: 1}),
       height: headerHeight,
     },
     headerTransparent: true, 
