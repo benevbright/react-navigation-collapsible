@@ -25,6 +25,10 @@ $ react-native run-android
 
 ## Usage
 
+### react-navigation v2
+
+If you're using `react-navigation` v2, please use `react-navigation-collapsible@2.0.0` and [2.0.0 README](https://github.com/benevbright/react-navigation-collapsible/tree/v2).
+
 ### Expo
 
 If you use Expo, add this lines to your App.js. (It only affects Android)
