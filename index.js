@@ -226,7 +226,8 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}, tabNaviga
           });
           break;
         case CollapsibleType.extraHeader: {
-            const headerHeight = collapsibleParams.collapsibleBackgroundStyle && collapsibleParams.collapsibleBackgroundStyle.height || 0;
+            const headerHeight = (collapsibleParams.collapsibleBackgroundStyle && collapsibleParams.collapsibleBackgroundStyle.height || 0)
+              - (collapsibleParams.collapsibleBackgroundStyle && collapsibleParams.collapsibleBackgroundStyle.paddingBottom || 0);
             const animatedDiffClampY = Animated.diffClamp(this.animatedYSum, 0, getSafeBounceHeight() + headerHeight);
             this.props.navigation.setParams({
               animatedDiffClampY,
