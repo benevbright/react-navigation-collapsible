@@ -101,7 +101,9 @@ type CollapsibleParams = {
   iOSCollapsedColor: string, // iOS only
 } | {
   collapsibleComponent: React.Component,
-  collapsibleBackgroundStyle: React.Style,
+  collapsibleBackgroundStyle: React.Style & {
+    disableFadeoutInnerComponent?: boolean
+  }
 }
 
 function withCollapsible (WrappedScreen, collapsibleParams: CollapsibleParams = {})

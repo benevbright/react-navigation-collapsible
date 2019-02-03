@@ -42,7 +42,8 @@ const collapsibleParams = {
   collapsibleComponent: GroupImageHeader,
   collapsibleBackgroundStyle: {
     height: 200, 
-    backgroundColor: '#061'
+    backgroundColor: '#061',
+    disableFadeoutInnerComponent: true,
   }
 }
 

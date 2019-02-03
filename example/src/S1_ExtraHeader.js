@@ -74,7 +74,8 @@ const collapsibleParams = {
   collapsibleComponent: SearchBar,
   collapsibleBackgroundStyle: {
     height: 60, 
-    backgroundColor: '#061'
+    backgroundColor: '#061',
+    // disableFadeoutInnerComponent: true,
   }
 }
 
