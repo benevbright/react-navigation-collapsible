@@ -101,8 +101,11 @@ type CollapsibleParams = {
   iOSCollapsedColor: string, // iOS only
 } | {
   collapsibleComponent: React.Component,
-  collapsibleBackgroundStyle: React.Style & {
-    disableFadeoutInnerComponent?: boolean
+  collapsibleBackgroundStyle: {
+    ...React.Style
+  } & {
+    disableFadeoutInnerComponent?: boolean,
+    paddingBottom?: number,
   }
 }
 
