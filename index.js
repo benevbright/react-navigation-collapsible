@@ -76,16 +76,19 @@ const getOpacity = (animatedDiffClampY, headerHeight) => (
 
 
 const CollapsibleExtraHeader = props => {
-  const { children, style, navigation } = props;
+  const { children, style : collapsibleBackgroundStyle, navigation } = props;
   
   if(!navigation) return null;
   const { animatedDiffClampY } = navigation.state.params || {};
 
-  const height = style.height || 0;
+  const height = collapsibleBackgroundStyle.height || 0;
   const translateY = animatedDiffClampY ? getTranslateY(animatedDiffClampY, height) : 0;
-  const opacity = animatedDiffClampY ? getOpacity(animatedDiffClampY, height) : 1;
+  const defaultOpacity = collapsibleBackgroundStyle.opacity != null ? collapsibleBackgroundStyle.opacity : 1;
+  const opacity = collapsibleBackgroundStyle.disableFadeoutInnerComponent
+    ? defaultOpacity
+    : animatedDiffClampY ? getOpacity(animatedDiffClampY, height) : defaultOpacity;
   return (
-    <Animated.View style={[style, {
+    <Animated.View style={[collapsibleBackgroundStyle, {
       width: '100%', 
       position: 'absolute',
       transform: [{translateY}]}]}>
