@@ -32,7 +32,10 @@ export const IS_IPHONE_X =
 
 
 const defaultHeaderHeight = Platform.select({ios: 44, android: 56, web: 50});
-const safeBounceHeight = Platform.select({ios: 300, android: 100, web: 200});
+let _safeBounceHeight;
+const getSafeBounceHeight = () => _safeBounceHeight != null ? _safeBounceHeight : Platform.select({ios: 300, android: 100, web: 200});
+export const setSafeBounceHeight = (height) => { _safeBounceHeight = height };
+
 
 const getStatusBarHeight = (isLandscape) => {
   if (Platform.OS === 'ios') {
@@ -47,21 +50,21 @@ const getNavigationHeight = (isLandscape, headerHeight) => {
 
 const getTranslateY = (animatedDiffClampY, headerHeight, offset = 0) => (
   animatedDiffClampY && headerHeight && animatedDiffClampY.interpolate({
-    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
+    inputRange: [getSafeBounceHeight(), getSafeBounceHeight() + headerHeight],
     outputRange: [offset, offset - headerHeight],
     extrapolate: 'clamp'
   }) 
 ) || 0;
 const getTranslateProgress = (animatedDiffClampY, headerHeight) => (
   animatedDiffClampY && headerHeight && animatedDiffClampY.interpolate({
-    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
+    inputRange: [getSafeBounceHeight(), getSafeBounceHeight() + headerHeight],
     outputRange: [0, 1],
     extrapolate: 'clamp'
   }) 
 ) || 0;
 const getOpacity = (animatedDiffClampY, headerHeight) => (
   animatedDiffClampY && headerHeight && animatedDiffClampY.interpolate({
-    inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
+    inputRange: [getSafeBounceHeight(), getSafeBounceHeight() + headerHeight],
     outputRange: [1, 0],
     extrapolate: 'clamp'
   }) 
@@ -167,7 +170,7 @@ const collapsibleNavigationOptions = (configOptions, userOptions, navigation) =>
     ? userOptions.headerStyle.height
     : defaultHeaderHeight;
   if(navigationParams.headerHeight !== headerHeight){
-    const animatedDiffClampY = Animated.diffClamp(navigationParams.animatedYSum, 0, safeBounceHeight + headerHeight);
+    const animatedDiffClampY = Animated.diffClamp(navigationParams.animatedYSum, 0, getSafeBounceHeight() + headerHeight);
     navigation.setParams({
       headerHeight,
       animatedDiffClampY,
@@ -221,7 +224,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}, tabNaviga
           break;
         case CollapsibleType.extraHeader: {
             const headerHeight = collapsibleParams.collapsibleBackgroundStyle && collapsibleParams.collapsibleBackgroundStyle.height || 0;
-            const animatedDiffClampY = Animated.diffClamp(this.animatedYSum, 0, safeBounceHeight + headerHeight);
+            const animatedDiffClampY = Animated.diffClamp(this.animatedYSum, 0, getSafeBounceHeight() + headerHeight);
             this.props.navigation.setParams({
               animatedDiffClampY,
               collapsibleTranslateY: getTranslateY(animatedDiffClampY, headerHeight, headerHeight),

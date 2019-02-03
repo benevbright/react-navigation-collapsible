@@ -9,6 +9,9 @@ import S2_DefaultHeaderForTab from './S2_DefaultHeaderForTab';
 import S3_ExtraHeaderForTab from './S3_ExtraHeaderForTab';
 import ContextScreen from './ContextScreen';
 
+// import { setSafeBounceHeight } from 'react-navigation-collapsible';
+// setSafeBounceHeight(0);
+
 /* Support Expo */
 // import { setExpoStatusBarHeight } from 'react-navigation-collapsible';
 // import { Constants } from 'expo';
