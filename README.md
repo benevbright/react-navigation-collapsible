@@ -134,6 +134,10 @@ render () {
 
 ## Limitation
 
+#### When scroll slowly, the layout is flickering on Android. 
+
+This is `react-native`'s regression bug. Here is a workaround. https://github.com/facebook/react-native/issues/15445#issuecomment-321721259
+
 #### With State persistence [#40](https://github.com/benevbright/react-navigation-collapsible/issues/40)
 
 react-navigation provides [State persistence](https://reactnavigation.org/docs/en/state-persistence.html) as experimental feature. Unfortunately, collapsible header stops collapsible when you use it.
