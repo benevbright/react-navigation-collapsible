@@ -93,21 +93,19 @@ and [example/src/TabChild1Screen.js](https://github.com/benevbright/react-naviga
 #### HoC and config method
 
 ```
-function withCollapsible (WrappedScreen, collapsibleParams = {})
-function withCollapsibleForTab (MaterialTapNavigator, collapsibleParams = {})
-function withCollapsibleForTabChild (WrappedScreen)
-
-type collapsibleParams = {
-  // for Deault collapsible header (iOS only)
-  iOSCollapsedColor?: string,
+type CollapsibleParams = {
+  iOSCollapsedColor: string, // iOS only
 } | {
-  // for Extra collapsible header
-  collapsibleComponent?: React.Component,
-  collapsibleBackgroundStyle?: React.Style,
+  collapsibleComponent: React.Component,
+  collapsibleBackgroundStyle: React.Style,
 }
 
-// expo only
-function setExpoStatusBarHeight (height)
+function withCollapsible (WrappedScreen, collapsibleParams: CollapsibleParams = {})
+function withCollapsibleForTab (MaterialTapNavigator, collapsibleParams: CollapsibleParams = {})
+function withCollapsibleForTabChild (WrappedScreen)
+
+function setExpoStatusBarHeight (height) // expo only
+function setSafeBounceHeight (height)
 ```
 
 #### Given `props`
