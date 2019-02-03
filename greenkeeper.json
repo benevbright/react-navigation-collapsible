@@ -4,6 +4,18 @@
       "packages": [
         "example/package.json",
         "package.json"
+      ],
+      "ignore": [
+        "react",
+        "react-native-gesture-handler",
+        "react-navigation-collapsible",
+        "babel-eslint",
+        "babel-jest",
+        "eslint",
+        "eslint-plugin-react",
+        "jest",
+        "metro-react-native-babel-preset",
+        "react-test-renderer"
       ]
     }
   }
