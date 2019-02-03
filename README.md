@@ -136,7 +136,7 @@ render () {
 
 #### When scroll slowly, the layout is flickering on Android. 
 
-This is `react-native`'s regression bug. Here is a workaround. https://github.com/facebook/react-native/issues/15445#issuecomment-321721259
+This is `react-native`'s regression bug on Android. Here is a workaround. https://github.com/facebook/react-native/issues/15445#issuecomment-321721259
 
 #### With State persistence [#40](https://github.com/benevbright/react-navigation-collapsible/issues/40)
 
