@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { Animated, Platform, Dimensions, View } from 'react-native';
 import { withOrientation } from '@react-navigation/native';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import CustomComponent from './CustomComponent/CustomComponent';
+export CustomComponent from './CustomComponent/CustomComponent';
 const CollapsibleType = {
   defaultHeader: 0,
   extraHeader: 1,
@@ -382,5 +382,3 @@ export const withCollapsibleForTabChild = (WrappedScreen) => {
 
   return hoist;
 }
-
-export CustomComponent;
