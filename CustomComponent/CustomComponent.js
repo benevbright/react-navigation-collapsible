@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { withOrientation, SafeAreaView } from 'react-navigation';
-import { HeaderStyleInterpolator } from '../../node_modules/react-navigation-stack';
+import { HeaderStyleInterpolator } from '../../react-navigation-stack';
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
