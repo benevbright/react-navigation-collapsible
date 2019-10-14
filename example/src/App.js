@@ -7,6 +7,7 @@ import S0_DefaultHeader from './S0_DefaultHeader';
 import S1_ExtraHeader from './S1_ExtraHeader';
 import S2_DefaultHeaderForTab from './S2_DefaultHeaderForTab';
 import S3_ExtraHeaderForTab from './S3_ExtraHeaderForTab';
+import S4_CustomComponent from './S4_CustomComponent';
 import ContextScreen from './ContextScreen';
 
 // import { setSafeBounceHeight } from 'react-navigation-collapsible';
@@ -34,6 +35,7 @@ const routeConfig = {
   S1_ExtraHeader: {screen: S1_ExtraHeader},
   S2_DefaultHeaderForTab: {screen: S2_DefaultHeaderForTab},
   S3_ExtraHeaderForTab: {screen: S3_ExtraHeaderForTab},
+  S4_CustomComponent: {screen: S4_CustomComponent},
   DetailScreen: {screen: ContextScreen},
 };
 

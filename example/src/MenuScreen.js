@@ -9,6 +9,7 @@ const routeConfig = [
     navigateTo: 'S3_ExtraHeaderForTab',
     title: 'S3. Extra Header With Tab (Facebook Group)',
   },
+  {navigateTo: 'S4_CustomComponent', title: 'S4. Custom Component'},
 ];
 
 export default class MenuScreen extends Component {
