@@ -1,82 +1,114 @@
 import React, {Component} from 'react';
-import { Text, FlatList, View, Animated, TouchableOpacity, TextInput } from 'react-native';
+import {
+  Text,
+  FlatList,
+  View,
+  Animated,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 
-import { withCollapsible } from 'react-navigation-collapsible';
+import {withCollapsible} from 'react-navigation-collapsible';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-class ExtraHeaderScreen extends Component{
+class ExtraHeaderScreen extends Component {
   static navigationOptions = {
     title: 'Extra Header',
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     const data = [];
-    for(let i = 0 ; i < 60 ; i++){
+    for (let i = 0; i < 60; i++) {
       data.push(i.toString());
     }
 
     this.state = {
-      data: data
-    }
+      data: data,
+    };
   }
 
   renderItem = ({item}) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       onPress={() => {
         this.props.navigation.navigate('DetailScreen');
       }}
-      style={{width: '100%', height: 50, borderBottomColor: '#0002', borderBottomWidth: 0.5, paddingHorizontal: 20, justifyContent: 'center'}}>
+      style={{
+        width: '100%',
+        height: 50,
+        borderBottomColor: '#0002',
+        borderBottomWidth: 0.5,
+        paddingHorizontal: 20,
+        justifyContent: 'center',
+      }}>
       <Text style={{fontSize: 22}}>{item}</Text>
     </TouchableOpacity>
-  )
+  );
 
-  render(){
-    const { paddingHeight, animatedY, onScroll } = this.props.collapsible;
-    const { searchText } = this.props.navigation.state.params ? this.props.navigation.state.params : {};
-    const data = searchText ? this.state.data.filter(item => item.includes(searchText)) : this.state.data;
+  render() {
+    const {paddingHeight, animatedY, onScroll} = this.props.collapsible;
+    const {searchText} = this.props.navigation.state.params
+      ? this.props.navigation.state.params
+      : {};
+    const data = searchText
+      ? this.state.data.filter(item => item.includes(searchText))
+      : this.state.data;
 
     return (
-      <AnimatedFlatList 
+      <AnimatedFlatList
         style={{flex: 1}}
         data={data}
         renderItem={this.renderItem}
         keyExtractor={(item, index) => String(index)}
-
         contentContainerStyle={{paddingTop: paddingHeight}}
-        scrollIndicatorInsets={{top: paddingHeight}}        
-        onScroll={onScroll} 
+        scrollIndicatorInsets={{top: paddingHeight}}
+        onScroll={onScroll}
         _mustAddThis={animatedY}
-        />
-    )
+      />
+    );
   }
 }
 
 const SearchBar = ({navigation, collapsible}) => {
   // eslint-disable-next-line no-unused-vars
-  const { translateY, translateOpacity, translateProgress } = collapsible;
-  const { searchText } = navigation.state.params ? navigation.state.params : {};
+  const {translateY, translateOpacity, translateProgress} = collapsible;
+  const {searchText} = navigation.state.params ? navigation.state.params : {};
   return (
-    <View style={{width: '100%', height: '100%', paddingHorizontal: 15, justifyContent: 'center'}}>
-      <View style={{backgroundColor: 'white', flex: 1, borderRadius: 10, margin: 10, justifyContent: 'center'}}>
-        <TextInput style={{paddingHorizontal: 20}}
-          placeholder='Search'
+    <View
+      style={{
+        width: '100%',
+        height: '100%',
+        paddingHorizontal: 15,
+        justifyContent: 'center',
+      }}>
+      <View
+        style={{
+          backgroundColor: 'white',
+          flex: 1,
+          borderRadius: 10,
+          margin: 10,
+          justifyContent: 'center',
+        }}>
+        <TextInput
+          style={{paddingHorizontal: 20}}
+          placeholder="Search"
           value={searchText}
-          onChangeText={text => navigation.setParams({searchText: text})}/>
+          onChangeText={text => navigation.setParams({searchText: text})}
+        />
       </View>
     </View>
   );
-}
+};
 
 const collapsibleParams = {
   collapsibleComponent: SearchBar,
   collapsibleBackgroundStyle: {
-    height: 60, 
+    height: 60,
     backgroundColor: '#061',
     // disableFadeoutInnerComponent: true,
-  }
-}
+  },
+};
 
 export default withCollapsible(ExtraHeaderScreen, collapsibleParams);
