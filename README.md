@@ -33,7 +33,7 @@ If you use Expo, add this lines to your App.js. (It only affects Android)
 ```js
 /* Support Expo */
 import {setExpoStatusBarHeight} from 'react-navigation-collapsible';
-import {Constants} from 'expo';
+import Constants from 'expo-constants';
 
 setExpoStatusBarHeight(Constants.statusBarHeight);
 ```
