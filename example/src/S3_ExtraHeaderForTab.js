@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, Animated} from 'react-native';
-import {createMaterialTopTabNavigator} from 'react-navigation';
+import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import TabChild1Screen from './TabChild1Screen.js';
 import ContextScreen from './ContextScreen';
 import {withCollapsibleForTab} from 'react-navigation-collapsible';

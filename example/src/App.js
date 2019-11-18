@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StatusBar} from 'react-native';
-import {createAppContainer, createStackNavigator} from 'react-navigation';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
 import MenuScreen from './MenuScreen.js';
 import S0_DefaultHeader from './S0_DefaultHeader';
@@ -14,7 +15,7 @@ import ContextScreen from './ContextScreen';
 
 /* Support Expo */
 // import { setExpoStatusBarHeight } from 'react-navigation-collapsible';
-// import { Constants } from 'expo';
+// import Constants from 'expo-constants';
 // setExpoStatusBarHeight(Constants.statusBarHeight);
 
 const navigationBackgroundColor = '#061';
