@@ -15,9 +15,9 @@ Try [Example](https://github.com/benevbright/react-navigation-collapsible/tree/m
 
 ```sh
 cd example
-npm install
-react-native run-ios
-react-native run-android
+yarn
+yarn ios
+yarn android
 ```
 
 ## Usage
@@ -147,7 +147,6 @@ react-navigation provides [State persistence](https://reactnavigation.org/docs/e
 
 ## ToDo
 
-- [ ] iOS 11 Style Header
 - [ ] Hiding bottom tab
 
 ## Contribution
@@ -157,7 +156,7 @@ react-navigation provides [State persistence](https://reactnavigation.org/docs/e
 
 ## Dependencies Version of Example
 
-- `react-native`: 0.57.8, `latest`: [![npm](https://img.shields.io/npm/v/react-native.svg)](https://www.npmjs.com/package/react-native)
-- `react-navigation`: 3.0.9, `latest`: [![npm](https://img.shields.io/npm/v/react-navigation.svg)](https://www.npmjs.com/package/react-navigation)
+- `react-native`: 0.61.4, `latest`: [![npm](https://img.shields.io/npm/v/react-native.svg)](https://www.npmjs.com/package/react-native)
+- `react-navigation`: 4.0.10, `latest`: [![npm](https://img.shields.io/npm/v/react-navigation.svg)](https://www.npmjs.com/package/react-navigation)
 
 I've ensured this module is compatible with `react-native` >=0.56 and `react-navigation` >=2.11.2. But it does not mean it's not compatible with older versions.
