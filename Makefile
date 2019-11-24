@@ -11,6 +11,5 @@ update-example-rn:
 	rm example/App.tsx
 	sed -i '' "s/import App from '.\/App';/import App from '.\/src\/App';/" example/index.js
 	sh -c 'cd example && yarn add react-navigation react-native-reanimated react-native-gesture-handler react-navigation-stack react-navigation-tabs'
-	sh -c 'cd example && yarn add -D @react-native-community/cli'
 	sh -c 'cd example && yarn add react-navigation-collapsible'
 	sh -c 'cd example && cd ios && pod install'
