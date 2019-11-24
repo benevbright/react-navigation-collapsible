@@ -37,7 +37,7 @@ const GroupImageHeader = ({navigation, collapsible}) => {
   return (
     <View style={{width: '100%', height: '100%', justifyContent: 'center'}}>
       <Image
-        source={require('./../asset/cat.jpg')}
+        source={require('./cat.jpg')}
         resizeMode="cover"
         style={{
           position: 'absolute',
@@ -47,7 +47,7 @@ const GroupImageHeader = ({navigation, collapsible}) => {
         }}
       />
       <Animated.Image
-        source={require('./../asset/cat.jpg')}
+        source={require('./cat.jpg')}
         resizeMode="cover"
         style={{
           transform: [{scale: translateOpacity}],
