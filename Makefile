@@ -1,5 +1,5 @@
 update-example-rn:
-	mkdir tmp || echo 'skip mkdir'
+	mkdir tmp
 	cp -r example/src tmp
 	cp example/.vscode/launch.json tmp
 	rm -rf example
