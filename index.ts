@@ -1,5 +1,5 @@
-const hello = () => {
-  console.log('hello');
+const hello = (): string => {
+  return 'hello';
 };
 
 export { hello };
