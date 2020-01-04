@@ -8,8 +8,8 @@ update-example-rn:
 	# uninstall @types/react-native
 	cd example && yarn remove @types/react-native
 	cd example && yarn add -D babel-plugin-module-resolver
-	# install react-navigation
-	cd example && yarn add react-navigation react-native-reanimated react-native-gesture-handler react-navigation-stack react-navigation-tabs
+	# install react-navigation@next (v5)
+	cd example && yarn add @react-navigation/native@next @react-navigation/stack@next @react-native-community/masked-view
+	cd example && yarn add react-native-gesture-handler react-native-screens react-native-safe-area-context
 	# install peer-dependencies
-	cd example && yarn add react-native-safe-area-view react-native-safe-area-context
 	cd example && cd ios && pod install

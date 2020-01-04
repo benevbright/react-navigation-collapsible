@@ -1,28 +1,28 @@
 import * as React from 'react';
 import {View, Text} from 'react-native';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import {NavigationNativeContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {hello} from 'react-navigation-collapsible';
+import 'react-native-gesture-handler';
 
-const HomeScreen = () => {
+function HomeScreen() {
   return (
-    <View style={{flex: 1, alignItems: 'center', top: 100}}>
-      <Text>{hello()}</Text>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Home Screen: {hello()}</Text>
     </View>
   );
-};
+}
 
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: {
-      title: 'react-navigation-collapsible',
-    },
-  },
-});
+const Stack = createStackNavigator();
 
-const AppContainer = createAppContainer(AppNavigator);
-
-const App = () => <AppContainer />;
+function App() {
+  return (
+    <NavigationNativeContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationNativeContainer>
+  );
+}
 
 export default App;
