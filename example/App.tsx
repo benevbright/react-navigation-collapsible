@@ -8,12 +8,14 @@ import {
 import {hello} from 'react-navigation-collapsible';
 import 'react-native-gesture-handler';
 
+import {S1RegularScreen} from './src/S1-RegularHeaderScreen';
 import {DetailScreen} from './src/DetailScreen';
 import {CollapsibleStack} from './src/Collapsible';
 
 type StackParamList = {
   Home: undefined;
   Detail: undefined;
+  'S1-Regular': undefined;
 };
 
 export type ScreenProps = {
@@ -22,21 +24,12 @@ export type ScreenProps = {
 
 function HomeScreen({navigation}: ScreenProps) {
   return (
-    <View style={{flex: 1}}>
-      <Text>1</Text>
-      <Text>2</Text>
-      <Text>3</Text>
-      <Text>4</Text>
-      <Text>4</Text>
-      <Text>4</Text>
-      <Text>4</Text>
-      <Text>5</Text>
-      <Text>6</Text>
+    <View style={{flex: 1, paddingTop: 50, alignItems: 'center'}}>
       <Text
         onPress={() => {
-          navigation.navigate('Detail');
+          navigation.navigate('S1-Regular');
         }}>
-        Go to Detail
+        Sample1: Regular Header
       </Text>
     </View>
   );
@@ -48,21 +41,29 @@ function App() {
   return (
     <NavigationNativeContainer>
       <Stack.Navigator>
-        {CollapsibleStack(
-          <Stack.Screen
-            name="Detail"
-            component={DetailScreen}
-            options={{
-              headerStyle: {backgroundColor: 'green'},
-              headerTintColor: 'white',
-            }}
-          />,
-        )}
         <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{
             title: 'react-navigation-collapsible',
+          }}
+        />
+        {CollapsibleStack(
+          <Stack.Screen
+            name="S1-Regular"
+            component={S1RegularScreen}
+            options={{
+              headerStyle: {backgroundColor: 'green'},
+              headerTintColor: 'white',
+              title: 'Regular Header',
+            }}
+          />,
+        )}
+        <Stack.Screen
+          name="Detail"
+          component={DetailScreen}
+          options={{
+            title: 'Detail Screen',
           }}
         />
       </Stack.Navigator>
