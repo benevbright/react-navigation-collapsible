@@ -12,7 +12,13 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    "baseUrl": "./",
+    "paths": {
+      "@react-navigation/stack": [
+        "./example/node_modules/@react-navigation/stack"
+      ]
+    }
   },
   "compileOnSave": true,
   "exclude": ["node_modules"],
