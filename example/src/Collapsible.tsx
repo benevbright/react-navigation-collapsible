@@ -39,32 +39,37 @@ export type CollapsibleProps = {
   collapsible?: {
     onScroll: Function;
     containerPaddingTop: number;
+    translateY: Animated.Value;
+    progress: Animated.Value;
+    opacity: Animated.Value;
   };
 };
 
 const CollapsibleStack = (ScreenElement: React.ReactElement) => {
-  const [translateYOrigin] = React.useState(new Animated.Value(0));
+  const [positionY] = React.useState(new Animated.Value(0));
   const headerHeight = defaultHeaderHeight;
   const [containerPaddingTop] = React.useState(
     getNavigationHeight(false, headerHeight),
   );
 
   const animatedDiffClampY = Animated.diffClamp(
-    translateYOrigin,
+    positionY,
     0,
     safeBounceHeight + headerHeight,
   );
 
-  const translateY = animatedDiffClampY.interpolate({
+  const progress = animatedDiffClampY.interpolate({
     inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
-    outputRange: [0, 0 - headerHeight],
+    outputRange: [0, 1],
     extrapolate: 'clamp',
   });
+  const translateY = Animated.multiply(progress, -headerHeight);
+  const opacity = Animated.subtract(1, progress);
 
   const {options = {}, component: Comp} = ScreenElement.props || {};
 
   const onScroll = Animated.event(
-    [{nativeEvent: {contentOffset: {y: translateYOrigin}}}],
+    [{nativeEvent: {contentOffset: {y: positionY}}}],
     {
       useNativeDriver: true,
     },
@@ -72,6 +77,9 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
   const collapsible = {
     onScroll,
     containerPaddingTop,
+    translateY,
+    progress,
+    opacity,
   };
   return (
     <Stack.Screen
@@ -81,7 +89,7 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
         headerStyle: {
           ...options.headerStyle,
           transform: [{translateY}],
-          opacity: 1,
+          opacity,
         },
         headerBackground: () => (
           <Animated.View
