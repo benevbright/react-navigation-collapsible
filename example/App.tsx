@@ -5,12 +5,11 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
-import {hello} from 'react-navigation-collapsible';
 import 'react-native-gesture-handler';
+import {CollapsibleStack} from 'react-navigation-collapsible';
 
 import {S1RegularScreen} from './src/S1-RegularHeaderScreen';
 import {DetailScreen} from './src/DetailScreen';
-import {CollapsibleStack} from './src/Collapsible';
 
 type StackParamList = {
   Home: undefined;

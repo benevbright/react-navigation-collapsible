@@ -1,21 +1,10 @@
 import * as React from 'react';
-import {Animated, Platform, Dimensions} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { Animated, Platform } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
-const IPHONE_XS_HEIGHT = 812; // iPhone X and XS
-const IPHONE_XR_HEIGHT = 896; // iPhone XR and XS Max
-const {width: WINDOW_WIDTH, height: WINDOW_HEIGHT} = Dimensions.get('window');
-export const IS_IPHONE_X =
-  Platform.OS === 'ios' &&
-  !Platform.isPad &&
-  !Platform.isTVOS &&
-  (WINDOW_HEIGHT === IPHONE_XS_HEIGHT ||
-    WINDOW_WIDTH === IPHONE_XS_HEIGHT ||
-    WINDOW_HEIGHT === IPHONE_XR_HEIGHT ||
-    WINDOW_WIDTH === IPHONE_XR_HEIGHT);
-
-const defaultHeaderHeight = Platform.select({ios: 44, android: 56});
-let safeBounceHeight = Platform.select({ios: 300, android: 100});
+const defaultHeaderHeight = Platform.select({ ios: 44, android: 56 });
+let safeBounceHeight = Platform.select({ ios: 300, android: 100 });
 export const setSafeBounceHeight = (height: number) => {
   safeBounceHeight = height;
 };
@@ -27,7 +16,7 @@ const androidStatusBarHeight = 0;
 const getStatusBarHeight = (isLandscape: boolean) => {
   if (Platform.OS === 'ios') {
     if (isLandscape) return 0;
-    return IS_IPHONE_X ? 44 : 20;
+    return isIphoneX() ? 44 : 20;
   } else if (Platform.OS === 'android') return androidStatusBarHeight;
   else return 0;
 };
@@ -49,13 +38,13 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
   const [positionY] = React.useState(new Animated.Value(0));
   const headerHeight = defaultHeaderHeight;
   const [containerPaddingTop] = React.useState(
-    getNavigationHeight(false, headerHeight),
+    getNavigationHeight(false, headerHeight)
   );
 
   const animatedDiffClampY = Animated.diffClamp(
     positionY,
     0,
-    safeBounceHeight + headerHeight,
+    safeBounceHeight + headerHeight
   );
 
   const progress = animatedDiffClampY.interpolate({
@@ -66,13 +55,13 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
   const translateY = Animated.multiply(progress, -headerHeight);
   const opacity = Animated.subtract(1, progress);
 
-  const {options = {}, component: Comp} = ScreenElement.props || {};
+  const { options = {}, component: Comp } = ScreenElement.props || {};
 
   const onScroll = Animated.event(
-    [{nativeEvent: {contentOffset: {y: positionY}}}],
+    [{ nativeEvent: { contentOffset: { y: positionY } } }],
     {
       useNativeDriver: true,
-    },
+    }
   );
   const collapsible = {
     onScroll,
@@ -88,7 +77,7 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
         ...options,
         headerStyle: {
           ...options.headerStyle,
-          transform: [{translateY}],
+          transform: [{ translateY }],
           opacity,
         },
         headerBackground: () => (
@@ -96,7 +85,7 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
             style={{
               backgroundColor: options.headerStyle?.backgroundColor,
               flex: 1,
-              transform: [{translateY}],
+              transform: [{ translateY }],
             }}
           />
         ),
@@ -107,4 +96,4 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
   );
 };
 
-export {CollapsibleStack};
+export { CollapsibleStack };

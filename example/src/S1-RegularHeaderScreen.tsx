@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Text, TouchableOpacity, Animated} from 'react-native';
 
 import {ScreenProps} from '../App';
-import {CollapsibleProps} from './Collapsible';
+import {CollapsibleProps} from 'react-navigation-collapsible';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {

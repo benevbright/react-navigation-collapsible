@@ -16,5 +16,5 @@
   },
   "compileOnSave": true,
   "exclude": ["node_modules"],
-  "include": ["./index.ts", "./src/*"]
+  "include": ["./index.tsx", "./src/*"]
 }

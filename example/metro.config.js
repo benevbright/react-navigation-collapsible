@@ -1,4 +1,9 @@
-const extraModules = ['@babel/runtime', 'react', 'react-native'];
+const extraModules = [
+  '@babel/runtime',
+  'react',
+  'react-native',
+  '@react-navigation/stack',
+];
 
 module.exports = {
   watchFolders: ['..'],
