@@ -15,7 +15,7 @@
     "react-native-reanimated": "^1.4.0",
     "react-navigation": "^4.0.10",
     "react-navigation-collapsible": "^3.0.3",
-    "react-navigation-stack": "^1.10.3",
+    "react-navigation-stack": "^2.0.12",
     "react-navigation-tabs": "^2.6.0"
   },
   "devDependencies": {
