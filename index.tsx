@@ -9,6 +9,32 @@ export const setSafeBounceHeight = (height: number) => {
   safeBounceHeight = height;
 };
 
+/*
+export const getDefaultHeaderHeight = (
+  layout: Layout,
+  statusBarHeight: number
+) => {
+  const isLandscape = layout.width > layout.height;
+
+  let headerHeight;
+
+  if (Platform.OS === 'ios') {
+    // @ts-ignore
+    if (isLandscape && !Platform.isPad) {
+      headerHeight = 32;
+    } else {
+      headerHeight = 44;
+    }
+  } else if (Platform.OS === 'android') {
+    headerHeight = 56;
+  } else {
+    headerHeight = 64;
+  }
+
+  return headerHeight + statusBarHeight;
+};
+*/
+
 const Stack = createStackNavigator();
 
 const androidStatusBarHeight = 0;
