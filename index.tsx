@@ -1,44 +1,38 @@
 import * as React from 'react';
-import { Animated, Platform, Dimensions, ScaledSize } from 'react-native';
+import {
+  Animated,
+  Platform,
+  Dimensions,
+  ScaledSize,
+  StatusBar,
+} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
-const defaultHeaderHeight = Platform.select({ ios: 44, android: 56 });
 let safeBounceHeight = Platform.select({ ios: 300, android: 100 });
-export const setSafeBounceHeight = (height: number) => {
+const setSafeBounceHeight = (height: number) => {
   safeBounceHeight = height;
 };
 
-/*
-export const getDefaultHeaderHeight = (
-  layout: Layout,
-  statusBarHeight: number
-) => {
-  const isLandscape = layout.width > layout.height;
-
-  let headerHeight;
-
-  if (Platform.OS === 'ios') {
-    // @ts-ignore
-    if (isLandscape && !Platform.isPad) {
-      headerHeight = 32;
-    } else {
-      headerHeight = 44;
-    }
-  } else if (Platform.OS === 'android') {
-    headerHeight = 56;
-  } else {
-    headerHeight = 64;
-  }
-
-  return headerHeight + statusBarHeight;
-};
-*/
-
 const Stack = createStackNavigator();
 
-const androidStatusBarHeight = 0;
+let androidStatusBarHeight = 0;
+const setExpoStatusBarHeight = height => {
+  if (Platform.OS === 'android') androidStatusBarHeight = height;
+};
 
+const getDefaultHeaderHeight = (isLandscape: boolean) => {
+  if (Platform.OS === 'ios') {
+    if (isLandscape && !Platform.isPad) {
+      return 32;
+    } else {
+      return 44;
+    }
+  } else if (Platform.OS === 'android') {
+    return 56;
+  }
+  return 0;
+};
 const getStatusBarHeight = (isLandscape: boolean) => {
   if (Platform.OS === 'ios') {
     if (isLandscape) return 0;
@@ -62,11 +56,11 @@ export type CollapsibleProps = {
 
 const CollapsibleStack = (ScreenElement: React.ReactElement) => {
   const [positionY] = React.useState(new Animated.Value(0));
-  const headerHeight = defaultHeaderHeight;
   const window = Dimensions.get('window');
   const [isLandscape, setIsLandscape] = React.useState(
     window.height < window.width
   );
+  const headerHeight = getDefaultHeaderHeight(isLandscape);
 
   React.useEffect(() => {
     const handleOrientationChange = ({ window }: { window: ScaledSize }) => {
@@ -134,4 +128,4 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
   );
 };
 
-export { CollapsibleStack };
+export { CollapsibleStack, setSafeBounceHeight, setExpoStatusBarHeight };
