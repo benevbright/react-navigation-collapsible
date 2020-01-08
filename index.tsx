@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  Animated,
-  Platform,
-  Dimensions,
-  ScaledSize,
-  StatusBar,
-} from 'react-native';
+import { Animated, Platform, Dimensions, ScaledSize, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
@@ -54,7 +48,14 @@ export type CollapsibleProps = {
   };
 };
 
-const CollapsibleStack = (ScreenElement: React.ReactElement) => {
+export type CollapsibleStackConfig = {
+  iOSCollapsedColor?: string;
+};
+
+const CollapsibleStack = (
+  ScreenElement: React.ReactElement,
+  config: CollapsibleStackConfig = {}
+) => {
   const [positionY] = React.useState(new Animated.Value(0));
   const window = Dimensions.get('window');
   const [isLandscape, setIsLandscape] = React.useState(
@@ -111,13 +112,25 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
           opacity,
         },
         headerBackground: () => (
-          <Animated.View
-            style={{
-              backgroundColor: options.headerStyle?.backgroundColor,
-              flex: 1,
-              transform: [{ translateY }],
-            }}
-          />
+          <Animated.View style={{ flex: 1, transform: [{ translateY }] }}>
+            <View
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                backgroundColor:
+                  config.iOSCollapsedColor ||
+                  options.headerStyle?.backgroundColor,
+              }}
+            />
+            <Animated.View
+              style={{
+                backgroundColor: options.headerStyle?.backgroundColor,
+                flex: 1,
+                opacity,
+              }}
+            />
+          </Animated.View>
         ),
         headerTransparent: true,
       }}

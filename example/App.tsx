@@ -57,6 +57,9 @@ function App() {
               title: 'Regular Header',
             }}
           />,
+          {
+            iOSCollapsedColor: 'red',
+          },
         )}
         <Stack.Screen
           name="Detail"
