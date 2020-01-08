@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Animated, Platform } from 'react-native';
+import { Animated, Platform, Dimensions, ScaledSize } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
@@ -37,9 +37,17 @@ export type CollapsibleProps = {
 const CollapsibleStack = (ScreenElement: React.ReactElement) => {
   const [positionY] = React.useState(new Animated.Value(0));
   const headerHeight = defaultHeaderHeight;
-  const [containerPaddingTop] = React.useState(
-    getNavigationHeight(false, headerHeight)
+  const window = Dimensions.get('window');
+  const [isLandscape, setIsLandscape] = React.useState(
+    window.height < window.width
   );
+
+  React.useEffect(() => {
+    const handleOrientationChange = ({ window }: { window: ScaledSize }) => {
+      setIsLandscape(window.height < window.width);
+    };
+    Dimensions.addEventListener('change', handleOrientationChange);
+  }, []);
 
   const animatedDiffClampY = Animated.diffClamp(
     positionY,
@@ -63,13 +71,15 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
       useNativeDriver: true,
     }
   );
-  const collapsible = {
+
+  const exportCollapsibleProps = {
     onScroll,
-    containerPaddingTop,
+    containerPaddingTop: getNavigationHeight(isLandscape, headerHeight),
     translateY,
     progress,
     opacity,
   };
+
   return (
     <Stack.Screen
       {...ScreenElement.props}
@@ -91,7 +101,9 @@ const CollapsibleStack = (ScreenElement: React.ReactElement) => {
         ),
         headerTransparent: true,
       }}
-      component={props => <Comp {...props} collapsible={collapsible} />}
+      component={props => (
+        <Comp {...props} collapsible={exportCollapsibleProps} />
+      )}
     />
   );
 };
