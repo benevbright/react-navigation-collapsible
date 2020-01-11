@@ -1,18 +1,22 @@
 import * as React from 'react';
 import {Text, TouchableOpacity, Animated} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useCollapsibleStack} from 'react-navigation-collapsible';
 
-import {ScreenProps} from '../App';
-import {CollapsibleProps} from 'react-navigation-collapsible';
+import {StackParamList} from '../App';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {
   data.push(i);
 }
 
-type Props = ScreenProps & CollapsibleProps;
+type ScreenProps = {
+  navigation: StackNavigationProp<StackParamList>;
+};
 
-const S1RegularScreen = ({navigation, collapsible}: Props) => {
-  const {onScroll, containerPaddingTop} = collapsible || {};
+const S1RegularScreen = ({navigation}: ScreenProps) => {
+  const {onScroll, containerPaddingTop} = useCollapsibleStack();
+
   return (
     <Animated.FlatList
       data={data}

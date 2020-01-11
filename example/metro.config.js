@@ -1,12 +1,15 @@
+const path = require('path');
+
 const extraModules = [
   '@babel/runtime',
   'react',
   'react-native',
   '@react-navigation/stack',
+  '@react-navigation/native',
 ];
 
 module.exports = {
-  watchFolders: ['..'],
+  watchFolders: [path.resolve(__dirname, '..')],
   transformer: {
     getTransformOptions: async () => ({
       transform: {

@@ -11,13 +11,13 @@ import {CollapsibleStack} from 'react-navigation-collapsible';
 import {S1RegularScreen} from './src/S1-RegularHeaderScreen';
 import {DetailScreen} from './src/DetailScreen';
 
-type StackParamList = {
+export type StackParamList = {
   Home: undefined;
   Detail: undefined;
   'S1-Regular': undefined;
 };
 
-export type ScreenProps = {
+type ScreenProps = {
   navigation: StackNavigationProp<StackParamList>;
 };
 

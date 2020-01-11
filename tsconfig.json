@@ -17,6 +17,9 @@
     "paths": {
       "@react-navigation/stack": [
         "./example/node_modules/@react-navigation/stack"
+      ],
+      "@react-navigation/native": [
+        "./example/node_modules/@react-navigation/native"
       ]
     }
   },
