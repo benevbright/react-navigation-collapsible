@@ -12,9 +12,18 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    "baseUrl": "./",
+    "paths": {
+      "@react-navigation/stack": [
+        "./example/node_modules/@react-navigation/stack"
+      ],
+      "@react-navigation/native": [
+        "./example/node_modules/@react-navigation/native"
+      ]
+    }
   },
   "compileOnSave": true,
   "exclude": ["node_modules"],
-  "include": ["./index.ts", "./src/*"]
+  "include": ["./index.tsx", "./src/*"]
 }

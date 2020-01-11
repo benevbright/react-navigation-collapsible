@@ -1,14 +1,35 @@
 import * as React from 'react';
 import {View, Text} from 'react-native';
 import {NavigationNativeContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {hello} from 'react-navigation-collapsible';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import 'react-native-gesture-handler';
+import {CollapsibleStack} from 'react-navigation-collapsible';
 
-function HomeScreen() {
+import {S1RegularScreen} from './src/S1-RegularHeaderScreen';
+import {DetailScreen} from './src/DetailScreen';
+
+export type StackParamList = {
+  Home: undefined;
+  Detail: undefined;
+  'S1-Regular': undefined;
+};
+
+type ScreenProps = {
+  navigation: StackNavigationProp<StackParamList>;
+};
+
+function HomeScreen({navigation}: ScreenProps) {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen: {hello()}</Text>
+    <View style={{flex: 1, paddingTop: 50, alignItems: 'center'}}>
+      <Text
+        onPress={() => {
+          navigation.navigate('S1-Regular');
+        }}>
+        Sample1: Regular Header
+      </Text>
     </View>
   );
 }
@@ -19,7 +40,34 @@ function App() {
   return (
     <NavigationNativeContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: 'react-navigation-collapsible',
+          }}
+        />
+        {CollapsibleStack(
+          <Stack.Screen
+            name="S1-Regular"
+            component={S1RegularScreen}
+            options={{
+              headerStyle: {backgroundColor: 'green'},
+              headerTintColor: 'white',
+              title: 'Regular Header',
+            }}
+          />,
+          {
+            iOSCollapsedColor: 'red',
+          },
+        )}
+        <Stack.Screen
+          name="Detail"
+          component={DetailScreen}
+          options={{
+            title: 'Detail Screen',
+          }}
+        />
       </Stack.Navigator>
     </NavigationNativeContainer>
   );
