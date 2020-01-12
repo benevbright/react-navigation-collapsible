@@ -21,5 +21,7 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/ban-ts-ignore': 'warn',
+    'react/display-name': 'warn',
   },
 };
