@@ -1,4 +1,4 @@
-import { CollapsibleStack } from './src';
+import { CollapsibleStack } from './src/CollapsibleStack';
 
 import { useCollapsibleStack } from './src/hooks';
 

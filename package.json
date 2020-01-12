@@ -34,7 +34,8 @@
   "peerDependencies": {
     "react": ">=16.8",
     "react-native": ">=0.59",
-    "react-navigation": "*"
+    "@react-navigation/stack": "*",
+    "@react-navigation/native": "*"
   },
   "dependencies": {
     "hoist-non-react-statics": "^3.0.1",
