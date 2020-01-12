@@ -1,6 +1,6 @@
 {
   "name": "react-navigation-collapsible",
-  "version": "5.0.0-alpha0",
+  "version": "5.0.0-alpha1",
   "description": "An extension of react-navigation for the collapsible header",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "lib"
   ],
   "scripts": {
-    "prettier": "prettier --write index.ts  ./src README.md",
+    "prettier": "prettier --write index.ts  ./src/**/* README.md",
     "flowgen": "sh flow.sh",
     "lint": "eslint --ext '.js,.ts,.tsx' index.ts ./src",
     "build": "tsc && yarn flowgen",
