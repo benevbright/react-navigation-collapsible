@@ -38,7 +38,6 @@
     "@react-navigation/native": "*"
   },
   "dependencies": {
-    "hoist-non-react-statics": "^3.0.1",
     "react-native-iphone-x-helper": "^1.2.1"
   },
   "devDependencies": {
