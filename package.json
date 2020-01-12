@@ -1,6 +1,6 @@
 {
   "name": "react-navigation-collapsible",
-  "version": "5.0.0-rc0",
+  "version": "5.0.0-alpha0",
   "description": "An extension of react-navigation for the collapsible header",
   "repository": {
     "type": "git",
