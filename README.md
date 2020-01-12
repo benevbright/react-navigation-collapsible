@@ -1,3 +1,5 @@
+🚧 [v5 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v5) work in progress for `react-navigation v5`.
+
 # react-navigation-collapsible
 
 [![npm](https://img.shields.io/npm/v/react-navigation-collapsible.svg)](https://www.npmjs.com/package/react-navigation-collapsible) [![npm](https://img.shields.io/npm/dm/react-navigation-collapsible.svg)](https://www.npmjs.com/package/react-navigation-collapsible) [![Greenkeeper badge](https://badges.greenkeeper.io/benevbright/react-navigation-collapsible.svg)](https://greenkeeper.io/)
