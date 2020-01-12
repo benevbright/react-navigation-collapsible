@@ -1,4 +1,4 @@
-🚧 [v5 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v5) work in progress for `react-navigation v5`.
+### 🚧 [v5 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v5) work in progress for `react-navigation v5`.
 
 # react-navigation-collapsible
 
