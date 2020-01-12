@@ -6,7 +6,7 @@ An extension of react-navigation that makes your header collapsible.
 
 Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible)
 
-## Versions
+## Versions 🚧
 
 For `react-navigation` < 5, use `react-navigation-collapsible@3.x`. Documentation can be found at [v3-4 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4).
 
