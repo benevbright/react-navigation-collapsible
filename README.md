@@ -4,15 +4,22 @@
 
 An extension of react-navigation that makes your header collapsible.
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/v5/docs/demo-sample1.gif?raw=true">
-
 Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible)
 
-## Versions 🚧
+## Compatibility 🚧
 
-For `react-navigation` < 5, use `react-navigation-collapsible@3.x`. Documentation can be found at [v3-4 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4).
+| `react-navigation-collapsible` | `react-navigation` | Documentation                                                                        |
+| ------------------------------ | ------------------ | ------------------------------------------------------------------------------------ |
+| ^5.0.0 (`next`)                | ^5.0.0 (`next`)    | current                                                                              |
+| ^3.0.0 (`latest`)              | ^4.0.0 (`latest`)  | [v3-4 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4) |
+
+The navigation tab is no longer supported due to the [Android bug from react-native](https://github.com/facebook/react-native/issues/21801).
 
 ## Usage
+
+### For Regular Stack Header
+
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/v5/docs/demo-sample1.gif?raw=true">
 
 ```js
 import { CollapsibleStack } from 'react-navigation-collapsible';
@@ -59,7 +66,7 @@ const MyScreen = ({ navigation, route }) => {
       onScroll={onScroll}
       contentContainerStyle={{ paddingTop: containerPaddingTop }}
       scrollIndicatorInsets={{ top: containerPaddingTop }}
-      /* rest stuff */
+      /* rest of your stuff */
     />
   );
 };
