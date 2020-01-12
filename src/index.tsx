@@ -1,63 +1,19 @@
-/* global global */
 import * as React from 'react';
-import {
-  Animated,
-  Platform,
-  Dimensions,
-  ScaledSize,
-  View,
-  StatusBar,
-} from 'react-native';
+import { Animated, Dimensions, ScaledSize } from 'react-native';
 import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
-import { useRoute } from '@react-navigation/native';
-import { isIphoneX } from 'react-native-iphone-x-helper';
 
-let safeBounceHeight = Platform.select({ ios: 300, android: 100 });
-const setSafeBounceHeight = (height: number) => {
-  safeBounceHeight = height;
-};
+import {
+  getSafeBounceHeight,
+  getDefaultHeaderHeight,
+  getNavigationHeight,
+} from './utils';
+import { CollapsibleStackConfig } from './types';
+import { CollapsedHeaderBackground } from './CollapsedHeaderBackground';
 
 const Stack = createStackNavigator();
-
-const getDefaultHeaderHeight = (isLandscape: boolean) => {
-  if (Platform.OS === 'ios') {
-    if (isLandscape && !Platform.isPad) {
-      return 32;
-    } else {
-      return 44;
-    }
-  } else if (Platform.OS === 'android') {
-    return 56;
-  }
-  return 0;
-};
-const getStatusBarHeight = (isLandscape: boolean) => {
-  if (Platform.OS === 'ios') {
-    if (isLandscape) return 0;
-    return isIphoneX() ? 44 : 20;
-  } else if (Platform.OS === 'android') {
-    // @ts-ignore
-    return global.Expo ? StatusBar.currentHeight : 0;
-  } else return 0;
-};
-const getNavigationHeight = (isLandscape: boolean, headerHeight: number) => {
-  return headerHeight + getStatusBarHeight(isLandscape);
-};
-
-type Collapsible = {
-  onScroll: Function;
-  containerPaddingTop: number;
-  translateY: Animated.Value;
-  progress: Animated.Value;
-  opacity: Animated.Value;
-};
-
-export type CollapsibleStackConfig = {
-  iOSCollapsedColor?: string;
-};
 
 const CollapsibleStack = (
   ScreenElement: React.ReactElement,
@@ -104,6 +60,7 @@ const CollapsibleStack = (
       }) => {
         setNavigationSetParam(() => navigation.setParams);
         const headerHeight = getDefaultHeaderHeight(isLandscape);
+        const safeBounceHeight = getSafeBounceHeight();
 
         const animatedDiffClampY = Animated.diffClamp(
           positionY,
@@ -140,27 +97,13 @@ const CollapsibleStack = (
             transform: [{ translateY }],
             opacity,
           },
-          headerBackground: () => (
-            <Animated.View style={{ flex: 1, transform: [{ translateY }] }}>
-              <View
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor:
-                    config.iOSCollapsedColor ||
-                    userOptions.headerStyle?.backgroundColor,
-                }}
-              />
-              <Animated.View
-                style={{
-                  backgroundColor: userOptions.headerStyle?.backgroundColor,
-                  flex: 1,
-                  opacity,
-                }}
-              />
-            </Animated.View>
-          ),
+          headerBackground: CollapsedHeaderBackground({
+            translateY,
+            opacity,
+            backgroundColor: userOptions.headerStyle?.backgroundColor,
+            collapsedColor:
+              config.collapsedColor || userOptions.headerStyle?.backgroundColor,
+          }),
           headerTransparent: true,
         };
       }}
@@ -169,10 +112,4 @@ const CollapsibleStack = (
   );
 };
 
-const useCollapsibleStack = (): Collapsible => {
-  const route = useRoute();
-  // @ts-ignore
-  return route.params?.collapsible || {};
-};
-
-export { CollapsibleStack, useCollapsibleStack, setSafeBounceHeight };
+export { CollapsibleStack };

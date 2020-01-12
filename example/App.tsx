@@ -58,7 +58,7 @@ function App() {
             }}
           />,
           {
-            iOSCollapsedColor: 'red',
+            collapsedColor: 'red',
           },
         )}
         <Stack.Screen

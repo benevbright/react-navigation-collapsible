@@ -24,9 +24,9 @@
     "lib"
   ],
   "scripts": {
-    "prettier": "prettier --write index.ts README.md",
+    "prettier": "prettier --write index.ts  ./src README.md",
     "flowgen": "sh flow.sh",
-    "lint": "eslint --ext '.js,.ts,.tsx' index.tsx",
+    "lint": "eslint --ext '.js,.ts,.tsx' index.ts ./src",
     "build": "tsc && yarn flowgen",
     "clean": "rm -rf lib",
     "build-publish": "yarn clean && yarn lint && yarn build && yarn publish"
