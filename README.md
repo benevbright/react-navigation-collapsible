@@ -57,16 +57,18 @@ const MyScreen = ({ navigation, route }) => {
   const {
     onScroll /* Event handler */,
     containerPaddingTop /* number */,
-    translateY /* Animated.Value, 0.0 ~ -headerHeight */,
-    progress /* Animated.Value, 0.0 ~ 1.0 */,
-    opacity /* Animated.Value, 1.0 ~ 0.0 */,
+    scrollIndicatorInsetTop /* number */,
+    /* Animated.AnimatedInterpolation by scrolling */
+    translateY /* 0.0 ~ -headerHeight */,
+    progress /* 0.0 ~ 1.0 */,
+    opacity /* 1.0 ~ 0.0 */,
   } = useCollapsibleStack();
 
   return (
     <Animated.FlatList
       onScroll={onScroll}
       contentContainerStyle={{ paddingTop: containerPaddingTop }}
-      scrollIndicatorInsets={{ top: containerPaddingTop }}
+      scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
       /* rest of your stuff */
     />
   );

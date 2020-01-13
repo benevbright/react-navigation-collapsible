@@ -9,8 +9,9 @@ import {
   getSafeBounceHeight,
   getDefaultHeaderHeight,
   getNavigationHeight,
+  getScrollIndicatorInsetTop,
 } from './utils';
-import { CollapsibleStackConfig } from './types';
+import { CollapsibleStackConfig, Collapsible } from './types';
 import { CollapsedHeaderBackground } from './CollapsedHeaderBackground';
 
 const Stack = createStackNavigator();
@@ -76,9 +77,13 @@ const CollapsibleStack = (
         const translateY = Animated.multiply(progress, -headerHeight);
         const opacity = Animated.subtract(1, progress);
 
-        const collapsible = {
+        const collapsible: Collapsible = {
           onScroll,
           containerPaddingTop: getNavigationHeight(isLandscape, headerHeight),
+          scrollIndicatorInsetTop: getScrollIndicatorInsetTop(
+            isLandscape,
+            headerHeight
+          ),
           translateY,
           progress,
           opacity,

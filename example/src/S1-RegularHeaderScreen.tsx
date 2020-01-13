@@ -15,14 +15,18 @@ type ScreenProps = {
 };
 
 const S1RegularScreen = ({navigation}: ScreenProps) => {
-  const {onScroll, containerPaddingTop} = useCollapsibleStack();
+  const {
+    onScroll,
+    containerPaddingTop,
+    scrollIndicatorInsetTop,
+  } = useCollapsibleStack();
 
   return (
     <Animated.FlatList
       data={data}
       onScroll={onScroll}
       contentContainerStyle={{paddingTop: containerPaddingTop}}
-      // scrollIndicatorInsets={{top: containerPaddingTop}}
+      scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
       renderItem={({item}: any) => (
         <TouchableOpacity
           onPress={() => navigation.navigate('Detail')}

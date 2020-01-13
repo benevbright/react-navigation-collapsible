@@ -39,10 +39,21 @@ const getStatusBarHeight = (isLandscape: boolean) => {
 const getNavigationHeight = (isLandscape: boolean, headerHeight: number) => {
   return headerHeight + getStatusBarHeight(isLandscape);
 };
+const getScrollIndicatorInsetTop = (
+  isLandscape: boolean,
+  headerHeight: number
+) => {
+  if (Platform.OS === 'ios') {
+    if (isIphoneX()) return getStatusBarHeight(isLandscape);
+    else return headerHeight;
+  }
+  return headerHeight + getStatusBarHeight(isLandscape);
+};
 
 export {
   setSafeBounceHeight,
   getSafeBounceHeight,
   getDefaultHeaderHeight,
   getNavigationHeight,
+  getScrollIndicatorInsetTop,
 };

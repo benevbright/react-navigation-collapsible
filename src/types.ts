@@ -3,9 +3,10 @@ import { Animated } from 'react-native';
 export type Collapsible = {
   onScroll: Function;
   containerPaddingTop: number;
-  translateY: Animated.Value;
-  progress: Animated.Value;
-  opacity: Animated.Value;
+  scrollIndicatorInsetTop: number;
+  translateY: Animated.AnimatedInterpolation;
+  progress: Animated.AnimatedInterpolation;
+  opacity: Animated.AnimatedInterpolation;
 };
 
 export type CollapsibleStackConfig = {
