@@ -9,27 +9,38 @@ import 'react-native-gesture-handler';
 import {CollapsibleStack} from 'react-navigation-collapsible';
 
 import {S1RegularScreen} from './src/S1-RegularHeaderScreen';
+import {S2SubHeaderScreen} from './src/S2-SubHeaderScreen';
 import {DetailScreen} from './src/DetailScreen';
 
 export type StackParamList = {
   Home: undefined;
   Detail: undefined;
   'S1-Regular': undefined;
+  'S2-SubHeader': undefined;
 };
 
 type ScreenProps = {
   navigation: StackNavigationProp<StackParamList>;
 };
 
+const samples: {title: string; routeName: keyof StackParamList}[] = [
+  {title: 'Sample1: Regular Header', routeName: 'S1-Regular'},
+  {title: 'Sample2: Sub Header', routeName: 'S2-SubHeader'},
+];
+
 function HomeScreen({navigation}: ScreenProps) {
   return (
     <View style={{flex: 1, paddingTop: 50, alignItems: 'center'}}>
-      <Text
-        onPress={() => {
-          navigation.navigate('S1-Regular');
-        }}>
-        Sample1: Regular Header
-      </Text>
+      {samples.map(sample => (
+        <Text
+          key={sample.title}
+          style={{margin: 15}}
+          onPress={() => {
+            navigation.navigate(sample.routeName);
+          }}>
+          {sample.title}
+        </Text>
+      ))}
     </View>
   );
 }
@@ -39,7 +50,12 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <NavigationNativeContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#f002',
+          },
+        }}>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -60,6 +76,17 @@ function App() {
           {
             collapsedColor: 'red',
           },
+        )}
+        {CollapsibleStack(
+          <Stack.Screen
+            name="S2-SubHeader"
+            component={S2SubHeaderScreen}
+            options={{
+              headerStyle: {backgroundColor: 'green'},
+              headerTintColor: 'white',
+              title: 'Collapsible Sub Header',
+            }}
+          />,
         )}
         <Stack.Screen
           name="Detail"
