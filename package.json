@@ -1,6 +1,6 @@
 {
   "name": "react-navigation-collapsible",
-  "version": "5.0.0-alpha1",
+  "version": "5.0.0-alpha2",
   "description": "An extension of react-navigation for the collapsible header",
   "repository": {
     "type": "git",
@@ -32,10 +32,10 @@
     "build-publish": "yarn clean && yarn lint && yarn build && yarn publish"
   },
   "peerDependencies": {
-    "react": ">=16.8",
-    "react-native": ">=0.59",
+    "@react-navigation/native": "*",
     "@react-navigation/stack": "*",
-    "@react-navigation/native": "*"
+    "react": ">=16.8",
+    "react-native": ">=0.59"
   },
   "dependencies": {
     "react-native-iphone-x-helper": "^1.2.1"
