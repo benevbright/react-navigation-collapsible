@@ -16,12 +16,18 @@ import { CollapsedHeaderBackground } from './CollapsedHeaderBackground';
 
 const Stack = createStackNavigator();
 
-const CollapsibleStack = (
+enum CollapsibleTarget {
+  Default,
+  SubHeader,
+}
+
+const createCollapsibleStack = (
   ScreenElement: React.ReactElement,
-  config: CollapsibleStackConfig = {}
+  config: CollapsibleStackConfig = {},
+  collapsibleTarget: CollapsibleTarget = CollapsibleTarget.Default
 ) => {
-  const { options: userOptions = {}, component: UserComponent } =
-    ScreenElement.props || {};
+  const { options = {}, component: UserComponent } = ScreenElement.props || {};
+  let userOptions = options;
 
   const [positionY] = React.useState(new Animated.Value(0));
   const onScroll = Animated.event(
@@ -59,8 +65,14 @@ const CollapsibleStack = (
         navigation: StackNavigationProp<any>;
         route: any;
       }) => {
+        if (typeof userOptions === 'function')
+          userOptions = userOptions({ navigation, route });
+
         setNavigationSetParam(() => navigation.setParams);
-        const headerHeight = getDefaultHeaderHeight(isLandscape);
+        const headerHeight =
+          collapsibleTarget === CollapsibleTarget.SubHeader
+            ? route.params?.collapsibleSubHeaderHeight || 0
+            : getDefaultHeaderHeight(isLandscape);
         const safeBounceHeight = getSafeBounceHeight();
 
         const animatedDiffClampY = Animated.diffClamp(
@@ -79,11 +91,14 @@ const CollapsibleStack = (
 
         const collapsible: Collapsible = {
           onScroll,
-          containerPaddingTop: getNavigationHeight(isLandscape, headerHeight),
-          scrollIndicatorInsetTop: getScrollIndicatorInsetTop(
-            isLandscape,
-            headerHeight
-          ),
+          containerPaddingTop:
+            collapsibleTarget === CollapsibleTarget.SubHeader
+              ? headerHeight
+              : getNavigationHeight(isLandscape, headerHeight),
+          scrollIndicatorInsetTop:
+            collapsibleTarget === CollapsibleTarget.SubHeader
+              ? headerHeight
+              : getScrollIndicatorInsetTop(isLandscape, headerHeight),
           translateY,
           progress,
           opacity,
@@ -95,26 +110,34 @@ const CollapsibleStack = (
           navigation.setParams({ collapsible, isCollapsibleDirty: false });
         }
 
-        return {
-          ...userOptions,
-          headerStyle: {
-            ...userOptions.headerStyle,
-            transform: [{ translateY }],
-            opacity,
-          },
-          headerBackground: CollapsedHeaderBackground({
-            translateY,
-            opacity,
-            backgroundColor: userOptions.headerStyle?.backgroundColor,
-            collapsedColor:
-              config.collapsedColor || userOptions.headerStyle?.backgroundColor,
-          }),
-          headerTransparent: true,
-        };
+        return collapsibleTarget === CollapsibleTarget.SubHeader
+          ? userOptions
+          : {
+              ...userOptions,
+              headerStyle: {
+                ...userOptions.headerStyle,
+                transform: [{ translateY }],
+                opacity,
+              },
+              headerBackground: CollapsedHeaderBackground({
+                translateY,
+                opacity,
+                backgroundColor: userOptions.headerStyle?.backgroundColor,
+                collapsedColor:
+                  config.collapsedColor ||
+                  userOptions.headerStyle?.backgroundColor,
+              }),
+              headerTransparent: true,
+            };
       }}
       component={UserComponent}
     />
   );
 };
 
-export { CollapsibleStack };
+const createCollapsibleStackSub = (
+  ScreenElement: React.ReactElement,
+  config: CollapsibleStackConfig = {}
+) => createCollapsibleStack(ScreenElement, config, CollapsibleTarget.SubHeader);
+
+export { createCollapsibleStack, createCollapsibleStackSub };

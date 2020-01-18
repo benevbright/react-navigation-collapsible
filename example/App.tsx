@@ -6,17 +6,20 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import {CollapsibleStack} from 'react-navigation-collapsible';
+import {
+  createCollapsibleStack,
+  createCollapsibleStackSub,
+} from 'react-navigation-collapsible';
 
-import {S1RegularScreen} from './src/S1-RegularHeaderScreen';
-import {S2SubHeaderScreen} from './src/S2-SubHeaderScreen';
+import {DefaultHeaderScreen} from './src/DefaultHeaderScreen';
+import {SubHeaderScreen} from './src/SubHeaderScreen';
 import {DetailScreen} from './src/DetailScreen';
 
 export type StackParamList = {
   Home: undefined;
   Detail: undefined;
-  'S1-Regular': undefined;
-  'S2-SubHeader': undefined;
+  WithDefaultHeader: undefined;
+  WithSubHeader: undefined;
 };
 
 type ScreenProps = {
@@ -24,8 +27,8 @@ type ScreenProps = {
 };
 
 const samples: {title: string; routeName: keyof StackParamList}[] = [
-  {title: 'Sample1: Regular Header', routeName: 'S1-Regular'},
-  {title: 'Sample2: Sub Header', routeName: 'S2-SubHeader'},
+  {title: 'Sample1: Regular Header', routeName: 'WithDefaultHeader'},
+  {title: 'Sample2: Sub Header', routeName: 'WithSubHeader'},
 ];
 
 function HomeScreen({navigation}: ScreenProps) {
@@ -63,10 +66,10 @@ function App() {
             title: 'react-navigation-collapsible',
           }}
         />
-        {CollapsibleStack(
+        {createCollapsibleStack(
           <Stack.Screen
-            name="S1-Regular"
-            component={S1RegularScreen}
+            name="WithDefaultHeader"
+            component={DefaultHeaderScreen}
             options={{
               headerStyle: {backgroundColor: 'green'},
               headerTintColor: 'white',
@@ -77,10 +80,10 @@ function App() {
             collapsedColor: 'red',
           },
         )}
-        {CollapsibleStack(
+        {createCollapsibleStackSub(
           <Stack.Screen
-            name="S2-SubHeader"
-            component={S2SubHeaderScreen}
+            name="WithSubHeader"
+            component={SubHeaderScreen}
             options={{
               headerStyle: {backgroundColor: 'green'},
               headerTintColor: 'white',

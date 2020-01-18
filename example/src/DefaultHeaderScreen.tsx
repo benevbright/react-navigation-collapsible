@@ -14,7 +14,7 @@ type ScreenProps = {
   navigation: StackNavigationProp<StackParamList>;
 };
 
-const S2SubHeaderScreen = ({navigation}: ScreenProps) => {
+const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
   const {
     onScroll,
     containerPaddingTop,
@@ -51,4 +51,4 @@ const S2SubHeaderScreen = ({navigation}: ScreenProps) => {
   );
 };
 
-export {S2SubHeaderScreen};
+export {DefaultHeaderScreen};

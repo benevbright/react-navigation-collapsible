@@ -23,14 +23,14 @@ The navigation tab is no longer supported due to the [Android bug from react-nat
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/v5/docs/demo-sample1.gif?raw=true">
 
 ```js
-import { CollapsibleStack } from 'react-navigation-collapsible';
+import { createCollapsibleStack } from 'react-navigation-collapsible';
 
 function App() {
   return (
     <NavigationNativeContainer>
       <Stack.Navigator>
         /* Wrap your Stack.Screen */
-        {CollapsibleStack(
+        {createCollapsibleStack(
           <Stack.Screen
             name="HomeScreen"
             component={MyScreen}
@@ -75,7 +75,7 @@ const MyScreen = ({ navigation, route }) => {
 };
 ```
 
-See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/S1-RegularHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/S1-RegularHeaderScreen.tsx)
+See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/DefaultHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/DefaultHeaderScreen.tsx)
 
 ## Install
 
