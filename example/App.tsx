@@ -27,7 +27,7 @@ type ScreenProps = {
 };
 
 const samples: {title: string; routeName: keyof StackParamList}[] = [
-  {title: 'Sample1: Regular Header', routeName: 'WithDefaultHeader'},
+  {title: 'Sample1: Default Header', routeName: 'WithDefaultHeader'},
   {title: 'Sample2: Sub Header', routeName: 'WithSubHeader'},
 ];
 
