@@ -18,19 +18,19 @@ The navigation tab is no longer supported due to the [Android bug from react-nat
 
 ## Usage
 
-### For Regular Stack Header
+### 1. Default Header
 
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/v5/docs/demo-sample1.gif?raw=true">
 
 ```js
-import { CollapsibleStack } from 'react-navigation-collapsible';
+import { createCollapsibleStack } from 'react-navigation-collapsible';
 
 function App() {
   return (
     <NavigationNativeContainer>
       <Stack.Navigator>
         /* Wrap your Stack.Screen */
-        {CollapsibleStack(
+        {createCollapsibleStack(
           <Stack.Screen
             name="HomeScreen"
             component={MyScreen}
@@ -40,7 +40,7 @@ function App() {
             }}
           />,
           {
-            collapsedColor: 'red',
+            collapsedColor: 'red' /* Optional */,
           }
         )}
       </Stack.Navigator>
@@ -75,7 +75,57 @@ const MyScreen = ({ navigation, route }) => {
 };
 ```
 
-See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/S1-RegularHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/S1-RegularHeaderScreen.tsx)
+See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/DefaultHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/DefaultHeaderScreen.tsx)
+
+### 2. Sub Header (e.g Search Bar)
+
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/v5/docs/demo-sample2.gif?raw=true">
+
+```js
+import { createCollapsibleStackSub } from 'react-navigation-collapsible';
+/* use 'createCollapsibleStackSub' instead of 'createCollapsibleStack' */
+
+/* The rest are the same with the default header. */
+```
+
+```js
+import { Animated } from 'react-native';
+import {
+  useCollapsibleStack,
+  CollapsibleStackSub,
+} from 'react-navigation-collapsible';
+
+const MySearchBar = () => (
+  <View style={{ padding: 15, width: '100%', height: 60 }}>
+    <TextInput placeholder="search here" />
+  </View>
+);
+
+const MyScreen = ({ navigation, route }) => {
+  const {
+    onScroll /* Event handler */,
+    containerPaddingTop /* number */,
+    scrollIndicatorInsetTop /* number */,
+  } = useCollapsibleStack();
+
+  return (
+    <>
+      <Animated.FlatList
+        onScroll={onScroll}
+        contentContainerStyle={{ paddingTop: containerPaddingTop }}
+        scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
+        /* rest of your stuff */
+      />
+      /* Wrap your component with `CollapsibleStackSub` */
+      <CollapsibleStackSub>
+        <MySearchBar />
+      </CollapsibleStackSub>
+    </>
+  );
+};
+```
+
+See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/SubHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/SubHeaderScreen.tsx)
 
 ## Install
 

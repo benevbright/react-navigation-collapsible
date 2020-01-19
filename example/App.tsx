@@ -6,30 +6,44 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import {CollapsibleStack} from 'react-navigation-collapsible';
+import {
+  createCollapsibleStack,
+  createCollapsibleStackSub,
+} from 'react-navigation-collapsible';
 
-import {S1RegularScreen} from './src/S1-RegularHeaderScreen';
+import {DefaultHeaderScreen} from './src/DefaultHeaderScreen';
+import {SubHeaderScreen} from './src/SubHeaderScreen';
 import {DetailScreen} from './src/DetailScreen';
 
 export type StackParamList = {
   Home: undefined;
   Detail: undefined;
-  'S1-Regular': undefined;
+  WithDefaultHeader: undefined;
+  WithSubHeader: undefined;
 };
 
 type ScreenProps = {
   navigation: StackNavigationProp<StackParamList>;
 };
 
+const samples: {title: string; routeName: keyof StackParamList}[] = [
+  {title: 'Sample1: Default Header', routeName: 'WithDefaultHeader'},
+  {title: 'Sample2: Sub Header', routeName: 'WithSubHeader'},
+];
+
 function HomeScreen({navigation}: ScreenProps) {
   return (
     <View style={{flex: 1, paddingTop: 50, alignItems: 'center'}}>
-      <Text
-        onPress={() => {
-          navigation.navigate('S1-Regular');
-        }}>
-        Sample1: Regular Header
-      </Text>
+      {samples.map(sample => (
+        <Text
+          key={sample.title}
+          style={{margin: 15}}
+          onPress={() => {
+            navigation.navigate(sample.routeName);
+          }}>
+          {sample.title}
+        </Text>
+      ))}
     </View>
   );
 }
@@ -39,7 +53,12 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <NavigationNativeContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#f002',
+          },
+        }}>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -47,10 +66,10 @@ function App() {
             title: 'react-navigation-collapsible',
           }}
         />
-        {CollapsibleStack(
+        {createCollapsibleStack(
           <Stack.Screen
-            name="S1-Regular"
-            component={S1RegularScreen}
+            name="WithDefaultHeader"
+            component={DefaultHeaderScreen}
             options={{
               headerStyle: {backgroundColor: 'green'},
               headerTintColor: 'white',
@@ -60,6 +79,17 @@ function App() {
           {
             collapsedColor: 'red',
           },
+        )}
+        {createCollapsibleStackSub(
+          <Stack.Screen
+            name="WithSubHeader"
+            component={SubHeaderScreen}
+            options={{
+              headerStyle: {backgroundColor: 'green'},
+              headerTintColor: 'white',
+              title: 'Collapsible Sub Header',
+            }}
+          />,
         )}
         <Stack.Screen
           name="Detail"
