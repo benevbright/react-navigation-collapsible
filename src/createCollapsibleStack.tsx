@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Animated, Dimensions, ScaledSize } from 'react-native';
+import { Animated, Dimensions } from 'react-native';
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -29,31 +29,13 @@ const createCollapsibleStack = (
   const { options = {}, component: UserComponent } = ScreenElement.props || {};
   let userOptions = options;
 
-  const [positionY] = React.useState(new Animated.Value(0));
+  const positionY = new Animated.Value(0);
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: positionY } } }],
     {
       useNativeDriver: true,
     }
   );
-
-  const window = Dimensions.get('window');
-  const [isLandscape, setIsLandscape] = React.useState(
-    window.height < window.width
-  );
-
-  const [navigationSetParam, setNavigationSetParam] = React.useState(null);
-
-  React.useEffect(() => {
-    const handleOrientationChange = ({ window }: { window: ScaledSize }) => {
-      setIsLandscape(window.height < window.width);
-      if (navigationSetParam) navigationSetParam({ isCollapsibleDirty: true });
-    };
-    Dimensions.addEventListener('change', handleOrientationChange);
-    return () => {
-      Dimensions.removeEventListener('change', handleOrientationChange);
-    };
-  }, [navigationSetParam]);
 
   return (
     <Stack.Screen
@@ -68,7 +50,9 @@ const createCollapsibleStack = (
         if (typeof userOptions === 'function')
           userOptions = userOptions({ navigation, route });
 
-        setNavigationSetParam(() => navigation.setParams);
+        const window = Dimensions.get('window');
+        const isLandscape = window.height < window.width;
+
         const headerHeight =
           collapsibleTarget === CollapsibleTarget.SubHeader
             ? route.params?.collapsibleSubHeaderHeight || 0

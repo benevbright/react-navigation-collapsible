@@ -1,9 +1,23 @@
-import { useRoute } from '@react-navigation/native';
+import * as React from 'react';
+import { Dimensions } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { Collapsible } from './types';
 
 const useCollapsibleStack = (): Collapsible => {
   const route = useRoute();
+  const navigation = useNavigation();
+
+  const handleOrientationChange = () => {
+    navigation.setParams({ isCollapsibleDirty: true });
+  };
+  React.useEffect(() => {
+    Dimensions.addEventListener('change', handleOrientationChange);
+    return () => {
+      Dimensions.removeEventListener('change', handleOrientationChange);
+    };
+  }, []);
+
   return (
     // @ts-ignore
     route.params?.collapsible || {
