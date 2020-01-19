@@ -14,7 +14,7 @@ Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-coll
 | ^4.0.0 (`latest`)  | ^3.0.0 (`latest`)              | [v3-4 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4) |
 | ^2.0.0             | ^2.0.0                         | [v2 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v2)     |
 
-The navigation tab is no longer supported due to the [Android bug from react-native](https://github.com/facebook/react-native/issues/21801).
+🏗 **The Callapsible Tab-navigator** is no longer supported due to the [Android bug from react-native](https://github.com/facebook/react-native/issues/21801).
 
 ## Usage
 
