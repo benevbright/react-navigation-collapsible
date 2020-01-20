@@ -20,6 +20,10 @@ yarn ios
 yarn android
 ```
 
+## Compatibility
+
+`react-navigation-stack@v2` is not supported. Please use [react-navigation-stack@v1](https://reactnavigation.org/docs/en/stack-navigator-1.0.html)
+
 ## Usage
 
 ### react-navigation v2?
