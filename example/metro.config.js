@@ -1,11 +1,15 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
+const path = require('path');
+
+const extraModules = [
+  '@babel/runtime',
+  'react',
+  'react-native',
+  '@react-navigation/stack',
+  '@react-navigation/native',
+];
 
 module.exports = {
+  watchFolders: [path.resolve(__dirname, '..')],
   transformer: {
     getTransformOptions: async () => ({
       transform: {
@@ -13,5 +17,14 @@ module.exports = {
         inlineRequires: false,
       },
     }),
+  },
+  resolver: {
+    extraNodeModules: extraModules.reduce(
+      (prev, current) => ({
+        ...prev,
+        [current]: `${__dirname}/node_modules/${current}`,
+      }),
+      {},
+    ),
   },
 };
