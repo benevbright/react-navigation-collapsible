@@ -20,7 +20,7 @@ Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-coll
 
 ### 1. Default Header
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/v5/docs/demo-sample1.gif?raw=true">
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1.gif?raw=true">
 
 ```js
 import { createCollapsibleStack } from 'react-navigation-collapsible';
@@ -75,11 +75,11 @@ const MyScreen = ({ navigation, route }) => {
 };
 ```
 
-See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/v5/example/App.tsx) and [/example/src/DefaultHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/v5/example/src/DefaultHeaderScreen.tsx)
+See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/DefaultHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/DefaultHeaderScreen.tsx)
 
 ### 2. Sub Header (e.g Search Bar)
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/v5/docs/demo-sample2.gif?raw=true">
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample2.gif?raw=true">
 
 ```js
 import { createCollapsibleStackSub } from 'react-navigation-collapsible';
@@ -125,7 +125,7 @@ const MyScreen = ({ navigation, route }) => {
 };
 ```
 
-See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/v5/example/App.tsx) and [/example/src/SubHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/v5/example/src/SubHeaderScreen.tsx)
+See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/SubHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/SubHeaderScreen.tsx)
 
 ## Install
 
@@ -140,7 +140,7 @@ PR is welcome!
 
 ### Testing your library code with the example
 
-[/example](https://github.com/benevbright/react-navigation-collapsible/tree/v5/example) imports the library directly from the root folder, configured with [babel-plugin-module-resolver](https://github.com/benevbright/react-navigation-collapsible/tree/v5/example/babel.config.js#L10).
+[/example](https://github.com/benevbright/react-navigation-collapsible/tree/master/example) imports the library directly from the root folder, configured with [babel-plugin-module-resolver](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/babel.config.js#L10).
 So, just turn the `watch` option on at the root folder while you're making changes on the library, and check them on the example.
 
 ```bash
