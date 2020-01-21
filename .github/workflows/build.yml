@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: install
+      run: yarn install
+    - name: lint
+      run: yarn lint
+    - name: build
+      run: yarn build
