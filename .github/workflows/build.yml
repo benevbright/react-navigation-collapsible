@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: install
-      run: yarn install
+      run: yarn install && cd example && yarn install
     - name: lint
       run: yarn lint
     - name: build
