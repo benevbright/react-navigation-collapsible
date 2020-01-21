@@ -5,13 +5,13 @@
 React Navigation Extension for Collapsible Header.
 Make your header of `react-navigation` collapsible.
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo.gif?raw=true">
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/v3-4/docs/demo.gif?raw=true">
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo2.gif?raw=true" width="300">
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/v3-4/docs/demo2.gif?raw=true" width="300">
 
 Try [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible)
 
-Try [Example](https://github.com/benevbright/react-navigation-collapsible/tree/master/example).
+Try [Example](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4/example).
 
 ```sh
 cd example
@@ -36,8 +36,8 @@ If you use Expo, add this lines to your App.js. (It only affects Android)
 
 ```js
 /* Support Expo */
-import {setExpoStatusBarHeight} from 'react-navigation-collapsible';
-import Constants from 'expo-constants';
+import { setExpoStatusBarHeight } from "react-navigation-collapsible";
+import Constants from "expo-constants";
 
 setExpoStatusBarHeight(Constants.statusBarHeight);
 ```
@@ -47,23 +47,23 @@ setExpoStatusBarHeight(Constants.statusBarHeight);
 (MyScreen.js)
 
 ```js
-import React, {Component} from 'react';
-import {withCollapsible} from 'react-navigation-collapsible';
+import React, { Component } from "react";
+import { withCollapsible } from "react-navigation-collapsible";
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 class MyScreen extends Component {
   static navigationOptions = {
-    title: 'My Screen',
+    title: "My Screen"
   };
 
   render() {
-    const {paddingHeight, animatedY, onScroll} = this.props.collapsible;
+    const { paddingHeight, animatedY, onScroll } = this.props.collapsible;
 
     return (
       <AnimatedFlatList
         //...
-        contentContainerStyle={{paddingTop: paddingHeight}}
-        scrollIndicatorInsets={{top: paddingHeight}}
+        contentContainerStyle={{ paddingTop: paddingHeight }}
+        scrollIndicatorInsets={{ top: paddingHeight }}
         _mustAddThis={animatedY}
         onScroll={onScroll}
 
@@ -76,24 +76,24 @@ class MyScreen extends Component {
   }
 }
 
-export default withCollapsible(MyScreen, {iOSCollapsedColor: '#031'});
+export default withCollapsible(MyScreen, { iOSCollapsedColor: "#031" });
 ```
 
-See [example/src/S0_DefaultHeader.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/S0_DefaultHeader.js)
+See [example/src/S0_DefaultHeader.js](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4/example/src/S0_DefaultHeader.js)
 
 ### Extra Header (Search Bar)
 
-See [example/src/S1_ExtraHeader.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/S1_ExtraHeader.js)
+See [example/src/S1_ExtraHeader.js](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4/example/src/S1_ExtraHeader.js)
 
 ### Default Header With Tab
 
-See [example/src/S2_DefaultHeaderForTab.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/S2_DefaultHeaderForTab.js)
-and [example/src/TabChild1Screen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/TabChild1Screen.js)
+See [example/src/S2_DefaultHeaderForTab.js](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4/example/src/S2_DefaultHeaderForTab.js)
+and [example/src/TabChild1Screen.js](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4/example/src/TabChild1Screen.js)
 
 ### Extra Header With Tab (e.g Facebook Group)
 
-See [example/src/S3_ExtraHeaderForTab.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/S3_ExtraHeaderForTab.js)
-and [example/src/TabChild1Screen.js](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/TabChild1Screen.js)
+See [example/src/S3_ExtraHeaderForTab.js](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4/example/src/S3_ExtraHeaderForTab.js)
+and [example/src/TabChild1Screen.js](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4/example/src/TabChild1Screen.js)
 
 ## API
 
