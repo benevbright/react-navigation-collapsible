@@ -4,7 +4,7 @@
 
 An extension of react-navigation that makes your header collapsible.
 
-Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible-5)
+Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible-v5)
 
 ## Compatibility 🚧
 
