@@ -13,6 +13,7 @@ import {
 
 import {DefaultHeaderScreen} from './src/DefaultHeaderScreen';
 import {SubHeaderScreen} from './src/SubHeaderScreen';
+import {CustomHeaderScreen} from './src/CustomHeaderScreen';
 import {DetailScreen} from './src/DetailScreen';
 
 export type StackParamList = {
@@ -20,6 +21,7 @@ export type StackParamList = {
   Detail: undefined;
   WithDefaultHeader: undefined;
   WithSubHeader: undefined;
+  WithCustomHeader: undefined;
 };
 
 type ScreenProps = {
@@ -29,6 +31,7 @@ type ScreenProps = {
 const samples: {title: string; routeName: keyof StackParamList}[] = [
   {title: 'Sample1: Default Header', routeName: 'WithDefaultHeader'},
   {title: 'Sample2: Sub Header', routeName: 'WithSubHeader'},
+  {title: 'Sample3: Custom Header', routeName: 'WithCustomHeader'},
 ];
 
 function HomeScreen({navigation}: ScreenProps) {
@@ -56,7 +59,7 @@ function App() {
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#f002',
+            backgroundColor: '#fdd',
           },
         }}>
         <Stack.Screen
@@ -88,6 +91,26 @@ function App() {
               headerStyle: {backgroundColor: 'green'},
               headerTintColor: 'white',
               title: 'Collapsible Sub Header',
+            }}
+          />,
+        )}
+        {createCollapsibleStack(
+          <Stack.Screen
+            name="WithCustomHeader"
+            component={CustomHeaderScreen}
+            options={{
+              headerTintColor: 'white',
+              header: () => (
+                <View
+                  style={{
+                    width: '100%',
+                    height: 200,
+                    backgroundColor: 'blue',
+                    padding: 20,
+                  }}>
+                  <View style={{flex: 1, backgroundColor: 'gray'}} />
+                </View>
+              ),
             }}
           />,
         )}
