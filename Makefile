@@ -13,3 +13,4 @@ update-example-rn:
 	cd example && yarn add react-native-gesture-handler react-native-screens react-native-safe-area-context
 	# install peer-dependencies
 	cd example && cd ios && pod install
+	# add ,"paths": {"react-navigation-collapsible": ["../lib"]} at /example/tsconfig.json

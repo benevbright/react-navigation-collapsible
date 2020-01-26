@@ -219,11 +219,11 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNCMaskedView (0.1.5):
+  - RNCMaskedView (0.1.6):
     - React
   - RNGestureHandler (1.5.3):
     - React
-  - RNScreens (2.0.0-alpha.22):
+  - RNScreens (2.0.0-alpha.29):
     - React
   - Yoga (1.14.0)
 
@@ -352,9 +352,9 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNCMaskedView: dd13f9f7b146a9ad82f9b7eb6c9b5548fcf6e990
+  RNCMaskedView: a88953beefbd347a29072d9eba90e42945fe291e
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
-  RNScreens: 6adf01eb4080f44af6cca551207c6b0505066857
+  RNScreens: b20bdb598fe95ac37aada88a5e92f36622549e49
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
 PODFILE CHECKSUM: 79310af6b976c356911a8a833e9b99c3399fdda3
