@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, Text} from 'react-native';
-import {NavigationNativeContainer} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -52,7 +52,7 @@ const Stack = createStackNavigator();
 
 function App() {
   return (
-    <NavigationNativeContainer>
+    <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -99,7 +99,7 @@ function App() {
           }}
         />
       </Stack.Navigator>
-    </NavigationNativeContainer>
+    </NavigationContainer>
   );
 }
 
