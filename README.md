@@ -27,7 +27,7 @@ import { createCollapsibleStack } from 'react-navigation-collapsible';
 
 function App() {
   return (
-    <NavigationNativeContainer>
+    <NavigationContainer>
       <Stack.Navigator>
         /* Wrap your Stack.Screen */
         {createCollapsibleStack(
@@ -44,7 +44,7 @@ function App() {
           }
         )}
       </Stack.Navigator>
-    </NavigationNativeContainer>
+    </NavigationContainer>
   );
 }
 ```
