@@ -29,7 +29,7 @@ const createCollapsibleStack = (
   const { options = {}, component: UserComponent } = ScreenElement.props || {};
   let userOptions = options;
 
-  const positionY = new Animated.Value(0);
+  const positionY = React.useRef(new Animated.Value(0)).current;
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: positionY } } }],
     {
