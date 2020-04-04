@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Animated } from 'react-native';
 
 export type Collapsible = {
@@ -11,4 +12,5 @@ export type Collapsible = {
 
 export type CollapsibleStackConfig = {
   collapsedColor?: string;
+  collapsedHeaderBackground?: ReactNode;
 };

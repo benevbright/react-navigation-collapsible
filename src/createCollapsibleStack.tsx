@@ -12,7 +12,7 @@ import {
   getScrollIndicatorInsetTop,
 } from './utils';
 import { CollapsibleStackConfig, Collapsible } from './types';
-import { CollapsedHeaderBackground } from './CollapsedHeaderBackground';
+import { CollapsedHeaderBackground as DefaultCollapsedHeaderBackground } from './CollapsedHeaderBackground';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +36,9 @@ const createCollapsibleStack = (
       useNativeDriver: true,
     }
   );
+
+  const CollapsedHeaderBackground =
+    config.collapsedHeaderBackground || DefaultCollapsedHeaderBackground;
 
   return (
     <Stack.Screen
