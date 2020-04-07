@@ -65,7 +65,7 @@ const MyScreen = ({ navigation, route }) => {
     opacity /* 1.0 ~ 0.0 */,
   } = useCollapsibleStack();
 
-  /* in case you need listener
+  /* in case you want to use your listener
   const listener = ({nativeEvent}) => {
     console.log(nativeEvent);
   };

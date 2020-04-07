@@ -22,7 +22,7 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
     scrollIndicatorInsetTop,
   } = useCollapsibleStack();
 
-  /* in case you need listener
+  /* in case you want to use your listener
   const listener = ({nativeEvent}) => {
     console.log(nativeEvent);
   };
