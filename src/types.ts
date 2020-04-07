@@ -1,7 +1,14 @@
-import { Animated } from 'react-native';
+import {
+  Animated,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 
 export type Collapsible = {
   onScroll: Function;
+  onScrollWithListener: (
+    listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+  ) => Function;
   containerPaddingTop: number;
   scrollIndicatorInsetTop: number;
   translateY: Animated.AnimatedInterpolation;
