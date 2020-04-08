@@ -38,14 +38,16 @@ const createCollapsibleStack = (
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: positionY } } }],
     {
-      useNativeDriver: true,
+      useNativeDriver:
+        config.useNativeDriver === undefined ? true : config.useNativeDriver,
     }
   );
   const onScrollWithListener = (
     listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
   ) =>
     Animated.event([{ nativeEvent: { contentOffset: { y: positionY } } }], {
-      useNativeDriver: true,
+      useNativeDriver:
+        config.useNativeDriver === undefined ? true : config.useNativeDriver,
       listener,
     });
 
