@@ -41,6 +41,7 @@ function App() {
           />,
           {
             collapsedColor: 'red' /* Optional */,
+            useNativeDriver: true /* Optional, default: true */,
           }
         )}
       </Stack.Navigator>
