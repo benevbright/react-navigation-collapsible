@@ -38,7 +38,7 @@ const createCollapsibleStack = (
   );
 
   const CollapsedHeaderBackground =
-    config.collapsedHeaderBackground || DefaultCollapsedHeaderBackground;
+    config.CollapsedHeaderBackground || DefaultCollapsedHeaderBackground;
 
   return (
     <Stack.Screen

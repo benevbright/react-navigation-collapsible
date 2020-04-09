@@ -12,5 +12,5 @@ export type Collapsible = {
 
 export type CollapsibleStackConfig = {
   collapsedColor?: string;
-  collapsedHeaderBackground?: ReactNode;
+  CollapsedHeaderBackground?: ReactNode;
 };
