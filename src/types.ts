@@ -5,6 +5,8 @@ import {
   NativeScrollEvent,
 } from 'react-native';
 
+import { Params as CollapsedHeaderBackgroundParams } from './CollapsedHeaderBackground';
+
 export type Collapsible = {
   onScroll: Function;
   onScrollWithListener: (
@@ -20,5 +22,7 @@ export type Collapsible = {
 export type CollapsibleStackConfig = {
   collapsedColor?: string;
   useNativeDriver?: boolean;
-  CollapsedHeaderBackground?: ReactNode;
+  CollapsedHeaderBackground?: (
+    params: CollapsedHeaderBackgroundParams
+  ) => ReactNode;
 };
