@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
   Animated,
   NativeSyntheticEvent,
@@ -19,4 +20,5 @@ export type Collapsible = {
 export type CollapsibleStackConfig = {
   collapsedColor?: string;
   useNativeDriver?: boolean;
+  CollapsedHeaderBackground?: ReactNode;
 };
