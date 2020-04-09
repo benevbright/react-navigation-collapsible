@@ -17,9 +17,17 @@ type ScreenProps = {
 const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
   const {
     onScroll,
+    // onScrollWithListener,
     containerPaddingTop,
     scrollIndicatorInsetTop,
   } = useCollapsibleStack();
+
+  /* in case you want to use your listener
+  const listener = ({nativeEvent}) => {
+    console.log(nativeEvent);
+  };
+  const onScroll = onScrollWithListener(listener);
+  */
 
   return (
     <Animated.FlatList

@@ -1,8 +1,15 @@
 import { ReactNode } from 'react';
-import { Animated } from 'react-native';
+import {
+  Animated,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 
 export type Collapsible = {
   onScroll: Function;
+  onScrollWithListener: (
+    listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+  ) => Function;
   containerPaddingTop: number;
   scrollIndicatorInsetTop: number;
   translateY: Animated.AnimatedInterpolation;
@@ -12,5 +19,6 @@ export type Collapsible = {
 
 export type CollapsibleStackConfig = {
   collapsedColor?: string;
+  useNativeDriver?: boolean;
   CollapsedHeaderBackground?: ReactNode;
 };

@@ -22,6 +22,7 @@ const useCollapsibleStack = (): Collapsible => {
     // @ts-ignore
     route.params?.collapsible || {
       onScroll: null,
+      onScrollWithListener: e => null,
       containerPaddingTop: 0,
       scrollIndicatorInsetTop: 0,
       translateY: 0,

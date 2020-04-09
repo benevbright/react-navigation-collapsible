@@ -10,9 +10,9 @@ Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-coll
 
 | `react-navigation` | `react-navigation-collapsible` | Documentation                                                                        |
 | ------------------ | ------------------------------ | ------------------------------------------------------------------------------------ |
-| ≥ v5 (`latest`)     | v5 (`latest`)                   | current                                                                              |
-| ≥ v3                | v3                              | [v3-4 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4) |
-| v2                  | v2                              | [v2 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v2)     |
+| ≥ v5 (`latest`)    | v5 (`latest`)                  | current                                                                              |
+| ≥ v3               | v3                             | [v3-4 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4) |
+| v2                 | v2                             | [v2 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v2)     |
 
 🏗 **The Callapsible Tab-navigator** is no longer supported due to the [Android bug from react-native](https://github.com/facebook/react-native/issues/21801).
 
@@ -41,6 +41,7 @@ function App() {
           />,
           {
             collapsedColor: 'red' /* Optional */,
+            useNativeDriver: true /* Optional, default: true */,
           }
         )}
       </Stack.Navigator>
@@ -56,6 +57,7 @@ import { useCollapsibleStack } from 'react-navigation-collapsible';
 const MyScreen = ({ navigation, route }) => {
   const {
     onScroll /* Event handler */,
+    onScrollWithListener /* Event handler creator */,
     containerPaddingTop /* number */,
     scrollIndicatorInsetTop /* number */,
     /* Animated.AnimatedInterpolation by scrolling */
@@ -63,6 +65,13 @@ const MyScreen = ({ navigation, route }) => {
     progress /* 0.0 ~ 1.0 */,
     opacity /* 1.0 ~ 0.0 */,
   } = useCollapsibleStack();
+
+  /* in case you want to use your listener
+  const listener = ({nativeEvent}) => {
+    console.log(nativeEvent);
+  };
+  const onScroll = onScrollWithListener(listener);
+  */
 
   return (
     <Animated.FlatList

@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { Animated, Dimensions } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -33,9 +38,18 @@ const createCollapsibleStack = (
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: positionY } } }],
     {
-      useNativeDriver: true,
+      useNativeDriver:
+        config.useNativeDriver === undefined ? true : config.useNativeDriver,
     }
   );
+  const onScrollWithListener = (
+    listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+  ) =>
+    Animated.event([{ nativeEvent: { contentOffset: { y: positionY } } }], {
+      useNativeDriver:
+        config.useNativeDriver === undefined ? true : config.useNativeDriver,
+      listener,
+    });
 
   const CollapsedHeaderBackground =
     config.CollapsedHeaderBackground || DefaultCollapsedHeaderBackground;
@@ -78,6 +92,7 @@ const createCollapsibleStack = (
 
         const collapsible: Collapsible = {
           onScroll,
+          onScrollWithListener,
           containerPaddingTop:
             collapsibleTarget === CollapsibleTarget.SubHeader
               ? headerHeight
