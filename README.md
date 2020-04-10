@@ -20,7 +20,7 @@ Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-coll
 
 ### 1-1. Default Header
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-1.gif?raw=true">
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-1.gif?raw=true" width="200">
 
 ```js
 import { createCollapsibleStack } from 'react-navigation-collapsible';
@@ -88,13 +88,15 @@ See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsib
 
 ### 1-2. Sticky Header
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-2.gif?raw=true">
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-2.gif?raw=true" width="200">
 
 See [/example/src/StickyHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/StickyHeaderScreen.tsx)
 
+---
+
 ### 2. Sub Header (e.g Search Bar)
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample2.gif?raw=true">
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample2.gif?raw=true" width="200">
 
 ```js
 import { createCollapsibleStackSub } from 'react-navigation-collapsible';
