@@ -18,9 +18,9 @@ Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-coll
 
 ## Usage
 
-### 1. Default Header
+### 1-1. Default Header
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1.gif?raw=true">
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-1.gif?raw=true">
 
 ```js
 import { createCollapsibleStack } from 'react-navigation-collapsible';
@@ -85,6 +85,12 @@ const MyScreen = ({ navigation, route }) => {
 ```
 
 See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/DefaultHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/DefaultHeaderScreen.tsx)
+
+### 1-2. Sticky Header
+
+<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-2.gif?raw=true">
+
+See [/example/src/StickyHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/StickyHeaderScreen.tsx)
 
 ### 2. Sub Header (e.g Search Bar)
 
