@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Animated } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { Collapsible } from './types';
@@ -25,9 +25,9 @@ const useCollapsibleStack = (): Collapsible => {
       onScrollWithListener: e => null,
       containerPaddingTop: 0,
       scrollIndicatorInsetTop: 0,
-      translateY: 0,
-      progress: 0,
-      opacity: 1,
+      translateY: new Animated.Value(0),
+      progress: new Animated.Value(0),
+      opacity: new Animated.Value(1),
     }
   );
 };
