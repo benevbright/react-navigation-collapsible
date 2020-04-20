@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {View, Text} from 'react-native';
+import React, {useRef, useState, useEffect, createRef} from 'react';
+import {View, Text, ActivityIndicator} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -16,7 +16,10 @@ import {StickyHeaderScreen} from './src/StickyHeaderScreen';
 import {SubHeaderScreen} from './src/SubHeaderScreen';
 import {DetailScreen} from './src/DetailScreen';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 export type StackParamList = {
+  OtherHome: undefined;
   Home: undefined;
   Detail: undefined;
   DefaultHeader: undefined;
@@ -29,6 +32,7 @@ type ScreenProps = {
 };
 
 const samples: {title: string; routeName: keyof StackParamList}[] = [
+  {title: 'Sample 0: Other Home', routeName: 'OtherHome'},
   {title: 'Sample 1-1: Default Header', routeName: 'DefaultHeader'},
   {title: 'Sample 1-2: Sticky Header', routeName: 'StickyHeader'},
   {title: 'Sample 2: Sub Header', routeName: 'SubHeader'},
@@ -53,9 +57,45 @@ function HomeScreen({navigation}: ScreenProps) {
 
 const Stack = createStackNavigator();
 
+const PERSISTENCE_KEY = 'NAVIGATION_STATE';
+
 function App() {
+  const [isReady, setIsReady] = useState(__DEV__ ? false : true);
+  const [initialState, setInitialState] = useState();
+
+  useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY);
+        const state = JSON.parse(savedStateString);
+        console.log('Restore state', state);
+        setInitialState(state);
+      } catch (e) {
+        console.log('Error restoring state', e);
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    if (!isReady) {
+      console.log('Restoring state');
+      restoreState();
+    }
+  }, [isReady]);
+
+  const _onStateChange = (state: any) => {
+    console.log('state in _onStateChange', state);
+    return AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+  };
+
+  // if (!isReady) {
+  //   return <ActivityIndicator />;
+  // }
+
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      initialState={initialState}
+      onStateChange={_onStateChange}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -69,6 +109,13 @@ function App() {
             title: 'react-navigation-collapsible',
           }}
         />
+        <Stack.Screen
+          name="OtherHome"
+          component={HomeScreen}
+          options={{
+            title: 'Other home',
+          }}
+        />
 
         {/* Sample 1-1: Default Header */}
         {createCollapsibleStack(
@@ -78,7 +125,7 @@ function App() {
             options={{
               headerStyle: {backgroundColor: 'green'},
               headerTintColor: 'white',
-              title: 'Default Header',
+              title: 'Default Header Updated',
             }}
           />,
           {

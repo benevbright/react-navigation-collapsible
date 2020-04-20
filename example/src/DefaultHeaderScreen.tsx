@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useRef} from 'react';
 import {Text, TouchableOpacity, Animated} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useCollapsibleStack} from 'react-navigation-collapsible';
@@ -22,6 +22,8 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
     scrollIndicatorInsetTop,
   } = useCollapsibleStack();
 
+  const list = useRef();
+
   /* in case you want to use your listener
   const listener = ({nativeEvent}) => {
     console.log(nativeEvent);
@@ -30,11 +32,39 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
   */
 
   return (
+    // <Animated.FlatList
+    //   data={data}
+    //   onScroll={onScroll}
+    //   contentContainerStyle={{paddingTop: containerPaddingTop}}
+    //   scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
+    //   renderItem={({item}: any) => (
+    //     <TouchableOpacity
+    //       onPress={() => navigation.navigate('Detail')}
+    //       style={{
+    //         width: '100%',
+    //         height: 50,
+    //         alignItems: 'center',
+    //         justifyContent: 'center',
+    //         borderBottomColor: 'gray',
+    //         borderBottomWidth: 1,
+    //       }}>
+    //       <Text
+    //         style={{
+    //           fontSize: 22,
+    //         }}>
+    //         {item}
+    //       </Text>
+    //     </TouchableOpacity>
+    //   )}
+    //   keyExtractor={(item: any) => item.toString()}
+    // />
     <Animated.FlatList
-      data={data}
-      onScroll={onScroll}
       contentContainerStyle={{paddingTop: containerPaddingTop}}
-      scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
+      data={data}
+      keyExtractor={(_: any, index: {toString: () => any}) => index.toString()}
+      nestedScrollEnabled
+      onScroll={onScroll}
+      ref={list}
       renderItem={({item}: any) => (
         <TouchableOpacity
           onPress={() => navigation.navigate('Detail')}
@@ -54,7 +84,13 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
           </Text>
         </TouchableOpacity>
       )}
-      keyExtractor={(item: any) => item.toString()}
+      // scrollEventThrottle={scrollEventThrottle}
+      scrollIndicatorInsets={{
+        top: scrollIndicatorInsetTop,
+      }}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      style={{backgroundColor: 'white'}}
     />
   );
 };
