@@ -4,6 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useCollapsibleStack} from 'react-navigation-collapsible';
 
 import {StackParamList} from '../App';
+import {FlatList} from 'react-native-gesture-handler';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {
@@ -32,32 +33,6 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
   */
 
   return (
-    // <Animated.FlatList
-    //   data={data}
-    //   onScroll={onScroll}
-    //   contentContainerStyle={{paddingTop: containerPaddingTop}}
-    //   scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
-    //   renderItem={({item}: any) => (
-    //     <TouchableOpacity
-    //       onPress={() => navigation.navigate('Detail')}
-    //       style={{
-    //         width: '100%',
-    //         height: 50,
-    //         alignItems: 'center',
-    //         justifyContent: 'center',
-    //         borderBottomColor: 'gray',
-    //         borderBottomWidth: 1,
-    //       }}>
-    //       <Text
-    //         style={{
-    //           fontSize: 22,
-    //         }}>
-    //         {item}
-    //       </Text>
-    //     </TouchableOpacity>
-    //   )}
-    //   keyExtractor={(item: any) => item.toString()}
-    // />
     <Animated.FlatList
       contentContainerStyle={{paddingTop: containerPaddingTop}}
       data={data}

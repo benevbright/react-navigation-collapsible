@@ -10,6 +10,7 @@ import {
   createCollapsibleStack,
   createCollapsibleStackSub,
 } from 'react-navigation-collapsible';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {DefaultHeaderScreen} from './src/DefaultHeaderScreen';
 import {StickyHeaderScreen} from './src/StickyHeaderScreen';
@@ -55,9 +56,83 @@ function HomeScreen({navigation}: ScreenProps) {
   );
 }
 
+const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE';
+
+const CollapsibleStack = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#f002',
+      },
+    }}>
+    <Stack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+        title: 'react-navigation-collapsible',
+      }}
+    />
+    <Stack.Screen
+      name="OtherHome"
+      component={View}
+      options={{
+        title: 'Other home',
+      }}
+    />
+
+    {/* Sample 1-1: Default Header */}
+    {createCollapsibleStack(
+      <Stack.Screen
+        name="DefaultHeader"
+        component={DefaultHeaderScreen}
+        options={{
+          headerStyle: {backgroundColor: 'green'},
+          headerTintColor: 'white',
+          title: 'Default Header Updated',
+        }}
+      />,
+      {
+        collapsedColor: 'red',
+      },
+    )}
+
+    {/* Sample 1-2: Sticky Header */}
+    {createCollapsibleStack(
+      <Stack.Screen
+        name="StickyHeader"
+        component={StickyHeaderScreen}
+        options={{
+          title: 'Sticky Header',
+          headerStyle: {backgroundColor: 'white'},
+        }}
+      />,
+    )}
+
+    {/* Sample 2: Sub Header */}
+    {createCollapsibleStackSub(
+      <Stack.Screen
+        name="SubHeader"
+        component={SubHeaderScreen}
+        options={{
+          headerStyle: {backgroundColor: 'green'},
+          headerTintColor: 'white',
+          title: 'Collapsible Sub Header',
+        }}
+      />,
+    )}
+
+    <Stack.Screen
+      name="Detail"
+      component={DetailScreen}
+      options={{
+        title: 'Detail Screen',
+      }}
+    />
+  </Stack.Navigator>
+);
 
 function App() {
   const [isReady, setIsReady] = useState(__DEV__ ? false : true);
@@ -88,84 +163,20 @@ function App() {
     return AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
   };
 
-  // if (!isReady) {
-  //   return <ActivityIndicator />;
-  // }
+  if (!isReady) {
+    return <ActivityIndicator />;
+  }
+
+  console.log('initialState', initialState);
 
   return (
     <NavigationContainer
       initialState={initialState}
       onStateChange={_onStateChange}>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#f002',
-          },
-        }}>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            title: 'react-navigation-collapsible',
-          }}
-        />
-        <Stack.Screen
-          name="OtherHome"
-          component={HomeScreen}
-          options={{
-            title: 'Other home',
-          }}
-        />
-
-        {/* Sample 1-1: Default Header */}
-        {createCollapsibleStack(
-          <Stack.Screen
-            name="DefaultHeader"
-            component={DefaultHeaderScreen}
-            options={{
-              headerStyle: {backgroundColor: 'green'},
-              headerTintColor: 'white',
-              title: 'Default Header Updated',
-            }}
-          />,
-          {
-            collapsedColor: 'red',
-          },
-        )}
-
-        {/* Sample 1-2: Sticky Header */}
-        {createCollapsibleStack(
-          <Stack.Screen
-            name="StickyHeader"
-            component={StickyHeaderScreen}
-            options={{
-              title: 'Sticky Header',
-              headerStyle: {backgroundColor: 'white'},
-            }}
-          />,
-        )}
-
-        {/* Sample 2: Sub Header */}
-        {createCollapsibleStackSub(
-          <Stack.Screen
-            name="SubHeader"
-            component={SubHeaderScreen}
-            options={{
-              headerStyle: {backgroundColor: 'green'},
-              headerTintColor: 'white',
-              title: 'Collapsible Sub Header',
-            }}
-          />,
-        )}
-
-        <Stack.Screen
-          name="Detail"
-          component={DetailScreen}
-          options={{
-            title: 'Detail Screen',
-          }}
-        />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="OtherHome" component={View} />
+        <Tab.Screen name="CollapsiblStack" component={CollapsibleStack} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
