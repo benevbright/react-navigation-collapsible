@@ -43,12 +43,14 @@ export const useCollapsibleStack = ({
   ] = React.useState(0);
 
   // Initialize variables
-  const [translateY, setTranslateY] = React.useState(new Animated.Value(0));
+  // const [translateY, setTranslateY] = React.useState(new Animated.Value(0));
+  const translateY = new Animated.Value(0);
   let opacity = 1;
   const containerPaddingTop = headerHeight;
-  const [translateYSticky, setTranslateYSticky] = React.useState(
-    new Animated.Value(0)
-  );
+  // const [translateYSticky, setTranslateYSticky] = React.useState(
+  //   new Animated.Value(0)
+  // );
+  const translateYSticky = new Animated.Value(0);
 
   // Calculate scroll inset
   const scrollIndicatorInsetTop =
@@ -171,15 +173,16 @@ export const useCollapsibleStack = ({
       const minusScrollY = Animated.multiply(clampedScrollY, -1);
 
       // Calculate how much to move the header
-      setTranslateY(
-        Animated.diffClamp(
-          minusScrollY,
-          // Adding collapsibleSubStackHeight to prevent header scrolling over sticky content
-          // -(headerHeight + collapsibleSubStackHeight),
-          -headerHeight,
-          0
-        )
+      // Maximum update depth exceeded.
+      // setTranslateY(
+      translateY = Animated.diffClamp(
+        minusScrollY,
+        // Adding collapsibleSubStackHeight to prevent header scrolling over sticky content
+        // -(headerHeight + collapsibleSubStackHeight),
+        -headerHeight,
+        0
       );
+      // );
       console.log('translateY', translateY);
 
       // Update opacity with headerHeight from 0 to 1
@@ -204,15 +207,15 @@ export const useCollapsibleStack = ({
       });
 
       // Calculate how much to move the CollapsibleSubStack
-      setTranslateYSticky(
-        Animated.diffClamp(
-          clampedScrollYSticky,
-          // Fold with CollapsibleSubStack with Header
-          // -(collapsibleSubStackHeight - headerHeight),
-          -collapsibleSubStackHeight,
-          0
-        )
+      // setTranslateYSticky(
+      translateYSticky = Animated.diffClamp(
+        clampedScrollYSticky,
+        // Fold with CollapsibleSubStack with Header
+        // -(collapsibleSubStackHeight - headerHeight),
+        -collapsibleSubStackHeight,
+        0
       );
+      // );
 
       // ALSO works to stop, but needs to move down immediately with header
       // setTranslateYSticky(
@@ -255,6 +258,7 @@ export const useCollapsibleStack = ({
       },
       headerTransparent,
     });
+    // Run once headerHeight, collapsibleSubStackHeight have been calculated
   }, [headerHeight, collapsibleSubStackHeight]);
 
   return {
