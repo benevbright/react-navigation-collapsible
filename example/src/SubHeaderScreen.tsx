@@ -5,6 +5,7 @@ import {
   useCollapsibleStack,
   CollapsibleStackSub,
 } from 'react-navigation-collapsible';
+import {useSafeArea} from 'react-native-safe-area-context';
 
 import {StackParamList} from '../App';
 
@@ -33,43 +34,54 @@ const MySearchBar = () => (
 );
 
 const SubHeaderScreen = ({navigation}: ScreenProps) => {
-  const {
-    onScroll,
-    containerPaddingTop,
-    scrollIndicatorInsetTop,
-  } = useCollapsibleStack();
+  // const {
+  //   onScroll,
+  //   containerPaddingTop,
+  //   scrollIndicatorInsetTop,
+  // } = useCollapsibleStack();
+
+  const {CollapsibleStack, CollapsibleSubStack} = useCollapsibleStack({
+    backgroundColor: 'blue',
+    collapsedColor: 'red',
+    showsHorizontalScrollIndicator: true,
+    showsVerticalScrollIndicator: true,
+    collapsibleSubStack: true,
+    insets: useSafeArea(),
+  });
 
   return (
     <>
-      <Animated.FlatList
-        data={data}
-        onScroll={onScroll}
-        contentContainerStyle={{paddingTop: containerPaddingTop}}
-        scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
-        renderItem={({item}: any) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Detail')}
-            style={{
-              width: '100%',
-              height: 50,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottomColor: 'gray',
-              borderBottomWidth: 1,
-            }}>
-            <Text
+      <CollapsibleStack>
+        <Animated.FlatList
+          data={data}
+          // onScroll={onScroll}
+          // contentContainerStyle={{paddingTop: containerPaddingTop}}
+          // scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
+          renderItem={({item}: any) => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Detail')}
               style={{
-                fontSize: 22,
+                width: '100%',
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderBottomColor: 'gray',
+                borderBottomWidth: 1,
               }}>
-              {item}
-            </Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item: any) => item.toString()}
-      />
-      <CollapsibleStackSub>
+              <Text
+                style={{
+                  fontSize: 22,
+                }}>
+                {item}
+              </Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item: any) => item.toString()}
+        />
+      </CollapsibleStack>
+      <CollapsibleSubStack>
         <MySearchBar />
-      </CollapsibleStackSub>
+      </CollapsibleSubStack>
     </>
   );
 };

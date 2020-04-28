@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {Text, TouchableOpacity, Animated} from 'react-native';
+import {Text, TouchableOpacity, Animated, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useCollapsibleStack} from 'react-navigation-collapsible';
+import {useSafeArea} from 'react-native-safe-area-context';
 
 import {StackParamList} from '../App';
 
@@ -17,22 +18,25 @@ type ScreenProps = {
 const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
   const {
     onScroll,
-    // onScrollWithListener,
     containerPaddingTop,
     scrollIndicatorInsetTop,
-  } = useCollapsibleStack();
+    headerHeight,
+  } = useCollapsibleStack({
+    backgroundColor: 'blue',
+    collapsedColor: 'red',
+    insets: useSafeArea(),
+  });
 
-  /* in case you want to use your listener
-  const listener = ({nativeEvent}) => {
-    console.log(nativeEvent);
-  };
-  const onScroll = onScrollWithListener(listener);
-  */
+  // Check for the header to load
+  if (!headerHeight) {
+    return null;
+  }
 
   return (
     <Animated.FlatList
       data={data}
       onScroll={onScroll}
+      nestedScrollEnabled
       contentContainerStyle={{paddingTop: containerPaddingTop}}
       scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
       renderItem={({item}: any) => (

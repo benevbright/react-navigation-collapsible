@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Text, TouchableOpacity, Animated, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useCollapsibleStack} from 'react-navigation-collapsible';
+import {useSafeArea} from 'react-native-safe-area-context';
 
 import {StackParamList} from '../App';
 
@@ -15,50 +16,61 @@ type ScreenProps = {
 };
 
 const StickyHeaderScreen = ({navigation}: ScreenProps) => {
-  const {
-    onScroll,
-    containerPaddingTop,
-    scrollIndicatorInsetTop,
-    translateY,
-  } = useCollapsibleStack();
+  // const {
+  //   onScroll,
+  //   containerPaddingTop,
+  //   scrollIndicatorInsetTop,
+  //   translateY,
+  // } = useCollapsibleStack();
 
-  const searchHeaderHeight = 80;
+  // const searchHeaderHeight = 80;
+
+  const {CollapsibleStack, CollapsibleSubStack} = useCollapsibleStack({
+    backgroundColor: 'blue',
+    collapsedColor: 'red',
+    showsHorizontalScrollIndicator: true,
+    showsVerticalScrollIndicator: true,
+    collapsibleSubStack: true,
+    insets: useSafeArea(),
+  });
 
   return (
     <>
-      <Animated.FlatList
-        data={data}
-        onScroll={onScroll}
-        contentContainerStyle={{
-          paddingTop: containerPaddingTop + searchHeaderHeight,
-        }}
-        scrollIndicatorInsets={{
-          top: scrollIndicatorInsetTop + searchHeaderHeight,
-        }}
-        renderItem={({item}: any) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Detail')}
-            style={{
-              width: '100%',
-              height: 50,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottomColor: 'gray',
-              borderBottomWidth: 1,
-            }}>
-            <Text
+      <CollapsibleStack>
+        <Animated.FlatList
+          data={data}
+          // onScroll={onScroll}
+          // contentContainerStyle={{
+          //   paddingTop: containerPaddingTop + searchHeaderHeight,
+          // }}
+          // scrollIndicatorInsets={{
+          //   top: scrollIndicatorInsetTop + searchHeaderHeight,
+          // }}
+          renderItem={({item}: any) => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Detail')}
               style={{
-                fontSize: 22,
+                width: '100%',
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderBottomColor: 'gray',
+                borderBottomWidth: 1,
               }}>
-              {item}
-            </Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item: any) => item.toString()}
-      />
+              <Text
+                style={{
+                  fontSize: 22,
+                }}>
+                {item}
+              </Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item: any) => item.toString()}
+        />
+      </CollapsibleStack>
 
       {/* Sticky UI */}
-      <Animated.View
+      {/* <Animated.View
         style={{
           transform: [{translateY}],
           position: 'absolute',
@@ -74,10 +86,12 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
             backgroundColor: 'blue',
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
-          <Text style={{fontSize: 20, color: 'white'}}>Sticky UI</Text>
-        </View>
-      </Animated.View>
+          }}> */}
+      <CollapsibleSubStack>
+        <Text style={{fontSize: 20, color: 'white'}}>Sticky UI</Text>
+      </CollapsibleSubStack>
+      {/* </View> 
+      </Animated.View> */}
     </>
   );
 };
