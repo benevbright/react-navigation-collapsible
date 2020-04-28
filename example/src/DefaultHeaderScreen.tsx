@@ -20,17 +20,11 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
     onScroll,
     containerPaddingTop,
     scrollIndicatorInsetTop,
-    headerHeight,
   } = useCollapsibleStack({
     backgroundColor: 'blue',
     collapsedColor: 'red',
     insets: useSafeArea(),
   });
-
-  // Check for the header to load
-  if (!headerHeight) {
-    return null;
-  }
 
   return (
     <Animated.FlatList
@@ -38,7 +32,10 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
       onScroll={onScroll}
       nestedScrollEnabled
       contentContainerStyle={{paddingTop: containerPaddingTop}}
-      scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
+      // Issue with the indicator appearing in the middle?
+      // scrollIndicatorInsets={{
+      //   top: scrollIndicatorInsetTop,
+      // }}
       renderItem={({item}: any) => (
         <TouchableOpacity
           onPress={() => navigation.navigate('Detail')}

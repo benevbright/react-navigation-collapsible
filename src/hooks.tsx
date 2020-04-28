@@ -143,7 +143,10 @@ export const useCollapsibleStack = ({
           {children}
         </Animated.View>
       )}
-      scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
+      // Issue with the indicator appearing in the middle?
+      // scrollIndicatorInsets={{
+      //   top: scrollIndicatorInsetTop,
+      // }}
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
     />

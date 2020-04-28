@@ -20,6 +20,7 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
     CollapsibleStack,
     CollapsibleSubStack,
     scrollIndicatorInsetTop,
+    containerPaddingTop,
   } = useCollapsibleStack({
     backgroundColor: 'blue',
     collapsedColor: 'red',
@@ -38,9 +39,9 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
         <Animated.FlatList
           data={data}
           // onScroll={onScroll}
-          // contentContainerStyle={{
-          //   paddingTop: containerPaddingTop + searchHeaderHeight,
-          // }}
+          contentContainerStyle={{
+            paddingTop: containerPaddingTop,
+          }}
           scrollIndicatorInsets={{
             top: scrollIndicatorInsetTop,
           }}
@@ -51,7 +52,7 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
                 width: '100%',
                 height: 50,
                 alignItems: 'center',
-                // justifyContent: 'center', // Causes scroll to appear in the middle of the screen?
+                justifyContent: 'center',
                 borderBottomColor: 'gray',
                 borderBottomWidth: 1,
               }}>

@@ -1,10 +1,7 @@
 import * as React from 'react';
 import {Text, TouchableOpacity, Animated, View, TextInput} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {
-  useCollapsibleStack,
-  CollapsibleStackSub,
-} from 'react-navigation-collapsible';
+import {useCollapsibleStack} from 'react-navigation-collapsible';
 import {useSafeArea} from 'react-native-safe-area-context';
 
 import {StackParamList} from '../App';
@@ -59,7 +56,8 @@ const SubHeaderScreen = ({navigation}: ScreenProps) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('Detail')}
               style={{
-                width: '100%',
+                // width: '100%',
+                alignSelf: 'stretch',
                 height: 50,
                 alignItems: 'center',
                 justifyContent: 'center',
