@@ -16,16 +16,11 @@ type ScreenProps = {
 };
 
 const StickyHeaderScreen = ({navigation}: ScreenProps) => {
-  // const {
-  //   onScroll,
-  //   containerPaddingTop,
-  //   scrollIndicatorInsetTop,
-  //   translateY,
-  // } = useCollapsibleStack();
-
-  // const searchHeaderHeight = 80;
-
-  const {CollapsibleStack, CollapsibleSubStack} = useCollapsibleStack({
+  const {
+    CollapsibleStack,
+    CollapsibleSubStack,
+    scrollIndicatorInsetTop,
+  } = useCollapsibleStack({
     backgroundColor: 'blue',
     collapsedColor: 'red',
     showsHorizontalScrollIndicator: true,
@@ -36,6 +31,9 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
 
   return (
     <>
+      <CollapsibleSubStack>
+        <Text style={{fontSize: 20, color: 'white'}}>Sticky UI</Text>
+      </CollapsibleSubStack>
       <CollapsibleStack>
         <Animated.FlatList
           data={data}
@@ -43,9 +41,9 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
           // contentContainerStyle={{
           //   paddingTop: containerPaddingTop + searchHeaderHeight,
           // }}
-          // scrollIndicatorInsets={{
-          //   top: scrollIndicatorInsetTop + searchHeaderHeight,
-          // }}
+          scrollIndicatorInsets={{
+            top: scrollIndicatorInsetTop,
+          }}
           renderItem={({item}: any) => (
             <TouchableOpacity
               onPress={() => navigation.navigate('Detail')}
@@ -53,7 +51,7 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
                 width: '100%',
                 height: 50,
                 alignItems: 'center',
-                justifyContent: 'center',
+                // justifyContent: 'center', // Causes scroll to appear in the middle of the screen?
                 borderBottomColor: 'gray',
                 borderBottomWidth: 1,
               }}>
@@ -68,30 +66,6 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
           keyExtractor={(item: any) => item.toString()}
         />
       </CollapsibleStack>
-
-      {/* Sticky UI */}
-      {/* <Animated.View
-        style={{
-          transform: [{translateY}],
-          position: 'absolute',
-          backgroundColor: 'skyblue',
-          top: containerPaddingTop,
-          height: searchHeaderHeight,
-          width: '100%',
-        }}>
-        <View
-          style={{
-            flex: 1,
-            margin: 10,
-            backgroundColor: 'blue',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}> */}
-      <CollapsibleSubStack>
-        <Text style={{fontSize: 20, color: 'white'}}>Sticky UI</Text>
-      </CollapsibleSubStack>
-      {/* </View> 
-      </Animated.View> */}
     </>
   );
 };

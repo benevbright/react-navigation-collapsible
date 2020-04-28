@@ -34,13 +34,11 @@ const MySearchBar = () => (
 );
 
 const SubHeaderScreen = ({navigation}: ScreenProps) => {
-  // const {
-  //   onScroll,
-  //   containerPaddingTop,
-  //   scrollIndicatorInsetTop,
-  // } = useCollapsibleStack();
-
-  const {CollapsibleStack, CollapsibleSubStack} = useCollapsibleStack({
+  const {
+    CollapsibleStack,
+    CollapsibleSubStack,
+    scrollIndicatorInsetTop,
+  } = useCollapsibleStack({
     backgroundColor: 'blue',
     collapsedColor: 'red',
     showsHorizontalScrollIndicator: true,
@@ -56,7 +54,7 @@ const SubHeaderScreen = ({navigation}: ScreenProps) => {
           data={data}
           // onScroll={onScroll}
           // contentContainerStyle={{paddingTop: containerPaddingTop}}
-          // scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
+          scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
           renderItem={({item}: any) => (
             <TouchableOpacity
               onPress={() => navigation.navigate('Detail')}

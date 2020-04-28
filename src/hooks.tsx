@@ -25,8 +25,8 @@ export const useCollapsibleStack = ({
   showsHorizontalScrollIndicator = false,
   showsVerticalScrollIndicator = false,
 } = {}) => {
-  let headerLoaded = false;
-  let substackLoaded = false;
+  // let headerLoaded = false;
+  // let substackLoaded = false;
 
   const navigation = useNavigation();
 
@@ -43,18 +43,14 @@ export const useCollapsibleStack = ({
   ] = React.useState(0);
 
   // Initialize variables
-  // const [translateY, setTranslateY] = React.useState(new Animated.Value(0));
   const translateY = new Animated.Value(0);
   let opacity = 1;
   const containerPaddingTop = headerHeight;
-  // const [translateYSticky, setTranslateYSticky] = React.useState(
-  //   new Animated.Value(0)
-  // );
-  const translateYSticky = new Animated.Value(0);
-
-  // Calculate scroll inset
-  const scrollIndicatorInsetTop =
-    containerPaddingTop - insets.top + collapsibleSubStackHeight;
+  // const translateYSticky = new Animated.Value(0);
+  const [translateYSticky, setTranslateYSticky] = React.useState(
+    new Animated.Value(0)
+  );
+  let scrollIndicatorInsetTop = 0;
 
   const handleLayoutCollapsedHeaderBackground = React.useCallback(event => {
     const { height } = event.nativeEvent.layout;
@@ -114,12 +110,12 @@ export const useCollapsibleStack = ({
       style={{
         backgroundColor: collapsedColor,
         left: 0,
-        // paddingTop: insets.top,
         position: 'absolute',
         right: 0,
         top: headerHeight,
         transform: [{ translateY: translateYSticky }],
         zIndex: 1,
+        opacity,
       }}>
       {children}
     </Animated.View>
@@ -157,75 +153,81 @@ export const useCollapsibleStack = ({
   React.useEffect(() => {
     const headerHasLoaded = !!headerHeight;
 
-    if (headerHasLoaded && !headerLoaded) {
-      headerLoaded = true;
-      // Alert.alert('Loaded');
+    // Calculate scroll inset
+    scrollIndicatorInsetTop =
+      containerPaddingTop - insets.top + collapsibleSubStackHeight > 0
+        ? containerPaddingTop - insets.top + collapsibleSubStackHeight
+        : 0;
 
-      // When reaching the end of a FlatList or ScrollView on iOS, the screen will bounce and scroll the other way which will trigger the header to show again
-      const clampedScrollY = positionY.interpolate({
-        extrapolateLeft: 'clamp',
-        inputRange: [minScroll + 0, minScroll + 1],
-        outputRange: [0, 1],
-      });
+    // if (headerHasLoaded && !headerLoaded) {
+    //   headerLoaded = true;
+    //   Alert.alert('Loaded');
 
-      // Creates a new Animated value composed from two Animated values multiplied together.
-      // By multiplying by -1, we make the clamped (limited by range) scroll value negative
-      const minusScrollY = Animated.multiply(clampedScrollY, -1);
+    // When reaching the end of a FlatList or ScrollView on iOS, the screen will bounce and scroll the other way which will trigger the header to show again
+    const clampedScrollY = positionY.interpolate({
+      extrapolateLeft: 'clamp',
+      inputRange: [minScroll + 0, minScroll + 1],
+      outputRange: [0, 1],
+    });
 
-      // Calculate how much to move the header
-      // Maximum update depth exceeded.
-      // setTranslateY(
-      translateY = Animated.diffClamp(
-        minusScrollY,
-        // Adding collapsibleSubStackHeight to prevent header scrolling over sticky content
-        // -(headerHeight + collapsibleSubStackHeight),
-        -headerHeight,
-        0
-      );
-      // );
-      console.log('translateY', translateY);
+    // Creates a new Animated value composed from two Animated values multiplied together.
+    // By multiplying by -1, we make the clamped (limited by range) scroll value negative
+    const minusScrollY = Animated.multiply(clampedScrollY, -1);
 
-      // Update opacity with headerHeight from 0 to 1
-      opacity = translateY.interpolate({
-        extrapolate: 'clamp',
-        inputRange: [-headerHeight, 0],
-        outputRange: [0, 1],
-      });
-    }
+    // Calculate how much to move the header
+    // Maximum update depth exceeded.
+    // setTranslateY(
+    translateY = Animated.diffClamp(
+      minusScrollY,
+      // Adding collapsibleSubStackHeight to prevent header scrolling over sticky content
+      -(headerHeight + collapsibleSubStackHeight),
+      0
+    );
+    // );
+    console.log('translateY', translateY);
+
+    // Update opacity with headerHeight from 0 to 1
+    opacity = translateY.interpolate({
+      extrapolate: 'clamp',
+      inputRange: [-headerHeight, 0],
+      outputRange: [0, 1],
+    });
+    // }
 
     const subStackHasLoaded = !!headerHeight && !!collapsibleSubStackHeight;
-    if (subStackHasLoaded && !substackLoaded) {
-      substackLoaded = true;
-      // Alert.alert('Substack Loaded');
 
-      // Interpolate a range so that the translateY stops the sticky content from moving
-      const clampedScrollYSticky = positionY.interpolate({
-        extrapolate: 'clamp',
-        // headerHeight is added to make sure content moves together
-        inputRange: [0, headerHeight + collapsibleSubStackHeight],
-        outputRange: [0, -(headerHeight + collapsibleSubStackHeight)],
-      });
+    // if (subStackHasLoaded && !substackLoaded) {
+    // substackLoaded = true;
+    // Alert.alert('Substack Loaded');
 
-      // Calculate how much to move the CollapsibleSubStack
-      // setTranslateYSticky(
-      translateYSticky = Animated.diffClamp(
+    // Interpolate a range so that the translateY stops the sticky content from moving
+    const clampedScrollYSticky = positionY.interpolate({
+      extrapolate: 'clamp',
+      // headerHeight is added to make sure content moves together
+      inputRange: [0, scrollIndicatorInsetTop],
+      outputRange: [0, -scrollIndicatorInsetTop],
+    });
+
+    // Calculate how much to move the CollapsibleSubStack
+    setTranslateYSticky(
+      Animated.diffClamp(
         clampedScrollYSticky,
         // Fold with CollapsibleSubStack with Header
-        // -(collapsibleSubStackHeight - headerHeight),
-        -collapsibleSubStackHeight,
+        // -scrollIndicatorInsetTop,
+        -containerPaddingTop + insets.top,
         0
-      );
-      // );
+      )
+    );
 
-      // ALSO works to stop, but needs to move down immediately with header
-      // setTranslateYSticky(
-      //   positionY.interpolate({
-      //     extrapolate: 'clamp',
-      //     inputRange: [0, collapsibleSubStackHeight],
-      //     outputRange: [0, -collapsibleSubStackHeight],
-      //   }),
-      // );
-    }
+    // ALSO works to stop, but needs to move down immediately with header
+    // setTranslateYSticky(
+    //   positionY.interpolate({
+    //     extrapolate: 'clamp',
+    //     inputRange: [0, collapsibleSubStackHeight],
+    //     outputRange: [0, -collapsibleSubStackHeight],
+    //   }),
+    // );
+    // }
 
     // Fade in the content on the page to prevent jumping
     // If the `CollapsibleSubStack` option has been provided, check if it has loaded
