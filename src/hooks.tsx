@@ -40,7 +40,6 @@ export const useCollapsibleStack = ({
   ] = React.useState(0);
 
   // Initialize variables
-  // let translateY = new Animated.Value(0);
   const [translateY, setTranslateY] = React.useState(new Animated.Value(0));
 
   // Set default opacity
@@ -179,6 +178,7 @@ export const useCollapsibleStack = ({
     const minusScrollY = Animated.multiply(clampedScrollY, -1);
 
     // Calculate how much to move the header
+    // Needs to update state in order to allow CollapsibleSubStack to move
     setTranslateY(
       // @ts-ignore
       Animated.diffClamp(minusScrollY, -headerHeight + insets.top, 0)
