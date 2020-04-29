@@ -43,11 +43,10 @@ export const useCollapsibleStack = ({
   ] = React.useState(0);
 
   // Initialize variables
-  const [translateY, setTranslateY] = React.useState(new Animated.Value(0));
-  const [opacity, setOpacity] = React.useState(new Animated.Value(1));
-  const [translateYSticky, setTranslateYSticky] = React.useState(
-    new Animated.Value(0)
-  );
+  let translateY = new Animated.Value(0);
+
+  // Set default opacity
+  let opacity = 1;
 
   // Where the content should start from (inclusive of optional collapsibleSubStackHeight)
   const containerPaddingTop = headerHeight + collapsibleSubStackHeight;
@@ -118,7 +117,7 @@ export const useCollapsibleStack = ({
         position: 'absolute',
         right: 0,
         top: headerHeight,
-        transform: [{ translateY: translateYSticky }],
+        transform: [{ translateY }],
         zIndex: 1,
         opacity,
       }}>
@@ -182,24 +181,18 @@ export const useCollapsibleStack = ({
     const minusScrollY = Animated.multiply(clampedScrollY, -1);
 
     // Calculate how much to move the header
-    // Maximum update depth exceeded.
-    setTranslateY(
-      Animated.diffClamp(
-        minusScrollY,
-        // Adding collapsibleSubStackHeight to prevent header scrolling over sticky content
-        -(headerHeight + collapsibleSubStackHeight),
-        0
-      )
+    translateY = Animated.diffClamp(
+      minusScrollY,
+      -headerHeight + insets.top,
+      0
     );
 
     // Update opacity with headerHeight from 0 to 1
-    setOpacity(
-      translateY.interpolate({
-        extrapolate: 'clamp',
-        inputRange: [-headerHeight, 0],
-        outputRange: [0, 1],
-      })
-    );
+    opacity = translateY.interpolate({
+      extrapolate: 'clamp',
+      inputRange: [-headerHeight, 0],
+      outputRange: [0, 1],
+    });
 
     const subStackHasLoaded = !!headerHeight && !!collapsibleSubStackHeight;
 
@@ -207,32 +200,12 @@ export const useCollapsibleStack = ({
     // substackLoaded = true;
     // Alert.alert('Substack Loaded');
 
-    // Interpolate a range so that the translateY stops the sticky content from moving
-    const clampedScrollYSticky = positionY.interpolate({
-      extrapolate: 'clamp',
-      // headerHeight is added to make sure content moves together
-      inputRange: [0, scrollIndicatorInsetTop],
-      outputRange: [0, -scrollIndicatorInsetTop],
-    });
-
-    // Calculate how much to move the CollapsibleSubStack
-    setTranslateYSticky(
-      Animated.diffClamp(
-        clampedScrollYSticky,
-        // Fold with CollapsibleSubStack with Header
-        // -scrollIndicatorInsetTop,
-        -containerPaddingTop + insets.top,
-        0
-      )
-    );
-
     // Fade in the content on the page to prevent jumping
     // If the `CollapsibleSubStack` option has been provided, check if it has loaded
     if (
       headerHasLoaded &&
       (!collapsibleSubStack || (collapsibleSubStack && subStackHasLoaded))
     ) {
-      // Alert.alert('Fade in');
       Animated.timing(collapsibleStackOpacity, {
         duration: collapsibleStackOpacityDuration,
         toValue: 1,
@@ -269,7 +242,6 @@ export const useCollapsibleStack = ({
     onScroll,
     scrollIndicatorInsetTop,
     translateY,
-    translateYSticky,
     headerHeight,
   };
 };
