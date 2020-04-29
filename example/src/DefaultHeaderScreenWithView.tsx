@@ -26,7 +26,7 @@ const DefaultHeaderScreenWithView = ({navigation}: ScreenProps) => {
       <View
         style={{
           height: 6000,
-          backgroundColor: 'green',
+          backgroundColor: 'red',
         }}>
         <Button
           title={String(counter)}

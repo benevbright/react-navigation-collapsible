@@ -32,10 +32,12 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
       onScroll={onScroll}
       nestedScrollEnabled
       contentContainerStyle={{paddingTop: containerPaddingTop}}
-      // Issue with the indicator appearing in the middle?
-      // scrollIndicatorInsets={{
-      //   top: scrollIndicatorInsetTop,
-      // }}
+      scrollIndicatorInsets={{
+        top: scrollIndicatorInsetTop,
+        // Fixing the weird issue with scrollbar showing up in a strange place?!
+        // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
+        right: 1,
+      }}
       renderItem={({item}: any) => (
         <TouchableOpacity
           onPress={() => navigation.navigate('Detail')}

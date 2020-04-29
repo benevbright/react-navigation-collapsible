@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Animated, View, Alert } from 'react-native';
+import { Animated, View } from 'react-native';
 import { useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
@@ -43,14 +43,18 @@ export const useCollapsibleStack = ({
   ] = React.useState(0);
 
   // Initialize variables
-  const translateY = new Animated.Value(0);
-  let opacity = 1;
-  const containerPaddingTop = headerHeight;
-  // const translateYSticky = new Animated.Value(0);
+  const [translateY, setTranslateY] = React.useState(new Animated.Value(0));
+  const [opacity, setOpacity] = React.useState(new Animated.Value(1));
   const [translateYSticky, setTranslateYSticky] = React.useState(
     new Animated.Value(0)
   );
-  let scrollIndicatorInsetTop = 0;
+
+  // Where the content should start from (inclusive of optional collapsibleSubStackHeight)
+  const containerPaddingTop = headerHeight + collapsibleSubStackHeight;
+
+  // Calculate where the scrollindicator should start from (inclusive of optional collapsibleSubStackHeight)
+  const scrollIndicatorInsetTop =
+    containerPaddingTop - insets.top > 0 ? containerPaddingTop - insets.top : 0;
 
   const handleLayoutCollapsedHeaderBackground = React.useCallback(event => {
     const { height } = event.nativeEvent.layout;
@@ -104,6 +108,7 @@ export const useCollapsibleStack = ({
   );
 
   // Create a Component to wrap the sticky header content
+  // eslint-disable-next-line react/prop-types
   const CollapsibleSubStack = ({ children }) => (
     <Animated.View
       onLayout={handleLayoutCollapsibleSubStack}
@@ -124,6 +129,8 @@ export const useCollapsibleStack = ({
   const collapsibleStackOpacity = useRef(new Animated.Value(0)).current;
 
   // Create a Component to wrap the scrollable content
+  // Fade in the content when loaded
+  // eslint-disable-next-line react/prop-types
   const CollapsibleStack = ({ children }) => (
     <Animated.FlatList
       contentContainerStyle={{
@@ -132,7 +139,7 @@ export const useCollapsibleStack = ({
       data={[0]}
       keyExtractor={(_, index) => index.toString()}
       listKey={collapsibleStackListKey}
-      nestedScrollEnabled
+      // nestedScrollEnabled
       onScroll={onScroll}
       renderItem={() => (
         <Animated.View
@@ -144,9 +151,12 @@ export const useCollapsibleStack = ({
         </Animated.View>
       )}
       // Issue with the indicator appearing in the middle?
-      // scrollIndicatorInsets={{
-      //   top: scrollIndicatorInsetTop,
-      // }}
+      scrollIndicatorInsets={{
+        top: scrollIndicatorInsetTop,
+        // Fixing the weird issue with scrollbar showing up in a strange place?!
+        // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
+        right: 1,
+      }}
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
     />
@@ -155,12 +165,6 @@ export const useCollapsibleStack = ({
   // Run when the page has loaded and the onLayouts have finished
   React.useEffect(() => {
     const headerHasLoaded = !!headerHeight;
-
-    // Calculate scroll inset
-    scrollIndicatorInsetTop =
-      containerPaddingTop - insets.top + collapsibleSubStackHeight > 0
-        ? containerPaddingTop - insets.top + collapsibleSubStackHeight
-        : 0;
 
     // if (headerHasLoaded && !headerLoaded) {
     //   headerLoaded = true;
@@ -179,23 +183,23 @@ export const useCollapsibleStack = ({
 
     // Calculate how much to move the header
     // Maximum update depth exceeded.
-    // setTranslateY(
-    translateY = Animated.diffClamp(
-      minusScrollY,
-      // Adding collapsibleSubStackHeight to prevent header scrolling over sticky content
-      -(headerHeight + collapsibleSubStackHeight),
-      0
+    setTranslateY(
+      Animated.diffClamp(
+        minusScrollY,
+        // Adding collapsibleSubStackHeight to prevent header scrolling over sticky content
+        -(headerHeight + collapsibleSubStackHeight),
+        0
+      )
     );
-    // );
-    console.log('translateY', translateY);
 
     // Update opacity with headerHeight from 0 to 1
-    opacity = translateY.interpolate({
-      extrapolate: 'clamp',
-      inputRange: [-headerHeight, 0],
-      outputRange: [0, 1],
-    });
-    // }
+    setOpacity(
+      translateY.interpolate({
+        extrapolate: 'clamp',
+        inputRange: [-headerHeight, 0],
+        outputRange: [0, 1],
+      })
+    );
 
     const subStackHasLoaded = !!headerHeight && !!collapsibleSubStackHeight;
 
@@ -222,16 +226,6 @@ export const useCollapsibleStack = ({
       )
     );
 
-    // ALSO works to stop, but needs to move down immediately with header
-    // setTranslateYSticky(
-    //   positionY.interpolate({
-    //     extrapolate: 'clamp',
-    //     inputRange: [0, collapsibleSubStackHeight],
-    //     outputRange: [0, -collapsibleSubStackHeight],
-    //   }),
-    // );
-    // }
-
     // Fade in the content on the page to prevent jumping
     // If the `CollapsibleSubStack` option has been provided, check if it has loaded
     if (
@@ -249,6 +243,7 @@ export const useCollapsibleStack = ({
     // Load header, this will first load once to load the headerBackground
     // then, once the `headerHeight` has been calculated it will update with
     // computed values for `opacity` and `translateY`
+    // This causes an issue with the scroll indicator on Flatlist
     navigation.setOptions({
       headerBackground: CollapsedHeaderBackground({
         backgroundColor,
