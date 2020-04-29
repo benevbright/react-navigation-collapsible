@@ -5725,12 +5725,6 @@ react-native@0.62.2:
     use-subscription "^1.0.0"
     whatwg-fetch "^3.0.0"
 
-react-navigation-collapsible@../:
-  version "5.5.0"
-  dependencies:
-    react-native-iphone-x-helper "^1.2.1"
-    react-native-safe-area-context "^0.7.3"
-
 react-refresh@^0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.4.2.tgz#54a277a6caaac2803d88f1d6f13c1dcfbd81e334"

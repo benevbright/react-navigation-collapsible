@@ -15,11 +15,8 @@ export const useCollapsibleStack = ({
     right: 0,
     bottom: 0,
   },
-  height = '100%',
   minScroll = 0,
-  position = 'absolute',
   useNativeDriver = true,
-  width = '100%',
   headerTransparent = true,
   collapsibleSubStack = false,
   showsHorizontalScrollIndicator = false,
@@ -39,11 +36,12 @@ export const useCollapsibleStack = ({
   // Calculate the height of the sticky header children (if present)
   const [
     collapsibleSubStackHeight,
-    setcollapsibleSubStackHeight,
+    setCollapsibleSubStackHeight,
   ] = React.useState(0);
 
   // Initialize variables
-  let translateY = new Animated.Value(0);
+  // let translateY = new Animated.Value(0);
+  const [translateY, setTranslateY] = React.useState(new Animated.Value(0));
 
   // Set default opacity
   let opacity = 1;
@@ -55,14 +53,14 @@ export const useCollapsibleStack = ({
   const scrollIndicatorInsetTop =
     containerPaddingTop - insets.top > 0 ? containerPaddingTop - insets.top : 0;
 
-  const handleLayoutCollapsedHeaderBackground = React.useCallback(event => {
+  const handleLayoutCollapsedHeaderBackground = React.useCallback((event) => {
     const { height } = event.nativeEvent.layout;
     setHeaderHeight(height);
   }, []);
 
-  const handleLayoutCollapsibleSubStack = React.useCallback(event => {
+  const handleLayoutCollapsibleSubStack = React.useCallback((event) => {
     const { height } = event.nativeEvent.layout;
-    setcollapsibleSubStackHeight(height);
+    setCollapsibleSubStackHeight(height);
   }, []);
 
   // Create scroll event to measure when the vertical scroll position changes
@@ -91,9 +89,9 @@ export const useCollapsibleStack = ({
       <View
         style={{
           backgroundColor: collapsedColor || backgroundColor,
-          height,
-          position,
-          width,
+          height: '100%',
+          position: 'absolute',
+          width: '100%',
         }}
       />
       <Animated.View
@@ -181,13 +179,13 @@ export const useCollapsibleStack = ({
     const minusScrollY = Animated.multiply(clampedScrollY, -1);
 
     // Calculate how much to move the header
-    translateY = Animated.diffClamp(
-      minusScrollY,
-      -headerHeight + insets.top,
-      0
+    setTranslateY(
+      // @ts-ignore
+      Animated.diffClamp(minusScrollY, -headerHeight + insets.top, 0)
     );
 
     // Update opacity with headerHeight from 0 to 1
+    // @ts-ignore
     opacity = translateY.interpolate({
       extrapolate: 'clamp',
       inputRange: [-headerHeight, 0],
