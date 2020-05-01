@@ -23,7 +23,14 @@ Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-coll
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-1.gif?raw=true" width="200">
 
 ```js
-import { createCollapsibleStack } from 'react-navigation-collapsible';
+import {
+  createCollapsibleStack,
+  // disableExpoTranslucentStatusBar,
+} from 'react-navigation-collapsible';
+
+/* Expo only: If you disabled Expo's default translucent statusBar, please call this function as well.
+disableExpoTranslucentStatusBar();
+*/
 
 function App() {
   return (
