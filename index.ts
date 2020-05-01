@@ -5,7 +5,10 @@ import {
 
 import { useCollapsibleStack } from './src/hooks';
 
-import { setSafeBounceHeight } from './src/utils';
+import {
+  setSafeBounceHeight,
+  disableExpoTranslucentStatusBar,
+} from './src/utils';
 
 import { Collapsible, CollapsibleStackConfig } from './src/types';
 
@@ -16,6 +19,7 @@ export {
   createCollapsibleStackSub,
   useCollapsibleStack,
   setSafeBounceHeight,
+  disableExpoTranslucentStatusBar,
   Collapsible,
   CollapsibleStackConfig,
   CollapsibleStackSub,
