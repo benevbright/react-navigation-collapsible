@@ -10,9 +10,11 @@ let safeBounceHeight = Platform.select({
   ios: SAFEBOUNCE_HEIGHT_IOS,
   android: SAFEBOUNCE_HEIGHT_ANDROID,
 });
+
 const setSafeBounceHeight = (height: number) => {
   safeBounceHeight = height;
 };
+
 const getSafeBounceHeight = () => safeBounceHeight;
 
 const getDefaultHeaderHeight = (isLandscape: boolean) => {
@@ -27,18 +29,29 @@ const getDefaultHeaderHeight = (isLandscape: boolean) => {
   }
   return 0;
 };
+
+let disabledExpoTranslucentStatusBar = false;
+
+const disableExpoTranslucentStatusBar = () => {
+  disabledExpoTranslucentStatusBar = true;
+};
+
 const getStatusBarHeight = (isLandscape: boolean) => {
   if (Platform.OS === 'ios') {
     if (isLandscape) return 0;
     return isIphoneX() ? 44 : 20;
   } else if (Platform.OS === 'android') {
     // @ts-ignore
-    return global.Expo ? StatusBar.currentHeight : 0;
+    return global.Expo && !disabledExpoTranslucentStatusBar
+      ? StatusBar.currentHeight
+      : 0;
   } else return 0;
 };
+
 const getNavigationHeight = (isLandscape: boolean, headerHeight: number) => {
   return headerHeight + getStatusBarHeight(isLandscape);
 };
+
 const getScrollIndicatorInsetTop = (
   isLandscape: boolean,
   headerHeight: number
@@ -57,4 +70,5 @@ export {
   getNavigationHeight,
   getStatusBarHeight,
   getScrollIndicatorInsetTop,
+  disableExpoTranslucentStatusBar,
 };
