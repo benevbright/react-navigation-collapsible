@@ -15,6 +15,7 @@ import {
   getDefaultHeaderHeight,
   getNavigationHeight,
   getScrollIndicatorInsetTop,
+  getStatusBarHeight,
 } from './utils';
 import { CollapsibleStackConfig, Collapsible } from './types';
 import { CollapsedHeaderBackground as DefaultCollapsedHeaderBackground } from './CollapsedHeaderBackground';
@@ -70,10 +71,17 @@ const createCollapsibleStack = (
         const window = Dimensions.get('window');
         const isLandscape = window.height < window.width;
 
-        const headerHeight =
-          collapsibleTarget === CollapsibleTarget.SubHeader
-            ? route.params?.collapsibleSubHeaderHeight || 0
-            : getDefaultHeaderHeight(isLandscape);
+        let headerHeight = 0;
+        if (collapsibleTarget === CollapsibleTarget.SubHeader) {
+          headerHeight = route.params?.collapsibleSubHeaderHeight || 0;
+        } else {
+          if (userOptions.headerStyle?.height != null) {
+            headerHeight =
+              userOptions.headerStyle.height - getStatusBarHeight(isLandscape);
+          } else {
+            headerHeight = getDefaultHeaderHeight(isLandscape);
+          }
+        }
         const safeBounceHeight = getSafeBounceHeight();
 
         const animatedDiffClampY = Animated.diffClamp(
