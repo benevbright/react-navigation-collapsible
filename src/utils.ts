@@ -55,5 +55,6 @@ export {
   getSafeBounceHeight,
   getDefaultHeaderHeight,
   getNavigationHeight,
+  getStatusBarHeight,
   getScrollIndicatorInsetTop,
 };
