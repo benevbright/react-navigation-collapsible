@@ -58,6 +58,7 @@ const createCollapsibleStack = (
   return (
     <Stack.Screen
       {...ScreenElement.props}
+      key={config.key}
       options={({
         navigation,
         route,
