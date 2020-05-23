@@ -49,6 +49,8 @@ function App() {
           {
             collapsedColor: 'red' /* Optional */,
             useNativeDriver: true /* Optional, default: true */,
+            key:
+              'HomeScreen' /* Optional, a key for your Stack.Screen element */,
           }
         )}
       </Stack.Navigator>
