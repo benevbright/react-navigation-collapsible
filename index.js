@@ -218,7 +218,9 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}, tabNaviga
           {useNativeDriver: Platform.select({ios: true, android: true, web: false})}
         )
       );
-
+      this.setHeaderHeight = newValue => { 
+        collapsibleParams.collapsibleBackgroundStyle.height =  newValue;
+      }
       switch (collapsibleType) {
         case CollapsibleType.defaultHeader:
           this.props.navigation.setParams({
@@ -280,6 +282,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}, tabNaviga
           translateY: params.collapsibleTranslateY || new Animated.Value(paddingHeight),
           translateOpacity: params.collapsibleTranslateOpacity || new Animated.Value(1),
           translateProgress: params.collapsibleTranslateProgress || new Animated.Value(0),
+          setHeaderHeight: this.setHeaderHeight,
         }
       }
 
