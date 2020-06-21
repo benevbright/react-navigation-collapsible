@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Text, TouchableOpacity, Animated} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {useCollapsibleStack} from 'react-navigation-collapsible';
+import { Text, TouchableOpacity, Animated } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useCollapsibleStack } from 'react-navigation-collapsible';
 
-import {StackParamList} from '../App';
+import { StackParamList } from '../App';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {
@@ -14,7 +14,7 @@ type ScreenProps = {
   navigation: StackNavigationProp<StackParamList>;
 };
 
-const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
+const DefaultHeaderScreen = ({ navigation }: ScreenProps) => {
   const {
     onScroll,
     // onScrollWithListener,
@@ -33,9 +33,9 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
     <Animated.FlatList
       data={data}
       onScroll={onScroll}
-      contentContainerStyle={{paddingTop: containerPaddingTop}}
-      scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
-      renderItem={({item}: any) => (
+      contentContainerStyle={{ paddingTop: containerPaddingTop }}
+      scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
+      renderItem={({ item }: any) => (
         <TouchableOpacity
           onPress={() => navigation.navigate('Detail')}
           style={{
@@ -59,4 +59,4 @@ const DefaultHeaderScreen = ({navigation}: ScreenProps) => {
   );
 };
 
-export {DefaultHeaderScreen};
+export { DefaultHeaderScreen };

@@ -26,4 +26,5 @@ export type CollapsibleStackConfig = {
     params: CollapsedHeaderBackgroundParams
   ) => ReactNode;
   key?: string;
+  elevation?: number;
 };

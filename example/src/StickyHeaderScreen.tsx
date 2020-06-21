@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Text, TouchableOpacity, Animated, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {useCollapsibleStack} from 'react-navigation-collapsible';
+import { Text, TouchableOpacity, Animated, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useCollapsibleStack } from 'react-navigation-collapsible';
 
-import {StackParamList} from '../App';
+import { StackParamList } from '../App';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {
@@ -14,7 +14,7 @@ type ScreenProps = {
   navigation: StackNavigationProp<StackParamList>;
 };
 
-const StickyHeaderScreen = ({navigation}: ScreenProps) => {
+const StickyHeaderScreen = ({ navigation }: ScreenProps) => {
   const {
     onScroll,
     containerPaddingTop,
@@ -35,7 +35,7 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
         scrollIndicatorInsets={{
           top: scrollIndicatorInsetTop + searchHeaderHeight,
         }}
-        renderItem={({item}: any) => (
+        renderItem={({ item }: any) => (
           <TouchableOpacity
             onPress={() => navigation.navigate('Detail')}
             style={{
@@ -60,7 +60,7 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
       {/* Sticky UI */}
       <Animated.View
         style={{
-          transform: [{translateY}],
+          transform: [{ translateY }],
           position: 'absolute',
           backgroundColor: 'skyblue',
           top: containerPaddingTop,
@@ -75,11 +75,11 @@ const StickyHeaderScreen = ({navigation}: ScreenProps) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 20, color: 'white'}}>Sticky UI</Text>
+          <Text style={{ fontSize: 20, color: 'white' }}>Sticky UI</Text>
         </View>
       </Animated.View>
     </>
   );
 };
 
-export {StickyHeaderScreen};
+export { StickyHeaderScreen };

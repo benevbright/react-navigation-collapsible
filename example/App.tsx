@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -11,10 +11,10 @@ import {
   createCollapsibleStackSub,
 } from 'react-navigation-collapsible';
 
-import {DefaultHeaderScreen} from './src/DefaultHeaderScreen';
-import {StickyHeaderScreen} from './src/StickyHeaderScreen';
-import {SubHeaderScreen} from './src/SubHeaderScreen';
-import {DetailScreen} from './src/DetailScreen';
+import { DefaultHeaderScreen } from './src/DefaultHeaderScreen';
+import { StickyHeaderScreen } from './src/StickyHeaderScreen';
+import { SubHeaderScreen } from './src/SubHeaderScreen';
+import { DetailScreen } from './src/DetailScreen';
 
 export type StackParamList = {
   Home: undefined;
@@ -28,19 +28,19 @@ type ScreenProps = {
   navigation: StackNavigationProp<StackParamList>;
 };
 
-const samples: {title: string; routeName: keyof StackParamList}[] = [
-  {title: 'Sample 1-1: Default Header', routeName: 'DefaultHeader'},
-  {title: 'Sample 1-2: Sticky Header', routeName: 'StickyHeader'},
-  {title: 'Sample 2: Sub Header', routeName: 'SubHeader'},
+const samples: { title: string; routeName: keyof StackParamList }[] = [
+  { title: 'Sample 1-1: Default Header', routeName: 'DefaultHeader' },
+  { title: 'Sample 1-2: Sticky Header', routeName: 'StickyHeader' },
+  { title: 'Sample 2: Sub Header', routeName: 'SubHeader' },
 ];
 
-function HomeScreen({navigation}: ScreenProps) {
+function HomeScreen({ navigation }: ScreenProps) {
   return (
-    <View style={{flex: 1, paddingTop: 50, alignItems: 'center'}}>
+    <View style={{ flex: 1, paddingTop: 50, alignItems: 'center' }}>
       {samples.map(sample => (
         <Text
           key={sample.title}
-          style={{margin: 15}}
+          style={{ margin: 15 }}
           onPress={() => {
             navigation.navigate(sample.routeName);
           }}>
@@ -76,13 +76,14 @@ function App() {
             name="DefaultHeader"
             component={DefaultHeaderScreen}
             options={{
-              headerStyle: {backgroundColor: 'green'},
+              headerStyle: { backgroundColor: 'green' },
               headerTintColor: 'white',
               title: 'Default Header',
             }}
           />,
           {
             collapsedColor: 'red',
+            elevation: 10
           },
         )}
 
@@ -93,9 +94,12 @@ function App() {
             component={StickyHeaderScreen}
             options={{
               title: 'Sticky Header',
-              headerStyle: {backgroundColor: 'white'},
+              headerStyle: { backgroundColor: 'white' },
             }}
           />,
+          {
+            elevation: 5
+          }
         )}
 
         {/* Sample 2: Sub Header */}
@@ -104,7 +108,7 @@ function App() {
             name="SubHeader"
             component={SubHeaderScreen}
             options={{
-              headerStyle: {backgroundColor: 'green'},
+              headerStyle: { backgroundColor: 'green' },
               headerTintColor: 'white',
               title: 'Collapsible Sub Header',
             }}
