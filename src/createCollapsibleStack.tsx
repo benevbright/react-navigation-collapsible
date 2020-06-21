@@ -124,23 +124,23 @@ const createCollapsibleStack = (
         return collapsibleTarget === CollapsibleTarget.SubHeader
           ? userOptions
           : {
-            ...userOptions,
-            headerStyle: {
-              ...userOptions.headerStyle,
-              transform: [{ translateY }],
-              opacity,
-            },
-            headerBackground: CollapsedHeaderBackground({
-              translateY,
-              opacity,
-              backgroundColor: userOptions.headerStyle?.backgroundColor,
-              collapsedColor:
-                config.collapsedColor ||
-                userOptions.headerStyle?.backgroundColor,
-              elevation: config.elevation,
-            }),
-            headerTransparent: true,
-          };
+              ...userOptions,
+              headerStyle: {
+                ...userOptions.headerStyle,
+                transform: [{ translateY }],
+                opacity,
+              },
+              headerBackground: CollapsedHeaderBackground({
+                translateY,
+                opacity,
+                backgroundColor: userOptions.headerStyle?.backgroundColor,
+                collapsedColor:
+                  config.collapsedColor ||
+                  userOptions.headerStyle?.backgroundColor,
+                elevation: config.elevation,
+              }),
+              headerTransparent: true,
+            };
       }}
       component={UserComponent}
     />

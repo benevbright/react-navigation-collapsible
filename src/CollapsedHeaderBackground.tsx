@@ -15,16 +15,19 @@ const CollapsedHeaderBackground = ({
   opacity,
   backgroundColor,
   collapsedColor,
-  elevation
+  elevation,
 }: Params) => () => (
   <Animated.View style={{ flex: 1, transform: [{ translateY }] }}>
     <View
-      style={[{
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        backgroundColor: (collapsedColor || backgroundColor),
-      }, getElevationStyle(elevation)]}
+      style={[
+        {
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          backgroundColor: collapsedColor || backgroundColor,
+        },
+        getElevationStyle(elevation),
+      ]}
     />
     <Animated.View
       style={{
