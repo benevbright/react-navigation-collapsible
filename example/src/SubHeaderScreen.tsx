@@ -1,12 +1,18 @@
 import * as React from 'react';
-import {Text, TouchableOpacity, Animated, View, TextInput} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {
+  Text,
+  TouchableOpacity,
+  Animated,
+  View,
+  TextInput,
+} from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import {
   useCollapsibleStack,
   CollapsibleStackSub,
 } from 'react-navigation-collapsible';
 
-import {StackParamList} from '../App';
+import { StackParamList } from '../App';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {
@@ -19,7 +25,12 @@ type ScreenProps = {
 
 const MySearchBar = () => (
   <View
-    style={{padding: 13, width: '100%', height: 60, backgroundColor: 'green'}}>
+    style={{
+      padding: 13,
+      width: '100%',
+      height: 60,
+      backgroundColor: 'green',
+    }}>
     <View
       style={{
         backgroundColor: 'white',
@@ -32,7 +43,7 @@ const MySearchBar = () => (
   </View>
 );
 
-const SubHeaderScreen = ({navigation}: ScreenProps) => {
+const SubHeaderScreen = ({ navigation }: ScreenProps) => {
   const {
     onScroll,
     containerPaddingTop,
@@ -44,9 +55,9 @@ const SubHeaderScreen = ({navigation}: ScreenProps) => {
       <Animated.FlatList
         data={data}
         onScroll={onScroll}
-        contentContainerStyle={{paddingTop: containerPaddingTop}}
-        scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
-        renderItem={({item}: any) => (
+        contentContainerStyle={{ paddingTop: containerPaddingTop }}
+        scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
+        renderItem={({ item }: any) => (
           <TouchableOpacity
             onPress={() => navigation.navigate('Detail')}
             style={{
@@ -74,4 +85,4 @@ const SubHeaderScreen = ({navigation}: ScreenProps) => {
   );
 };
 
-export {SubHeaderScreen};
+export { SubHeaderScreen };

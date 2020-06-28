@@ -37,7 +37,7 @@ const samples: { title: string; routeName: keyof StackParamList }[] = [
 function HomeScreen({ navigation }: ScreenProps) {
   return (
     <View style={{ flex: 1, paddingTop: 50, alignItems: 'center' }}>
-      {samples.map(sample => (
+      {samples.map((sample) => (
         <Text
           key={sample.title}
           style={{ margin: 15 }}
@@ -83,7 +83,7 @@ function App() {
           />,
           {
             collapsedColor: 'red',
-            elevation: 10
+            elevation: 10,
           },
         )}
 
@@ -98,8 +98,8 @@ function App() {
             }}
           />,
           {
-            elevation: 5
-          }
+            elevation: 5,
+          },
         )}
 
         {/* Sample 2: Sub Header */}

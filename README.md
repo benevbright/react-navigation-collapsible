@@ -51,6 +51,7 @@ function App() {
             useNativeDriver: true /* Optional, default: true */,
             key:
               'HomeScreen' /* Optional, a key for your Stack.Screen element */,
+            elevation: 4 /* Optional */,
           }
         )}
       </Stack.Navigator>

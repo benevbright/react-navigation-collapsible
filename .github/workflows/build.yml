@@ -11,6 +11,6 @@ jobs:
       - name: install
         run: yarn install && cd example && yarn install
       - name: lint
-        run: yarn lint
+        run: yarn lint && cd example && yarn lint
       - name: build
         run: yarn build
