@@ -1,6 +1,6 @@
 /* global global */
 
-import { Platform, StatusBar } from 'react-native';
+import { Platform, StatusBar, ViewStyle } from 'react-native';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
 const SAFEBOUNCE_HEIGHT_IOS = 300;
@@ -63,6 +63,25 @@ const getScrollIndicatorInsetTop = (
   return headerHeight + getStatusBarHeight(isLandscape);
 };
 
+const getElevationStyle = (elevation: number): ViewStyle => {
+  if (Platform.OS === 'ios') {
+    if (elevation === 0) return {};
+    else
+      return {
+        shadowOpacity: 0.0015 * elevation + 0.18,
+        shadowRadius: 0.54 * elevation,
+        shadowOffset: {
+          height: 0.6 * elevation,
+          width: 0.6 * elevation,
+        },
+      };
+  } else {
+    return {
+      elevation: elevation,
+    };
+  }
+};
+
 export {
   setSafeBounceHeight,
   getSafeBounceHeight,
@@ -71,4 +90,5 @@ export {
   getStatusBarHeight,
   getScrollIndicatorInsetTop,
   disableExpoTranslucentStatusBar,
+  getElevationStyle,
 };

@@ -137,6 +137,7 @@ const createCollapsibleStack = (
                 collapsedColor:
                   config.collapsedColor ||
                   userOptions.headerStyle?.backgroundColor,
+                elevation: config.elevation,
               }),
               headerTransparent: true,
             };
