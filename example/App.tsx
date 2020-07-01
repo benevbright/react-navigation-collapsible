@@ -83,7 +83,7 @@ function App() {
           />,
           {
             collapsedColor: 'red',
-            elevation: 10,
+            elevation: 4,
           },
         )}
 
@@ -98,7 +98,7 @@ function App() {
             }}
           />,
           {
-            elevation: 5,
+            elevation: 4,
           },
         )}
 

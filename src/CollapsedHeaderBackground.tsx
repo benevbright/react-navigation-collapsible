@@ -7,7 +7,7 @@ export type Params = {
   opacity: Animated.AnimatedInterpolation;
   backgroundColor: string | null;
   collapsedColor: string | null;
-  elevation: number | 0;
+  elevation?: number;
 };
 
 const CollapsedHeaderBackground = ({
@@ -26,7 +26,7 @@ const CollapsedHeaderBackground = ({
           height: '100%',
           backgroundColor: collapsedColor || backgroundColor,
         },
-        getElevationStyle(elevation),
+        elevation != null ? getElevationStyle(elevation) : null,
       ]}
     />
     <Animated.View

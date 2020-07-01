@@ -65,7 +65,7 @@ const getScrollIndicatorInsetTop = (
 
 const getElevationStyle = (elevation: number): ViewStyle => {
   if (Platform.OS === 'ios') {
-    if (elevation === 0) return {};
+    if (elevation === 0) return null;
     else
       return {
         shadowOpacity: 0.0015 * elevation + 0.18,
