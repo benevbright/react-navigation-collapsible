@@ -154,6 +154,61 @@ const MyScreen = ({ navigation, route }) => {
 
 See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/SubHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/SubHeaderScreen.tsx)
 
+### 3. Custom Header
+
+![Custom Header implementation example](docs/demo-sample-3.gif)
+
+```js
+function App() {
+  return (
+    <NavigationContainer
+      /* Add headerMode="screen" to prevent the custom header from clashing with subsequent headers.
+         If you don't do this, you will have to make sure the header is applied consistently.
+         You can check the Custom Header implementation example to see a possible configuration for this */
+      headerMode="screen"
+    >
+      <Stack.Navigator>
+        /* Wrap your Stack.Screen */
+        {createCollapsibleStack(
+          <Stack.Screen
+            name="HomeScreen"
+            component={MyScreen}
+            options={{
+              title: 'Home',
+            }}
+          />,
+          {
+            /* Add a custom header to the createCollapsibleStack options the same way
+               you would add it to the Stack.Screen options */
+            header: ({ scene, previous, navigation }) => {
+              const { options } = scene.descriptor;
+              const title =
+                options.headerTitle !== undefined
+                  ? options.headerTitle
+                  : options.title !== undefined
+                  ? options.title
+                  : scene.route.name;
+
+              return (
+                <MyHeader
+                  title={title}
+                  leftButton={
+                    previous ? <MyBackButton onPress={navigation.goBack} /> : undefined
+                  }
+                  style={options.headerStyle}
+                />
+              );
+            };
+          }
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+See [/example/App.tsx](example/App.tsx) and [/example/src/CustomHeaderScreen.tsx](example/src/CustomHeaderScreen.tsx)
+
 ## Install
 
 ```bash
