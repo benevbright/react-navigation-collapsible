@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackHeaderProps } from '@react-navigation/stack';
 
 interface Props extends StackHeaderProps {
-  header: ((props: StackHeaderProps) => React.ReactNode) | undefined;
+  header: (props: StackHeaderProps) => React.ReactNode;
 }
 
 export const CollapsedHeaderContainer = ({ header, ...headerProps }: Props) => {

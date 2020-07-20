@@ -28,5 +28,5 @@ export type CollapsibleStackConfig = {
   ) => ReactNode;
   key?: string;
   elevation?: number;
-  header?: ((props: StackHeaderProps) => React.ReactNode) | undefined;
+  header?: (props: StackHeaderProps) => React.ReactNode;
 };
