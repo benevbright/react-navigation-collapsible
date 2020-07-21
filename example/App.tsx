@@ -36,7 +36,7 @@ const samples: { title: string; routeName: keyof StackParamList }[] = [
   { title: 'Sample 1-1: Default Header', routeName: 'DefaultHeader' },
   { title: 'Sample 1-2: Sticky Header', routeName: 'StickyHeader' },
   { title: 'Sample 2: Sub Header', routeName: 'SubHeader' },
-  { title: 'Sample3: Custom Header', routeName: 'WithCustomHeader' },
+  { title: 'Sample 3: Custom Header', routeName: 'WithCustomHeader' },
 ];
 
 function HomeScreen({ navigation }: ScreenProps) {
