@@ -4,6 +4,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
+import { StackHeaderProps } from '@react-navigation/stack';
 
 import { Params as CollapsedHeaderBackgroundParams } from './CollapsedHeaderBackground';
 
@@ -27,4 +28,5 @@ export type CollapsibleStackConfig = {
   ) => ReactNode;
   key?: string;
   elevation?: number;
+  header?: (props: StackHeaderProps) => React.ReactNode;
 };

@@ -8,6 +8,7 @@ import {
 import {
   createStackNavigator,
   StackNavigationProp,
+  StackHeaderProps,
 } from '@react-navigation/stack';
 
 import {
@@ -19,6 +20,7 @@ import {
 } from './utils';
 import { CollapsibleStackConfig, Collapsible } from './types';
 import { CollapsedHeaderBackground as DefaultCollapsedHeaderBackground } from './CollapsedHeaderBackground';
+import { CollapsedHeaderContainer } from './CollapsedHeaderContainer';
 
 const Stack = createStackNavigator();
 
@@ -69,18 +71,32 @@ const createCollapsibleStack = (
         if (typeof userOptions === 'function')
           userOptions = userOptions({ navigation, route });
 
+        if (config.header) {
+          const animatedHeader = (props: StackHeaderProps) => (
+            <CollapsedHeaderContainer header={config.header} {...props} />
+          );
+          userOptions.header = animatedHeader;
+        }
+
         const window = Dimensions.get('window');
         const isLandscape = window.height < window.width;
 
         let headerHeight = 0;
-        if (collapsibleTarget === CollapsibleTarget.SubHeader) {
-          headerHeight = route.params?.collapsibleSubHeaderHeight || 0;
+        if (route.params?.collapsibleCustomHeaderHeight) {
+          headerHeight =
+            route.params.collapsibleCustomHeaderHeight -
+            getStatusBarHeight(isLandscape);
         } else {
-          if (userOptions.headerStyle?.height != null) {
-            headerHeight =
-              userOptions.headerStyle.height - getStatusBarHeight(isLandscape);
+          if (collapsibleTarget === CollapsibleTarget.SubHeader) {
+            headerHeight = route.params?.collapsibleSubHeaderHeight || 0;
           } else {
-            headerHeight = getDefaultHeaderHeight(isLandscape);
+            if (userOptions.headerStyle?.height != null) {
+              headerHeight =
+                userOptions.headerStyle.height -
+                getStatusBarHeight(isLandscape);
+            } else {
+              headerHeight = getDefaultHeaderHeight(isLandscape);
+            }
           }
         }
         const safeBounceHeight = getSafeBounceHeight();
