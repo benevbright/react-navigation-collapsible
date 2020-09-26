@@ -14,4 +14,6 @@ update-example-rn:
 	cd example && yarn add react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
 	# install @react-navigation/stack
 	cd example && yarn add @react-navigation/stack
+	# install prettier
+	cd example && yarn add -D prettier
 	cd example && cd ios && pod install
