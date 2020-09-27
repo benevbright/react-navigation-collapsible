@@ -120,7 +120,7 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
       opacity,
     };
     setCollapsible(collapsible);
-  }, [isLandscape]);
+  }, [isLandscape, headerStyle]);
 
   return (
     collapsible || {
