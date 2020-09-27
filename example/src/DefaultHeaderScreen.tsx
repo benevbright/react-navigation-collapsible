@@ -20,7 +20,11 @@ const DefaultHeaderScreen = ({ navigation }: ScreenProps) => {
     // onScrollWithListener,
     containerPaddingTop,
     scrollIndicatorInsetTop,
-  } = useCollapsibleStack();
+  } = useCollapsibleStack({
+    headerStyle: {
+      backgroundColor: 'green',
+    },
+  });
 
   /* in case you want to use your listener
   const listener = ({nativeEvent}) => {

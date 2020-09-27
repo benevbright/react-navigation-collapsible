@@ -1,26 +1,129 @@
 import * as React from 'react';
-import { Dimensions, Animated } from 'react-native';
+import {
+  Dimensions,
+  Animated,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { Collapsible } from './types';
+import {
+  getSafeBounceHeight,
+  getDefaultHeaderHeight,
+  getNavigationHeight,
+  getScrollIndicatorInsetTop,
+  getStatusBarHeight,
+} from './utils';
+import { CollapsedHeaderBackground } from './CollapsedHeaderBackground';
 
-const useCollapsibleStack = (): Collapsible => {
+type Config = {
+  useNativeDriver?: boolean;
+  collapsibleCustomHeaderHeight?: number;
+  elevation?: number;
+  collapsedColor?: string;
+  headerStyle: { backgroundColor: string };
+};
+
+const useCollapsibleStack = (config?: Config): Collapsible => {
+  const {
+    useNativeDriver = true,
+    collapsibleCustomHeaderHeight,
+    elevation,
+    collapsedColor,
+    headerStyle,
+  } = config || {};
+  const window = Dimensions.get('window');
+  const [collapsible, setCollapsible] = React.useState<Collapsible>();
+  const [isLandscape, setIsLandscape] = React.useState<boolean>(
+    window.height < window.width
+  );
+
   const route = useRoute();
   const navigation = useNavigation();
 
-  const handleOrientationChange = () => {
-    navigation.setParams({ isCollapsibleDirty: true });
-  };
+  const positionY = React.useRef(new Animated.Value(0)).current;
+
   React.useEffect(() => {
+    const handleOrientationChange = () => {
+      const window = Dimensions.get('window');
+      setIsLandscape(window.height < window.width);
+    };
+
     Dimensions.addEventListener('change', handleOrientationChange);
     return () => {
       Dimensions.removeEventListener('change', handleOrientationChange);
     };
   }, []);
 
+  React.useLayoutEffect(() => {
+    let headerHeight = 0;
+    if (collapsibleCustomHeaderHeight) {
+      headerHeight =
+        collapsibleCustomHeaderHeight - getStatusBarHeight(isLandscape);
+    } else {
+      headerHeight = getDefaultHeaderHeight(isLandscape);
+    }
+    const safeBounceHeight = getSafeBounceHeight();
+
+    const animatedDiffClampY = Animated.diffClamp(
+      positionY,
+      0,
+      safeBounceHeight + headerHeight
+    );
+
+    const progress = animatedDiffClampY.interpolate({
+      inputRange: [safeBounceHeight, safeBounceHeight + headerHeight],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    });
+    const translateY = Animated.multiply(progress, -headerHeight);
+    const opacity = Animated.subtract(1, progress);
+
+    const options = {
+      headerStyle: {
+        transform: [{ translateY }],
+        opacity,
+      },
+      headerBackground: CollapsedHeaderBackground({
+        translateY,
+        opacity,
+        backgroundColor: headerStyle?.backgroundColor,
+        collapsedColor: collapsedColor || headerStyle?.backgroundColor,
+        elevation,
+      }),
+      headerTransparent: true,
+    };
+    navigation.setOptions(options);
+
+    const onScroll = Animated.event(
+      [{ nativeEvent: { contentOffset: { y: positionY } } }],
+      { useNativeDriver }
+    );
+    const onScrollWithListener = (
+      listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+    ) =>
+      Animated.event([{ nativeEvent: { contentOffset: { y: positionY } } }], {
+        useNativeDriver,
+        listener,
+      });
+    const collapsible: Collapsible = {
+      onScroll,
+      onScrollWithListener,
+      containerPaddingTop: getNavigationHeight(isLandscape, headerHeight),
+      scrollIndicatorInsetTop: getScrollIndicatorInsetTop(
+        isLandscape,
+        headerHeight
+      ),
+      translateY,
+      progress,
+      opacity,
+    };
+    setCollapsible(collapsible);
+  }, [isLandscape]);
+
   return (
-    // @ts-ignore
-    route.params?.collapsible || {
+    collapsible || {
       onScroll: null,
       onScrollWithListener: e => null,
       containerPaddingTop: 0,
