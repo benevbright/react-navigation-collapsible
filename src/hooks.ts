@@ -6,6 +6,7 @@ import {
   NativeScrollEvent,
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import shallowequal from 'shallowequal';
 
 import { Collapsible } from './types';
 import {
@@ -22,7 +23,7 @@ type Config = {
   collapsibleCustomHeaderHeight?: number;
   elevation?: number;
   collapsedColor?: string;
-  headerStyle: { backgroundColor: string };
+  headerStyle: { backgroundColor?: string };
 };
 
 const useCollapsibleStack = (config?: Config): Collapsible => {
@@ -31,10 +32,18 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
     collapsibleCustomHeaderHeight,
     elevation,
     collapsedColor,
-    headerStyle,
+    headerStyle: userHeaderStyle,
   } = config || {};
-  const window = Dimensions.get('window');
+  const [headerStyle, setHeaderStyle] = React.useState<Config['headerStyle']>(
+    userHeaderStyle
+  );
+  React.useEffect(() => {
+    if (!shallowequal(headerStyle, userHeaderStyle))
+      setHeaderStyle(userHeaderStyle);
+  }, [userHeaderStyle]);
+
   const [collapsible, setCollapsible] = React.useState<Collapsible>();
+  const window = Dimensions.get('window');
   const [isLandscape, setIsLandscape] = React.useState<boolean>(
     window.height < window.width
   );

@@ -38,7 +38,8 @@
     "react-native": ">=0.59"
   },
   "dependencies": {
-    "react-native-iphone-x-helper": "^1.2.1"
+    "react-native-iphone-x-helper": "^1.2.1",
+    "shallowequal": "^1.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.17",
