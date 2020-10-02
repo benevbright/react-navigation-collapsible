@@ -4,6 +4,7 @@ import {
   Animated,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  useWindowDimensions,
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import shallowequal from 'shallowequal';
@@ -43,27 +44,13 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
   }, [userHeaderStyle]);
 
   const [collapsible, setCollapsible] = React.useState<Collapsible>();
-  const window = Dimensions.get('window');
-  const [isLandscape, setIsLandscape] = React.useState<boolean>(
-    window.height < window.width
-  );
+  const { width, height } = useWindowDimensions();
+  const isLandscape = height < width;
 
   const route = useRoute();
   const navigation = useNavigation();
 
   const positionY = React.useRef(new Animated.Value(0)).current;
-
-  React.useEffect(() => {
-    const handleOrientationChange = () => {
-      const window = Dimensions.get('window');
-      setIsLandscape(window.height < window.width);
-    };
-
-    Dimensions.addEventListener('change', handleOrientationChange);
-    return () => {
-      Dimensions.removeEventListener('change', handleOrientationChange);
-    };
-  }, []);
 
   React.useLayoutEffect(() => {
     let headerHeight = 0;
