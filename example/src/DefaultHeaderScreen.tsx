@@ -24,6 +24,7 @@ const DefaultHeaderScreen = ({ navigation }: ScreenProps) => {
     headerStyle: {
       backgroundColor: 'green',
     },
+    collapsedColor: 'red',
   });
 
   /* in case you want to use your listener

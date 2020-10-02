@@ -51,6 +51,17 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
   const navigation = useNavigation();
 
   const positionY = React.useRef(new Animated.Value(0)).current;
+  const onScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: positionY } } }],
+    { useNativeDriver }
+  );
+  const onScrollWithListener = (
+    listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+  ) =>
+    Animated.event([{ nativeEvent: { contentOffset: { y: positionY } } }], {
+      useNativeDriver,
+      listener,
+    });
 
   React.useLayoutEffect(() => {
     let headerHeight = 0;
@@ -92,17 +103,6 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
     };
     navigation.setOptions(options);
 
-    const onScroll = Animated.event(
-      [{ nativeEvent: { contentOffset: { y: positionY } } }],
-      { useNativeDriver }
-    );
-    const onScrollWithListener = (
-      listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
-    ) =>
-      Animated.event([{ nativeEvent: { contentOffset: { y: positionY } } }], {
-        useNativeDriver,
-        listener,
-      });
     const collapsible: Collapsible = {
       onScroll,
       onScrollWithListener,

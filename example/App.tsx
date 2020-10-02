@@ -130,7 +130,6 @@ function App() {
           name="DefaultHeader"
           component={DefaultHeaderScreen}
           options={{
-            headerStyle: { backgroundColor: 'green' },
             headerTintColor: 'white',
             title: 'Default Header',
           }}
