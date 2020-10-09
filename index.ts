@@ -12,7 +12,7 @@ import {
 
 import { Collapsible, CollapsibleStackConfig } from './src/types';
 
-import { CollapsibleStackSub } from './src/CollapsibleStackSub';
+import { CollapsibleSubHeaderAnimator } from './src/CollapsibleStackSub';
 
 export {
   createCollapsibleStack,
@@ -23,5 +23,5 @@ export {
   disableExpoTranslucentStatusBar,
   Collapsible,
   CollapsibleStackConfig,
-  CollapsibleStackSub,
+  CollapsibleSubHeaderAnimator,
 };

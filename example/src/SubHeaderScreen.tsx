@@ -9,7 +9,7 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import {
   useCollapsibleSubHeader,
-  CollapsibleStackSub,
+  CollapsibleSubHeaderAnimator,
 } from 'react-navigation-collapsible';
 
 import { StackParamList } from '../App';
@@ -79,9 +79,9 @@ const SubHeaderScreen = ({ navigation }: ScreenProps) => {
         )}
         keyExtractor={(item: any) => item.toString()}
       />
-      <CollapsibleStackSub translateY={translateY}>
+      <CollapsibleSubHeaderAnimator translateY={translateY}>
         <MySearchBar />
-      </CollapsibleStackSub>
+      </CollapsibleSubHeaderAnimator>
     </>
   );
 };

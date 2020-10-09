@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const CollapsibleStackSub = ({
+const CollapsibleSubHeaderAnimator = ({
   children,
   translateY,
 }: {
@@ -34,4 +34,4 @@ const CollapsibleStackSub = ({
   );
 };
 
-export { CollapsibleStackSub };
+export { CollapsibleSubHeaderAnimator };
