@@ -19,6 +19,11 @@ import {
 import { createHeaderBackground as defaultCreateHeaderBackground } from './createHeaderBackground';
 import { Params as createHeaderBackgroundParams } from './createHeaderBackground';
 
+enum CollapsibleHeaderType {
+  Default,
+  SubHeader,
+}
+
 type Config = {
   useNativeDriver?: boolean;
   collapsibleCustomHeaderHeight?: number;
@@ -30,7 +35,10 @@ type Config = {
   ) => React.ReactNode;
 };
 
-const useCollapsibleStack = (config?: Config): Collapsible => {
+const useCollapsibleHeader = (
+  config?: Config,
+  collapsibleHeaderType: CollapsibleHeaderType = CollapsibleHeaderType.Default
+): Collapsible => {
   const {
     useNativeDriver = true,
     collapsibleCustomHeaderHeight,
@@ -68,16 +76,23 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
       listener,
     });
 
+  // @ts-ignore
+  const { collapsibleSubHeaderHeight: subHeaderHeight } = route.params || {};
+
   React.useLayoutEffect(() => {
     let headerHeight = 0;
     if (collapsibleCustomHeaderHeight) {
       headerHeight =
         collapsibleCustomHeaderHeight - getStatusBarHeight(isLandscape);
     } else {
-      headerHeight =
-        headerStyle.height != null
-          ? headerStyle.height - getStatusBarHeight(isLandscape)
-          : getDefaultHeaderHeight(isLandscape);
+      if (collapsibleHeaderType === CollapsibleHeaderType.SubHeader) {
+        headerHeight = subHeaderHeight || 0;
+      } else {
+        headerHeight =
+          headerStyle.height != null
+            ? headerStyle.height - getStatusBarHeight(isLandscape)
+            : getDefaultHeaderHeight(isLandscape);
+      }
     }
     const safeBounceHeight = getSafeBounceHeight();
 
@@ -110,22 +125,27 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
       }),
       headerTransparent: true,
     };
-    navigation.setOptions(options);
+    if (collapsibleHeaderType === CollapsibleHeaderType.Default) {
+      navigation.setOptions(options);
+    }
 
     const collapsible: Collapsible = {
       onScroll,
       onScrollWithListener,
-      containerPaddingTop: getNavigationHeight(isLandscape, headerHeight),
-      scrollIndicatorInsetTop: getScrollIndicatorInsetTop(
-        isLandscape,
-        headerHeight
-      ),
+      containerPaddingTop:
+        collapsibleHeaderType === CollapsibleHeaderType.SubHeader
+          ? headerHeight
+          : getNavigationHeight(isLandscape, headerHeight),
+      scrollIndicatorInsetTop:
+        collapsibleHeaderType === CollapsibleHeaderType.SubHeader
+          ? headerHeight
+          : getScrollIndicatorInsetTop(isLandscape, headerHeight),
       translateY,
       progress,
       opacity,
     };
     setCollapsible(collapsible);
-  }, [isLandscape, headerStyle]);
+  }, [isLandscape, headerStyle, subHeaderHeight]);
 
   return (
     collapsible || {
@@ -140,4 +160,7 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
   );
 };
 
-export { useCollapsibleStack };
+const useCollapsibleSubHeader = (config?: Config) =>
+  useCollapsibleHeader(config, CollapsibleHeaderType.SubHeader);
+
+export { useCollapsibleHeader, useCollapsibleSubHeader };

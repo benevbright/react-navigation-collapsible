@@ -146,17 +146,15 @@ function App() {
         />
 
         {/* Sample 2: Sub Header */}
-        {createCollapsibleStackSub(
-          <Stack.Screen
-            name="SubHeader"
-            component={SubHeaderScreen}
-            options={{
-              headerStyle: { backgroundColor: 'green' },
-              headerTintColor: 'white',
-              title: 'Collapsible Sub Header',
-            }}
-          />,
-        )}
+        <Stack.Screen
+          name="SubHeader"
+          component={SubHeaderScreen}
+          options={{
+            headerStyle: { backgroundColor: 'green' },
+            headerTintColor: 'white',
+            title: 'Collapsible Sub Header',
+          }}
+        />
 
         {/* Sample 3: Custom Header */}
         {createCollapsibleStack(
