@@ -16,7 +16,7 @@ import {
   getScrollIndicatorInsetTop,
   getStatusBarHeight,
 } from './utils';
-import { createHeaderBackground as defaultCreateHeaderBackground } from './createHeaderBackground';
+import { createHeaderBackground as createDefaultHeaderBackground } from './createHeaderBackground';
 import { Params as createHeaderBackgroundParams } from './createHeaderBackground';
 
 enum CollapsibleHeaderType {
@@ -45,7 +45,7 @@ const useCollapsibleHeader = (
     elevation,
     collapsedColor,
     headerStyle: userHeaderStyle = {},
-    createHeaderBackground = defaultCreateHeaderBackground,
+    createHeaderBackground = createDefaultHeaderBackground,
   } = config || {};
 
   const [headerStyle, setHeaderStyle] = React.useState<Config['headerStyle']>(
@@ -110,22 +110,22 @@ const useCollapsibleHeader = (
     const translateY = Animated.multiply(progress, -headerHeight);
     const opacity = Animated.subtract(1, progress);
 
-    const options = {
-      headerStyle: {
-        transform: [{ translateY }],
-        opacity,
-        ...headerStyle,
-      },
-      headerBackground: createHeaderBackground({
-        translateY,
-        opacity,
-        backgroundColor: headerStyle?.backgroundColor,
-        collapsedColor: collapsedColor || headerStyle?.backgroundColor,
-        elevation,
-      }),
-      headerTransparent: true,
-    };
     if (collapsibleHeaderType === CollapsibleHeaderType.Default) {
+      const options = {
+        headerStyle: {
+          transform: [{ translateY }],
+          opacity,
+          ...headerStyle,
+        },
+        headerBackground: createHeaderBackground({
+          translateY,
+          opacity,
+          backgroundColor: headerStyle?.backgroundColor,
+          collapsedColor: collapsedColor || headerStyle?.backgroundColor,
+          elevation,
+        }),
+        headerTransparent: true,
+      };
       navigation.setOptions(options);
     }
 
