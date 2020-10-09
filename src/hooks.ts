@@ -24,7 +24,7 @@ type Config = {
   collapsibleCustomHeaderHeight?: number;
   elevation?: number;
   collapsedColor?: string;
-  headerStyle: { backgroundColor?: string };
+  headerStyle?: { backgroundColor?: string; height?: number };
 };
 
 const useCollapsibleStack = (config?: Config): Collapsible => {
@@ -36,7 +36,7 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
     headerStyle: userHeaderStyle,
   } = config || {};
   const [headerStyle, setHeaderStyle] = React.useState<Config['headerStyle']>(
-    userHeaderStyle
+    userHeaderStyle || {}
   );
   React.useEffect(() => {
     if (!shallowequal(headerStyle, userHeaderStyle))
@@ -69,7 +69,10 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
       headerHeight =
         collapsibleCustomHeaderHeight - getStatusBarHeight(isLandscape);
     } else {
-      headerHeight = getDefaultHeaderHeight(isLandscape);
+      headerHeight =
+        headerStyle.height != null
+          ? headerStyle.height - getStatusBarHeight(isLandscape)
+          : getDefaultHeaderHeight(isLandscape);
     }
     const safeBounceHeight = getSafeBounceHeight();
 
@@ -91,6 +94,7 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
       headerStyle: {
         transform: [{ translateY }],
         opacity,
+        ...headerStyle,
       },
       headerBackground: CollapsedHeaderBackground({
         translateY,

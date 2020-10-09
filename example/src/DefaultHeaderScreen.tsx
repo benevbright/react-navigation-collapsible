@@ -23,6 +23,7 @@ const DefaultHeaderScreen = ({ navigation }: ScreenProps) => {
   } = useCollapsibleStack({
     headerStyle: {
       backgroundColor: 'green',
+      // height: 150,
     },
     collapsedColor: 'red',
   });
