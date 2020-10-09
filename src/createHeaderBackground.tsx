@@ -10,7 +10,7 @@ export type Params = {
   elevation?: number;
 };
 
-const CollapsedHeaderBackground = ({
+const createHeaderBackground = ({
   translateY,
   opacity,
   backgroundColor,
@@ -40,4 +40,4 @@ const CollapsedHeaderBackground = ({
   </Animated.View>
 );
 
-export { CollapsedHeaderBackground };
+export { createHeaderBackground };

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { StackHeaderProps } from '@react-navigation/stack';
 
-import { Params as CollapsedHeaderBackgroundParams } from './CollapsedHeaderBackground';
+import { Params as createHeaderBackgroundParams } from './createHeaderBackground';
 
 export type Collapsible = {
   onScroll: Function;
@@ -23,9 +23,7 @@ export type Collapsible = {
 export type CollapsibleStackConfig = {
   collapsedColor?: string;
   useNativeDriver?: boolean;
-  CollapsedHeaderBackground?: (
-    params: CollapsedHeaderBackgroundParams
-  ) => ReactNode;
+  createHeaderBackground?: (params: createHeaderBackgroundParams) => ReactNode;
   key?: string;
   elevation?: number;
   header?: (props: StackHeaderProps) => React.ReactNode;

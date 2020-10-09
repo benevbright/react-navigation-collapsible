@@ -19,7 +19,7 @@ import {
   getStatusBarHeight,
 } from './utils';
 import { CollapsibleStackConfig, Collapsible } from './types';
-import { CollapsedHeaderBackground as DefaultCollapsedHeaderBackground } from './CollapsedHeaderBackground';
+import { createHeaderBackground as defaultCreateHeaderBackground } from './createHeaderBackground';
 import { CollapsedHeaderContainer } from './CollapsedHeaderContainer';
 
 const Stack = createStackNavigator();
@@ -54,8 +54,8 @@ const createCollapsibleStack = (
       listener,
     });
 
-  const CollapsedHeaderBackground =
-    config.CollapsedHeaderBackground || DefaultCollapsedHeaderBackground;
+  const createHeaderBackground =
+    config.createHeaderBackground || defaultCreateHeaderBackground;
 
   return (
     <Stack.Screen
@@ -146,7 +146,7 @@ const createCollapsibleStack = (
                 transform: [{ translateY }],
                 opacity,
               },
-              headerBackground: CollapsedHeaderBackground({
+              headerBackground: createHeaderBackground({
                 translateY,
                 opacity,
                 backgroundColor: userOptions.headerStyle?.backgroundColor,

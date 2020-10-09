@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  Dimensions,
   Animated,
   NativeSyntheticEvent,
   NativeScrollEvent,
@@ -17,7 +16,8 @@ import {
   getScrollIndicatorInsetTop,
   getStatusBarHeight,
 } from './utils';
-import { CollapsedHeaderBackground } from './CollapsedHeaderBackground';
+import { createHeaderBackground as defaultCreateHeaderBackground } from './createHeaderBackground';
+import { Params as createHeaderBackgroundParams } from './createHeaderBackground';
 
 type Config = {
   useNativeDriver?: boolean;
@@ -25,6 +25,9 @@ type Config = {
   elevation?: number;
   collapsedColor?: string;
   headerStyle?: { backgroundColor?: string; height?: number };
+  createHeaderBackground?: (
+    params: createHeaderBackgroundParams
+  ) => React.ReactNode;
 };
 
 const useCollapsibleStack = (config?: Config): Collapsible => {
@@ -34,7 +37,9 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
     elevation,
     collapsedColor,
     headerStyle: userHeaderStyle = {},
+    createHeaderBackground = defaultCreateHeaderBackground,
   } = config || {};
+
   const [headerStyle, setHeaderStyle] = React.useState<Config['headerStyle']>(
     userHeaderStyle
   );
@@ -96,7 +101,7 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
         opacity,
         ...headerStyle,
       },
-      headerBackground: CollapsedHeaderBackground({
+      headerBackground: createHeaderBackground({
         translateY,
         opacity,
         backgroundColor: headerStyle?.backgroundColor,
