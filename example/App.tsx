@@ -136,19 +136,14 @@ function App() {
         />
 
         {/* Sample 1-2: Sticky Header */}
-        {createCollapsibleStack(
-          <Stack.Screen
-            name="StickyHeader"
-            component={StickyHeaderScreen}
-            options={{
-              title: 'Sticky Header',
-              headerStyle: { backgroundColor: 'white' },
-            }}
-          />,
-          {
-            elevation: 4,
-          },
-        )}
+        <Stack.Screen
+          name="StickyHeader"
+          component={StickyHeaderScreen}
+          options={{
+            title: 'Sticky Header',
+            headerStyle: { backgroundColor: 'white' },
+          }}
+        />
 
         {/* Sample 2: Sub Header */}
         {createCollapsibleStackSub(

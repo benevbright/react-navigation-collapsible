@@ -33,10 +33,10 @@ const useCollapsibleStack = (config?: Config): Collapsible => {
     collapsibleCustomHeaderHeight,
     elevation,
     collapsedColor,
-    headerStyle: userHeaderStyle,
+    headerStyle: userHeaderStyle = {},
   } = config || {};
   const [headerStyle, setHeaderStyle] = React.useState<Config['headerStyle']>(
-    userHeaderStyle || {}
+    userHeaderStyle
   );
   React.useEffect(() => {
     if (!shallowequal(headerStyle, userHeaderStyle))

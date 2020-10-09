@@ -20,7 +20,11 @@ const StickyHeaderScreen = ({ navigation }: ScreenProps) => {
     containerPaddingTop,
     scrollIndicatorInsetTop,
     translateY,
-  } = useCollapsibleStack();
+  } = useCollapsibleStack({
+    headerStyle: {
+      backgroundColor: 'white',
+    },
+  });
 
   const searchHeaderHeight = 80;
 
