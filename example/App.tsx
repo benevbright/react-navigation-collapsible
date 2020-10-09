@@ -7,10 +7,7 @@ import {
   StackHeaderProps,
 } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import {
-  createCollapsibleStack,
-  createCollapsibleStackSub,
-} from 'react-navigation-collapsible';
+import { createCollapsibleStack } from 'react-navigation-collapsible';
 
 import { DefaultHeaderScreen } from './src/DefaultHeaderScreen';
 import { StickyHeaderScreen } from './src/StickyHeaderScreen';
