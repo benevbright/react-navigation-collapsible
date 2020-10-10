@@ -1,18 +1,19 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationProp,
-  StackHeaderProps,
 } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import { createCollapsibleStack } from 'react-navigation-collapsible';
 
 import { DefaultHeaderScreen } from './src/DefaultHeaderScreen';
 import { StickyHeaderScreen } from './src/StickyHeaderScreen';
 import { SubHeaderScreen } from './src/SubHeaderScreen';
-import { CustomHeaderScreen } from './src/CustomHeaderScreen';
+import {
+  CustomHeaderScreen,
+  renderCustomHeader,
+} from './src/CustomHeaderScreen';
 import { DetailScreen } from './src/DetailScreen';
 
 export type StackParamList = {
@@ -49,56 +50,6 @@ function HomeScreen({ navigation }: ScreenProps) {
           {sample.title}
         </Text>
       ))}
-    </View>
-  );
-}
-
-function renderCustomHeader(props: StackHeaderProps) {
-  const { options } = props.scene.descriptor;
-  const title =
-    options.headerTitle !== undefined
-      ? options.headerTitle
-      : options.title !== undefined
-      ? options.title
-      : props.scene.route.name;
-
-  return (
-    <View
-      style={{
-        width: '100%',
-        height: 200,
-        backgroundColor: 'blue',
-        padding: 20,
-      }}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'gray',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text
-          style={{
-            fontSize: 32,
-            color: 'white',
-            marginBottom: 10,
-          }}>
-          {title}
-        </Text>
-
-        {props.previous && (
-          <TouchableOpacity onPress={props.navigation.goBack}>
-            <View>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  color: 'white',
-                }}>{`<< GO BACK`}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-      </View>
     </View>
   );
 }
@@ -154,19 +105,14 @@ function App() {
         />
 
         {/* Sample 3: Custom Header */}
-        {createCollapsibleStack(
-          <Stack.Screen
-            name="WithCustomHeader"
-            component={CustomHeaderScreen}
-            options={{
-              headerTintColor: 'white',
-              title: 'Custom Header',
-            }}
-          />,
-          {
-            header: renderCustomHeader,
-          },
-        )}
+        <Stack.Screen
+          name="WithCustomHeader"
+          component={CustomHeaderScreen}
+          options={{
+            headerTintColor: 'white',
+            title: 'Custom Header',
+          }}
+        />
 
         <Stack.Screen
           name="Detail"

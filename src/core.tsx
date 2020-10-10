@@ -5,10 +5,10 @@ import {
   NativeScrollEvent,
   useWindowDimensions,
 } from 'react-native';
+import { StackHeaderProps } from '@react-navigation/stack';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import shallowequal from 'shallowequal';
 
-import { Collapsible } from './types';
 import {
   getSafeBounceHeight,
   getDefaultHeaderHeight,
@@ -18,39 +18,52 @@ import {
 } from './utils';
 import { createHeaderBackground as createDefaultHeaderBackground } from './createHeaderBackground';
 import { Params as createHeaderBackgroundParams } from './createHeaderBackground';
+import { createCollapsibleCustomHeaderAnimator } from './createCollapsibleCustomHeaderAnimator';
 
 enum CollapsibleHeaderType {
   Default,
   SubHeader,
 }
 
-type Config = {
+export type Collapsible = {
+  onScroll: Function;
+  onScrollWithListener: (
+    listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+  ) => Function;
+  containerPaddingTop: number;
+  scrollIndicatorInsetTop: number;
+  translateY: Animated.AnimatedInterpolation;
+  progress: Animated.AnimatedInterpolation;
+  opacity: Animated.AnimatedInterpolation;
+};
+
+export type UseCollapsibleOptions = {
   useNativeDriver?: boolean;
-  collapsibleCustomHeaderHeight?: number;
   elevation?: number;
   collapsedColor?: string;
   headerStyle?: { backgroundColor?: string; height?: number };
   createHeaderBackground?: (
     params: createHeaderBackgroundParams
   ) => React.ReactNode;
+  customHeader?: (props: StackHeaderProps) => React.ReactNode;
 };
 
 const useCollapsibleHeader = (
-  config?: Config,
+  options?: UseCollapsibleOptions,
   collapsibleHeaderType: CollapsibleHeaderType = CollapsibleHeaderType.Default
 ): Collapsible => {
   const {
     useNativeDriver = true,
-    collapsibleCustomHeaderHeight,
     elevation,
     collapsedColor,
     headerStyle: userHeaderStyle = {},
     createHeaderBackground = createDefaultHeaderBackground,
-  } = config || {};
+    customHeader,
+  } = options || {};
 
-  const [headerStyle, setHeaderStyle] = React.useState<Config['headerStyle']>(
-    userHeaderStyle
-  );
+  const [headerStyle, setHeaderStyle] = React.useState<
+    UseCollapsibleOptions['headerStyle']
+  >(userHeaderStyle);
   React.useEffect(() => {
     if (!shallowequal(headerStyle, userHeaderStyle))
       setHeaderStyle(userHeaderStyle);
@@ -76,14 +89,17 @@ const useCollapsibleHeader = (
       listener,
     });
 
-  // @ts-ignore
-  const { collapsibleSubHeaderHeight: subHeaderHeight } = route.params || {};
+  const {
+    // @ts-ignore
+    collapsibleSubHeaderHeight: subHeaderHeight,
+    // @ts-ignore
+    collapsibleCustomHeaderHeight: customHeaderHeight,
+  } = route.params || {};
 
   React.useLayoutEffect(() => {
     let headerHeight = 0;
-    if (collapsibleCustomHeaderHeight) {
-      headerHeight =
-        collapsibleCustomHeaderHeight - getStatusBarHeight(isLandscape);
+    if (customHeaderHeight) {
+      headerHeight = customHeaderHeight - getStatusBarHeight(isLandscape);
     } else {
       if (collapsibleHeaderType === CollapsibleHeaderType.SubHeader) {
         headerHeight = subHeaderHeight || 0;
@@ -126,6 +142,11 @@ const useCollapsibleHeader = (
         }),
         headerTransparent: true,
       };
+      if (customHeader) {
+        Object.assign(options, {
+          header: createCollapsibleCustomHeaderAnimator(customHeader),
+        });
+      }
       navigation.setOptions(options);
     }
 
@@ -145,7 +166,7 @@ const useCollapsibleHeader = (
       opacity,
     };
     setCollapsible(collapsible);
-  }, [isLandscape, headerStyle, subHeaderHeight]);
+  }, [isLandscape, headerStyle, subHeaderHeight, customHeaderHeight]);
 
   return (
     collapsible || {
@@ -160,7 +181,7 @@ const useCollapsibleHeader = (
   );
 };
 
-const useCollapsibleSubHeader = (config?: Config) =>
-  useCollapsibleHeader(config, CollapsibleHeaderType.SubHeader);
+const useCollapsibleSubHeader = (options?: UseCollapsibleOptions) =>
+  useCollapsibleHeader(options, CollapsibleHeaderType.SubHeader);
 
 export { useCollapsibleHeader, useCollapsibleSubHeader };
