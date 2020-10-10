@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, TouchableOpacity, Animated, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useCollapsibleStack } from 'react-navigation-collapsible';
+import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
 import { StackParamList } from '../App';
 
@@ -20,7 +20,11 @@ const StickyHeaderScreen = ({ navigation }: ScreenProps) => {
     containerPaddingTop,
     scrollIndicatorInsetTop,
     translateY,
-  } = useCollapsibleStack();
+  } = useCollapsibleHeader({
+    headerStyle: {
+      backgroundColor: 'white',
+    },
+  });
 
   const searchHeaderHeight = 80;
 

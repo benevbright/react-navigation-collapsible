@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import {
-  useCollapsibleStack,
-  CollapsibleStackSub,
+  useCollapsibleSubHeader,
+  CollapsibleSubHeaderAnimator,
 } from 'react-navigation-collapsible';
 
 import { StackParamList } from '../App';
@@ -48,7 +48,8 @@ const SubHeaderScreen = ({ navigation }: ScreenProps) => {
     onScroll,
     containerPaddingTop,
     scrollIndicatorInsetTop,
-  } = useCollapsibleStack();
+    translateY,
+  } = useCollapsibleSubHeader();
 
   return (
     <>
@@ -78,9 +79,9 @@ const SubHeaderScreen = ({ navigation }: ScreenProps) => {
         )}
         keyExtractor={(item: any) => item.toString()}
       />
-      <CollapsibleStackSub>
+      <CollapsibleSubHeaderAnimator translateY={translateY}>
         <MySearchBar />
-      </CollapsibleStackSub>
+      </CollapsibleSubHeaderAnimator>
     </>
   );
 };

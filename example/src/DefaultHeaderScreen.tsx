@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, TouchableOpacity, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useCollapsibleStack } from 'react-navigation-collapsible';
+import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
 import { StackParamList } from '../App';
 
@@ -20,7 +20,13 @@ const DefaultHeaderScreen = ({ navigation }: ScreenProps) => {
     // onScrollWithListener,
     containerPaddingTop,
     scrollIndicatorInsetTop,
-  } = useCollapsibleStack();
+  } = useCollapsibleHeader({
+    headerStyle: {
+      backgroundColor: 'green',
+      // height: 150,
+    },
+    collapsedColor: 'red',
+  });
 
   /* in case you want to use your listener
   const listener = ({nativeEvent}) => {

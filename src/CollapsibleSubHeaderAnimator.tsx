@@ -2,11 +2,14 @@ import * as React from 'react';
 import { Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { useCollapsibleStack } from './hooks';
-
-const CollapsibleStackSub = ({ children }: { children: React.ReactNode }) => {
+const CollapsibleSubHeaderAnimator = ({
+  children,
+  translateY,
+}: {
+  children: React.ReactNode;
+  translateY: Animated.AnimatedInterpolation;
+}) => {
   const navigation = useNavigation();
-  const { translateY } = useCollapsibleStack();
 
   const handleLayout = ({
     nativeEvent: {
@@ -15,7 +18,6 @@ const CollapsibleStackSub = ({ children }: { children: React.ReactNode }) => {
   }) => {
     navigation.setParams({
       collapsibleSubHeaderHeight: height,
-      isCollapsibleDirty: true,
     });
   };
 
@@ -32,4 +34,4 @@ const CollapsibleStackSub = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export { CollapsibleStackSub };
+export { CollapsibleSubHeaderAnimator };

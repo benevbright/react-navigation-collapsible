@@ -1,26 +1,23 @@
 import {
-  createCollapsibleStack,
-  createCollapsibleStackSub,
-} from './src/createCollapsibleStack';
-
-import { useCollapsibleStack } from './src/hooks';
+  useCollapsibleHeader,
+  useCollapsibleSubHeader,
+  Collapsible,
+  UseCollapsibleOptions,
+} from './src/core';
 
 import {
   setSafeBounceHeight,
   disableExpoTranslucentStatusBar,
 } from './src/utils';
 
-import { Collapsible, CollapsibleStackConfig } from './src/types';
-
-import { CollapsibleStackSub } from './src/CollapsibleStackSub';
+import { CollapsibleSubHeaderAnimator } from './src/CollapsibleSubHeaderAnimator';
 
 export {
-  createCollapsibleStack,
-  createCollapsibleStackSub,
-  useCollapsibleStack,
+  useCollapsibleHeader,
+  useCollapsibleSubHeader,
   setSafeBounceHeight,
   disableExpoTranslucentStatusBar,
+  CollapsibleSubHeaderAnimator,
   Collapsible,
-  CollapsibleStackConfig,
-  CollapsibleStackSub,
+  UseCollapsibleOptions,
 };

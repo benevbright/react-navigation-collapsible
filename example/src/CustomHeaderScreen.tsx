@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Text, TouchableOpacity, Animated } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useCollapsibleStack } from 'react-navigation-collapsible';
+import { Text, TouchableOpacity, Animated, View } from 'react-native';
+import { StackNavigationProp, StackHeaderProps } from '@react-navigation/stack';
+import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
 import { StackParamList } from '../App';
 
@@ -14,12 +14,68 @@ type ScreenProps = {
   navigation: StackNavigationProp<StackParamList>;
 };
 
+export const renderCustomHeader = ({
+  scene,
+  previous,
+  navigation,
+}: StackHeaderProps) => {
+  const { options } = scene.descriptor;
+  const title =
+    options.headerTitle !== undefined
+      ? options.headerTitle
+      : options.title !== undefined
+      ? options.title
+      : scene.route.name;
+
+  return (
+    <View
+      style={{
+        width: '100%',
+        height: 200,
+        backgroundColor: 'blue',
+        padding: 20,
+      }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'gray',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Text
+          style={{
+            fontSize: 32,
+            color: 'white',
+            marginBottom: 10,
+          }}>
+          {title}
+        </Text>
+
+        {previous && (
+          <TouchableOpacity onPress={navigation.goBack}>
+            <View>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  color: 'white',
+                }}>{`<< GO BACK`}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      </View>
+    </View>
+  );
+};
+
 const CustomHeaderScreen = ({ navigation }: ScreenProps) => {
   const {
     onScroll,
     containerPaddingTop,
     scrollIndicatorInsetTop,
-  } = useCollapsibleStack();
+  } = useCollapsibleHeader({
+    customHeader: renderCustomHeader,
+  });
 
   return (
     <Animated.FlatList
