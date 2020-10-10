@@ -4,7 +4,7 @@
 
 An extension of react-navigation that makes your header collapsible.
 
-Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible-v5)
+Try out the demo on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible-v5)
 
 ## Compatibility 🚧
 
@@ -23,48 +23,24 @@ Try out on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-coll
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-1.gif?raw=true" width="200">
 
 ```js
-import {
-  createCollapsibleStack,
-  // disableExpoTranslucentStatusBar,
-} from 'react-navigation-collapsible';
+// Expo ONLY
+import { disableExpoTranslucentStatusBar } from 'react-navigation-collapsible';
 
-/* Expo only: If you disabled Expo's default translucent statusBar, please call this function as well.
+/* Call this If you have disabled Expo's default translucent statusBar. */
 disableExpoTranslucentStatusBar();
-*/
-
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        /* Wrap your Stack.Screen */
-        {createCollapsibleStack(
-          <Stack.Screen
-            name="HomeScreen"
-            component={MyScreen}
-            options={{
-              headerStyle: { backgroundColor: 'green' },
-              title: 'Home',
-            }}
-          />,
-          {
-            collapsedColor: 'red' /* Optional */,
-            useNativeDriver: true /* Optional, default: true */,
-            key:
-              'HomeScreen' /* Optional, a key for your Stack.Screen element */,
-            elevation: 4 /* Optional */,
-          }
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
 ```
 
 ```js
 import { Animated } from 'react-native';
-import { useCollapsibleStack } from 'react-navigation-collapsible';
+import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
 const MyScreen = ({ navigation, route }) => {
+  const options = {
+    headerStyle: { backgroundColor: 'green', height: 150 } /* Optional */,
+    collapsedColor: 'red' /* Optional */,
+    useNativeDriver: true /* Optional, default: true */,
+    elevation: 4 /* Optional */,
+  };
   const {
     onScroll /* Event handler */,
     onScrollWithListener /* Event handler creator */,
@@ -74,11 +50,11 @@ const MyScreen = ({ navigation, route }) => {
     translateY /* 0.0 ~ -headerHeight */,
     progress /* 0.0 ~ 1.0 */,
     opacity /* 1.0 ~ 0.0 */,
-  } = useCollapsibleStack();
+  } = useCollapsibleHeader(options);
 
   /* in case you want to use your listener
   const listener = ({nativeEvent}) => {
-    console.log(nativeEvent);
+    // I want to do something
   };
   const onScroll = onScrollWithListener(listener);
   */
@@ -94,7 +70,7 @@ const MyScreen = ({ navigation, route }) => {
 };
 ```
 
-See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/DefaultHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/DefaultHeaderScreen.tsx)
+See [/example/src/DefaultHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/DefaultHeaderScreen.tsx)
 
 ### 1-2. Sticky Header
 
@@ -109,17 +85,10 @@ See [/example/src/StickyHeaderScreen.tsx](https://github.com/benevbright/react-n
 <img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample2.gif?raw=true" width="200">
 
 ```js
-import { createCollapsibleStackSub } from 'react-navigation-collapsible';
-/* use 'createCollapsibleStackSub' instead of 'createCollapsibleStack' */
-
-/* The rest are the same with the default header. */
-```
-
-```js
 import { Animated } from 'react-native';
 import {
-  useCollapsibleStack,
-  CollapsibleStackSub,
+  useCollapsibleSubHeader,
+  CollapsibleSubHeaderAnimator,
 } from 'react-navigation-collapsible';
 
 const MySearchBar = () => (
@@ -133,7 +102,8 @@ const MyScreen = ({ navigation, route }) => {
     onScroll /* Event handler */,
     containerPaddingTop /* number */,
     scrollIndicatorInsetTop /* number */,
-  } = useCollapsibleStack();
+    translateY,
+  } = useCollapsibleSubHeader();
 
   return (
     <>
@@ -143,71 +113,68 @@ const MyScreen = ({ navigation, route }) => {
         scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
         /* rest of your stuff */
       />
-      /* Wrap your component with `CollapsibleStackSub` */
-      <CollapsibleStackSub>
+      {/* Wrap your component with `CollapsibleSubHeaderAnimator` */}
+      <CollapsibleSubHeaderAnimator translateY={translateY}>
         <MySearchBar />
-      </CollapsibleStackSub>
+      </CollapsibleSubHeaderAnimator>
     </>
   );
 };
 ```
 
-See [/example/App.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/App.tsx) and [/example/src/SubHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/SubHeaderScreen.tsx)
+See [/example/src/SubHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/SubHeaderScreen.tsx)
 
 ### 3. Custom Header
 
-![Custom Header implementation example](docs/demo-sample-3.gif)
+![Custom Header implementation example](docs/demo-sample3.gif)
 
 ```js
-function App() {
-  return (
-    <NavigationContainer
-      /* Add headerMode="screen" to prevent the custom header from clashing with subsequent headers.
-         If you don't do this, you will have to make sure the header is applied consistently.
-         You can check the Custom Header implementation example to see a possible configuration for this */
-      headerMode="screen"
-    >
-      <Stack.Navigator>
-        /* Wrap your Stack.Screen */
-        {createCollapsibleStack(
-          <Stack.Screen
-            name="HomeScreen"
-            component={MyScreen}
-            options={{
-              title: 'Home',
-            }}
-          />,
-          {
-            /* Add a custom header to the createCollapsibleStack options the same way
-               you would add it to the Stack.Screen options */
-            header: ({ scene, previous, navigation }) => {
-              const { options } = scene.descriptor;
-              const title =
-                options.headerTitle !== undefined
-                  ? options.headerTitle
-                  : options.title !== undefined
-                  ? options.title
-                  : scene.route.name;
+import { Animated } from 'react-native';
+import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
-              return (
-                <MyHeader
-                  title={title}
-                  leftButton={
-                    previous ? <MyBackButton onPress={navigation.goBack} /> : undefined
-                  }
-                  style={options.headerStyle}
-                />
-              );
-            };
+const MyScreen = ({ navigation, route }) => {
+  const options = {
+    /* Add a custom header to 'useCollapsibleHeader' options the same way you would add it to the Stack.Screen options */
+    customHeader: ({ scene, previous, navigation }) => {
+      const { options } = scene.descriptor;
+      const title =
+        options.headerTitle !== undefined
+          ? options.headerTitle
+          : options.title !== undefined
+          ? options.title
+          : scene.route.name;
+
+      return (
+        <MyHeader
+          title={title}
+          leftButton={
+            previous ? <MyBackButton onPress={navigation.goBack} /> : undefined
           }
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+          style={options.headerStyle}
+        />
+      );
+    },
+  };
+  const {
+    onScroll /* Event handler */,
+    containerPaddingTop /* number */,
+    scrollIndicatorInsetTop /* number */,
+  } = useCollapsibleHeader(options);
+
+  return (
+    <Animated.FlatList
+      onScroll={onScroll}
+      contentContainerStyle={{ paddingTop: containerPaddingTop }}
+      scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
+      /* rest of your stuff */
+    />
   );
-}
+};
 ```
 
-See [/example/App.tsx](example/App.tsx) and [/example/src/CustomHeaderScreen.tsx](example/src/CustomHeaderScreen.tsx)
+See [/example/src/CustomHeaderScreen.tsx](example/src/CustomHeaderScreen.tsx)
+
+`react-navigation` recommends to use `headerMode='screen'` when you use the custom header. [[Set headerMode to screen]](https://reactnavigation.org/docs/stack-navigator/#set-headermode-to-screen)
 
 ## Install
 
@@ -220,11 +187,12 @@ yarn add react-navigation-collapsible
 
 PR is welcome!
 
-### Testing your library code with the example
+### How to test changes with the example?
 
 [/example](https://github.com/benevbright/react-navigation-collapsible/tree/master/example) imports the library directly from the root folder, configured with [babel-plugin-module-resolver](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/babel.config.js#L10).
-So, just turn the `watch` option on at the root folder while you're making changes on the library, and check them on the example.
+So, just build the library with the `watch` option and run the example.
 
 ```bash
 yarn tsc -w
+cd example && yarn ios
 ```
