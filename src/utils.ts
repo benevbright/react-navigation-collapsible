@@ -29,7 +29,7 @@ const getDefaultHeaderHeight = (isLandscape: boolean) => {
   } else if (Platform.OS === 'android') {
     return 56;
   }
-  return 0;
+  return 64;
 };
 
 let disabledExpoTranslucentStatusBar = false;
