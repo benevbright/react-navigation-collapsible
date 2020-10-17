@@ -9,6 +9,7 @@ import 'react-native-gesture-handler';
 
 import { DefaultHeaderScreen } from './src/DefaultHeaderScreen';
 import { StickyHeaderScreen } from './src/StickyHeaderScreen';
+import { BackgroundHeaderScreen } from './src/BackgroundHeaderScreen';
 import { SubHeaderScreen } from './src/SubHeaderScreen';
 import {
   CustomHeaderScreen,
@@ -21,6 +22,7 @@ export type StackParamList = {
   Detail: undefined;
   DefaultHeader: undefined;
   StickyHeader: undefined;
+  BackgroundHeader: undefined;
   SubHeader: undefined;
   WithCustomHeader: undefined;
   CustomHeaderDetail: undefined;
@@ -33,6 +35,7 @@ type ScreenProps = {
 const samples: { title: string; routeName: keyof StackParamList }[] = [
   { title: 'Sample 1-1: Default Header', routeName: 'DefaultHeader' },
   { title: 'Sample 1-2: Sticky Header', routeName: 'StickyHeader' },
+  { title: 'Sample 1-3: Background Header', routeName: 'BackgroundHeader' },
   { title: 'Sample 2: Sub Header', routeName: 'SubHeader' },
   { title: 'Sample 3: Custom Header', routeName: 'WithCustomHeader' },
 ];
@@ -90,6 +93,16 @@ function App() {
           options={{
             title: 'Sticky Header',
             headerStyle: { backgroundColor: 'white' },
+          }}
+        />
+
+        {/* Sample 1-3: Background Header */}
+        <Stack.Screen
+          name="BackgroundHeader"
+          component={BackgroundHeaderScreen}
+          options={{
+            title: 'Background Header',
+            headerTintColor: 'white',
           }}
         />
 

@@ -46,6 +46,7 @@ export type UseCollapsibleOptions = {
     params: createHeaderBackgroundParams
   ) => React.ReactNode;
   customHeader?: (props: StackHeaderProps) => React.ReactNode;
+  headerBackground?: React.ReactNode;
 };
 
 const useCollapsibleHeader = (
@@ -59,6 +60,7 @@ const useCollapsibleHeader = (
     headerStyle: userHeaderStyle = {},
     createHeaderBackground = createDefaultHeaderBackground,
     customHeader,
+    headerBackground,
   } = options || {};
 
   const [headerStyle, setHeaderStyle] = React.useState<
@@ -139,6 +141,7 @@ const useCollapsibleHeader = (
           backgroundColor: headerStyle?.backgroundColor,
           collapsedColor: collapsedColor || headerStyle?.backgroundColor,
           elevation,
+          headerBackground,
         }),
         headerTransparent: true,
       };
