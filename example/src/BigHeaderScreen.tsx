@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Animated, Image, TouchableOpacity } from 'react-native';
+import { Animated, View, Text, Image, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useCollapsibleBigHeader } from 'react-navigation-collapsible';
 
@@ -33,6 +33,30 @@ const BigHeaderScreen = ({ navigation }: ScreenProps) => {
           }}
           style={{ flex: 1 }}
         />
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            alignItems: 'center',
+            top: 80,
+          }}>
+          <Image
+            source={{
+              uri:
+                'https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?b=1&k=6&m=1223671392&s=612x612&w=0&h=5VMcL3a_1Ni5rRHX0LkaA25lD_0vkhFsb1iVm1HKVSQ=',
+            }}
+            style={{
+              width: 100,
+              height: 100,
+              borderColor: 'lightgray',
+              borderWidth: 6,
+              borderRadius: 50,
+            }}
+          />
+          <Text style={{ fontSize: 22, color: 'white', marginTop: 16 }}>
+            Hello, Big Header.
+          </Text>
+        </View>
       </TouchableOpacity>
     ),
     collapsedColor: 'white',
