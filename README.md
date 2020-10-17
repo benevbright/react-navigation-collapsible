@@ -22,7 +22,7 @@ Try out the demo on [Expo Snack](https://snack.expo.io/@benevbright/react-naviga
 
 ### 1-1. Default Header
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-1.gif?raw=true" width="200">
+<img src="docs/demo-sample-default.gif?raw=true" width="200">
 
 ```js
 // Expo ONLY
@@ -39,6 +39,7 @@ import { useCollapsibleHeader } from 'react-navigation-collapsible';
 const MyScreen = ({ navigation, route }) => {
   const options = {
     headerStyle: { backgroundColor: 'green', height: 150 } /* Optional */,
+    headerBackground: <Image /> /* Optional */,
     collapsedColor: 'red' /* Optional */,
     useNativeDriver: true /* Optional, default: true */,
     elevation: 4 /* Optional */,
@@ -72,17 +73,17 @@ const MyScreen = ({ navigation, route }) => {
 };
 ```
 
-See [/example/src/DefaultHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/DefaultHeaderScreen.tsx)
+See [/example/src/DefaultHeaderScreen.tsx](example/src/DefaultHeaderScreen.tsx)
 
 ### 1-2. Sticky Header
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample1-2.gif?raw=true" width="200">
+<img src="docs/demo-sample-sticky.gif?raw=true" width="200">
 
-See [/example/src/StickyHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/StickyHeaderScreen.tsx)
+See [/example/src/StickyHeaderScreen.tsx](example/src/StickyHeaderScreen.tsx)
 
 ### 1-3. Background Header
 
-<img src="docs/demo-sample1-3.gif?raw=true" width="200">
+<img src="docs/demo-sample-background.gif?raw=true" width="200">
 
 See [/example/src/BackgroundHeaderScreen.tsx](example/src/BackgroundHeaderScreen.tsx)
 
@@ -90,7 +91,7 @@ See [/example/src/BackgroundHeaderScreen.tsx](example/src/BackgroundHeaderScreen
 
 ### 2. Sub Header (e.g Search Bar)
 
-<img src="https://github.com/benevbright/react-navigation-collapsible/blob/master/docs/demo-sample2.gif?raw=true" width="200">
+<img src="docs/demo-sample-subheader.gif?raw=true" width="200">
 
 ```js
 import { Animated } from 'react-native';
@@ -130,11 +131,11 @@ const MyScreen = ({ navigation, route }) => {
 };
 ```
 
-See [/example/src/SubHeaderScreen.tsx](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/src/SubHeaderScreen.tsx)
+See [/example/src/SubHeaderScreen.tsx](example/src/SubHeaderScreen.tsx)
 
 ### 3. Custom Header
 
-![Custom Header implementation example](docs/demo-sample3.gif)
+<img src="docs/demo-sample-custom.gif?raw=true" width="200">
 
 ```js
 import { Animated } from 'react-native';
@@ -197,7 +198,7 @@ PR is welcome!
 
 ### How to test changes with the example?
 
-[/example](https://github.com/benevbright/react-navigation-collapsible/tree/master/example) imports the library directly from the root folder, configured with [babel-plugin-module-resolver](https://github.com/benevbright/react-navigation-collapsible/tree/master/example/babel.config.js#L10).
+[/example](example) imports the library directly from the root folder, configured with [babel-plugin-module-resolver](example/babel.config.js#L10).
 So, just build the library with the `watch` option and run the example.
 
 ```bash
