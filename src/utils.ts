@@ -54,17 +54,6 @@ const getNavigationHeight = (isLandscape: boolean, headerHeight: number) => {
   return headerHeight + getStatusBarHeight(isLandscape);
 };
 
-const getScrollIndicatorInsetTop = (
-  isLandscape: boolean,
-  headerHeight: number
-) => {
-  if (Platform.OS === 'ios') {
-    if (isIphoneX()) return getStatusBarHeight(isLandscape);
-    else return headerHeight;
-  }
-  return headerHeight + getStatusBarHeight(isLandscape);
-};
-
 const getElevationStyle = (elevation: number): ViewStyle => {
   if (Platform.OS === 'ios') {
     if (elevation === 0) return null;
@@ -90,7 +79,6 @@ export {
   getDefaultHeaderHeight,
   getNavigationHeight,
   getStatusBarHeight,
-  getScrollIndicatorInsetTop,
   disableExpoTranslucentStatusBar,
   getElevationStyle,
 };

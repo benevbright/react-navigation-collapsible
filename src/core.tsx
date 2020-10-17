@@ -13,7 +13,6 @@ import {
   getSafeBounceHeight,
   getDefaultHeaderHeight,
   getNavigationHeight,
-  getScrollIndicatorInsetTop,
   getStatusBarHeight,
 } from './utils';
 import { createHeaderBackground as createDefaultHeaderBackground } from './createHeaderBackground';
@@ -160,10 +159,7 @@ const useCollapsibleHeader = (
         collapsibleHeaderType === CollapsibleHeaderType.SubHeader
           ? headerHeight
           : getNavigationHeight(isLandscape, headerHeight),
-      scrollIndicatorInsetTop:
-        collapsibleHeaderType === CollapsibleHeaderType.SubHeader
-          ? headerHeight
-          : getScrollIndicatorInsetTop(isLandscape, headerHeight),
+      scrollIndicatorInsetTop: headerHeight,
       translateY,
       progress,
       opacity,
