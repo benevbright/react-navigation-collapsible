@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Text, TouchableOpacity, Animated } from 'react-native';
+import { Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
 import { StackParamList } from '../App';
+import { createRow } from './Row';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {
@@ -41,25 +42,7 @@ const DefaultHeaderScreen = ({ navigation }: ScreenProps) => {
       onScroll={onScroll}
       contentContainerStyle={{ paddingTop: containerPaddingTop }}
       scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
-      renderItem={({ item }: any) => (
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Detail')}
-          style={{
-            width: '100%',
-            height: 50,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderBottomColor: 'gray',
-            borderBottomWidth: 1,
-          }}>
-          <Text
-            style={{
-              fontSize: 22,
-            }}>
-            {item}
-          </Text>
-        </TouchableOpacity>
-      )}
+      renderItem={createRow(() => navigation.navigate('Detail'))}
       keyExtractor={(item: any) => item.toString()}
     />
   );

@@ -26,10 +26,10 @@ enum CollapsibleHeaderType {
 }
 
 export type Collapsible = {
-  onScroll: Function;
+  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   onScrollWithListener: (
     listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
-  ) => Function;
+  ) => (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   containerPaddingTop: number;
   scrollIndicatorInsetTop: number;
   translateY: Animated.AnimatedInterpolation;

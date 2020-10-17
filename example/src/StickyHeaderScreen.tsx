@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Text, TouchableOpacity, Animated, View } from 'react-native';
+import { Text, Animated, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
 import { StackParamList } from '../App';
+import { createRow } from './Row';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {
@@ -26,7 +27,7 @@ const StickyHeaderScreen = ({ navigation }: ScreenProps) => {
     },
   });
 
-  const searchHeaderHeight = 80;
+  const stickyHeaderHeight = 100;
 
   return (
     <>
@@ -34,30 +35,12 @@ const StickyHeaderScreen = ({ navigation }: ScreenProps) => {
         data={data}
         onScroll={onScroll}
         contentContainerStyle={{
-          paddingTop: containerPaddingTop + searchHeaderHeight,
+          paddingTop: containerPaddingTop + stickyHeaderHeight,
         }}
         scrollIndicatorInsets={{
-          top: scrollIndicatorInsetTop + searchHeaderHeight,
+          top: scrollIndicatorInsetTop + stickyHeaderHeight,
         }}
-        renderItem={({ item }: any) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Detail')}
-            style={{
-              width: '100%',
-              height: 50,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottomColor: 'gray',
-              borderBottomWidth: 1,
-            }}>
-            <Text
-              style={{
-                fontSize: 22,
-              }}>
-              {item}
-            </Text>
-          </TouchableOpacity>
-        )}
+        renderItem={createRow(() => navigation.navigate('Detail'))}
         keyExtractor={(item: any) => item.toString()}
       />
 
@@ -68,7 +51,7 @@ const StickyHeaderScreen = ({ navigation }: ScreenProps) => {
           position: 'absolute',
           backgroundColor: 'skyblue',
           top: containerPaddingTop,
-          height: searchHeaderHeight,
+          height: stickyHeaderHeight,
           width: '100%',
         }}>
         <View

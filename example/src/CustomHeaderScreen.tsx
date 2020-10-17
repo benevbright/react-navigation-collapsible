@@ -4,6 +4,7 @@ import { StackNavigationProp, StackHeaderProps } from '@react-navigation/stack';
 import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
 import { StackParamList } from '../App';
+import { createRow } from './Row';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {
@@ -83,25 +84,7 @@ const CustomHeaderScreen = ({ navigation }: ScreenProps) => {
       onScroll={onScroll}
       contentContainerStyle={{ paddingTop: containerPaddingTop }}
       scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
-      renderItem={({ item }: any) => (
-        <TouchableOpacity
-          onPress={() => navigation.navigate('CustomHeaderDetail')}
-          style={{
-            width: '100%',
-            height: 50,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderBottomColor: 'gray',
-            borderBottomWidth: 1,
-          }}>
-          <Text
-            style={{
-              fontSize: 22,
-            }}>
-            {item}
-          </Text>
-        </TouchableOpacity>
-      )}
+      renderItem={createRow(() => navigation.navigate('CustomHeaderDetail'))}
       keyExtractor={(item: any) => item.toString()}
     />
   );
