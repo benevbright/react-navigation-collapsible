@@ -8,6 +8,7 @@ export type Params = {
   backgroundColor: string | null;
   collapsedColor: string | null;
   elevation?: number;
+  headerBackground?: React.ReactNode;
 };
 
 const createHeaderBackground = ({
@@ -16,6 +17,7 @@ const createHeaderBackground = ({
   backgroundColor,
   collapsedColor,
   elevation,
+  headerBackground,
 }: Params) => () => (
   <Animated.View style={{ flex: 1, transform: [{ translateY }] }}>
     <View
@@ -35,8 +37,9 @@ const createHeaderBackground = ({
         flex: 1,
         opacity,
         elevation,
-      }}
-    />
+      }}>
+      {headerBackground}
+    </Animated.View>
   </Animated.View>
 );
 
