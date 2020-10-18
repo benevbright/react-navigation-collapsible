@@ -5,7 +5,6 @@ import {
   NativeScrollEvent,
   useWindowDimensions,
 } from 'react-native';
-import { StackHeaderProps } from '@react-navigation/stack';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import shallowequal from 'shallowequal';
 
