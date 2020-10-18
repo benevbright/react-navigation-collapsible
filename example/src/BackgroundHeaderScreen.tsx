@@ -21,19 +21,21 @@ const BackgroundHeaderScreen = ({ navigation }: ScreenProps) => {
     containerPaddingTop,
     scrollIndicatorInsetTop,
   } = useCollapsibleHeader({
-    headerStyle: {
-      height: 250,
+    navigationOptions: {
+      headerStyle: {
+        height: 250,
+      },
+      headerBackground: (
+        <Image
+          source={{
+            uri:
+              'https://artwork.wallartprints.com/media/catalog/category/mountain-pictures.jpg',
+          }}
+          style={{ flex: 1 }}
+        />
+      ),
     },
-    headerBackground: (
-      <Image
-        source={{
-          uri:
-            'https://artwork.wallartprints.com/media/catalog/category/mountain-pictures.jpg',
-        }}
-        style={{ flex: 1 }}
-      />
-    ),
-    collapsedColor: 'red',
+    config: { collapsedColor: 'red' },
   });
 
   return (
