@@ -25,7 +25,7 @@ const BigHeaderScreen = ({ navigation }: ScreenProps) => {
       height: 250,
     },
     headerBackground: (
-      <TouchableOpacity style={{ flex: 1 }}>
+      <>
         <Image
           source={{
             uri:
@@ -53,11 +53,13 @@ const BigHeaderScreen = ({ navigation }: ScreenProps) => {
               borderRadius: 50,
             }}
           />
-          <Text style={{ fontSize: 22, color: 'white', marginTop: 16 }}>
-            Hello, Big Header.
-          </Text>
+          <TouchableOpacity>
+            <Text style={{ fontSize: 20, color: 'white', marginTop: 16 }}>
+              Edit Profile
+            </Text>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </>
     ),
     collapsedColor: 'white',
   });
