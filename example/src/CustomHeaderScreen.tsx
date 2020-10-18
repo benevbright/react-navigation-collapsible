@@ -75,7 +75,9 @@ const CustomHeaderScreen = ({ navigation }: ScreenProps) => {
     containerPaddingTop,
     scrollIndicatorInsetTop,
   } = useCollapsibleHeader({
-    customHeader: renderCustomHeader,
+    navigationOptions: {
+      header: renderCustomHeader,
+    },
   });
 
   return (

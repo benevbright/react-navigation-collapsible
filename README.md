@@ -8,7 +8,7 @@ Try out the demo on [Expo Snack](https://snack.expo.io/@benevbright/react-naviga
 
 ## Compatibility 🚧
 
-📌 In `v5.7.0`, everything has been migrated to use hooks. Please see [a guide for the breaking change](https://github.com/benevbright/react-navigation-collapsible/compare/v5.6.4...v5.7.0#diff-04c6e90faac2675aa89e2176d2eec7d8).
+📌 Everything has been migrated to use hooks in `v5.7.0`. Please apply the breaking changes according to this README.
 
 | `react-navigation` | `react-navigation-collapsible` | Documentation                                                                        |
 | ------------------ | ------------------------------ | ------------------------------------------------------------------------------------ |
@@ -38,11 +38,15 @@ import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
 const MyScreen = ({ navigation, route }) => {
   const options = {
-    headerStyle: { backgroundColor: 'green', height: 150 } /* Optional */,
-    headerBackground: <Image /> /* Optional */,
-    collapsedColor: 'red' /* Optional */,
-    useNativeDriver: true /* Optional, default: true */,
-    elevation: 4 /* Optional */,
+    navigationOptions: {
+      headerStyle: { backgroundColor: 'green', height: 150 } /* Optional */,
+      headerBackground: <Image /> /* Optional */,
+    },
+    config: {
+      collapsedColor: 'red' /* Optional */,
+      useNativeDriver: true /* Optional, default: true */,
+      elevation: 4 /* Optional */,
+    },
   };
   const {
     onScroll /* Event handler */,
@@ -143,25 +147,31 @@ import { useCollapsibleHeader } from 'react-navigation-collapsible';
 
 const MyScreen = ({ navigation, route }) => {
   const options = {
-    /* Add a custom header to 'useCollapsibleHeader' options the same way you would add it to the Stack.Screen options */
-    customHeader: ({ scene, previous, navigation }) => {
-      const { options } = scene.descriptor;
-      const title =
-        options.headerTitle !== undefined
-          ? options.headerTitle
-          : options.title !== undefined
-          ? options.title
-          : scene.route.name;
+    navigationOptions: {
+      /* Add a custom header to 'useCollapsibleHeader' options the same way you would add it to the Stack.Screen options */
+      header: ({ scene, previous, navigation }) => {
+        const { options } = scene.descriptor;
+        const title =
+          options.headerTitle !== undefined
+            ? options.headerTitle
+            : options.title !== undefined
+            ? options.title
+            : scene.route.name;
 
-      return (
-        <MyHeader
-          title={title}
-          leftButton={
-            previous ? <MyBackButton onPress={navigation.goBack} /> : undefined
-          }
-          style={options.headerStyle}
-        />
-      );
+        return (
+          <MyHeader
+            title={title}
+            leftButton={
+              previous ? (
+                <MyBackButton onPress={navigation.goBack} />
+              ) : (
+                undefined
+              )
+            }
+            style={options.headerStyle}
+          />
+        );
+      },
     },
   };
   const {
@@ -183,7 +193,7 @@ const MyScreen = ({ navigation, route }) => {
 
 See [/example/src/CustomHeaderScreen.tsx](example/src/CustomHeaderScreen.tsx)
 
-`react-navigation` recommends to use `headerMode='screen'` when you use the custom header. [[Set headerMode to screen]](https://reactnavigation.org/docs/stack-navigator/#set-headermode-to-screen)
+`react-navigation` recommends to use `headerMode='screen'` when you use the custom header. [[Set `headerMode` to `screen`]](https://reactnavigation.org/docs/stack-navigator/#set-headermode-to-screen)
 
 ## Install
 

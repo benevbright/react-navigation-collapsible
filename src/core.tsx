@@ -37,34 +37,31 @@ export type Collapsible = {
 };
 
 export type UseCollapsibleOptions = {
-  useNativeDriver?: boolean;
-  elevation?: number;
-  collapsedColor?: string;
-  headerStyle?: { backgroundColor?: string; height?: number };
-  createHeaderBackground?: (
-    params: createHeaderBackgroundParams
-  ) => React.ReactNode;
-  customHeader?: (props: StackHeaderProps) => React.ReactNode;
-  headerBackground?: React.ReactNode;
+  navigationOptions?: { [key: string]: any };
+  config?: {
+    useNativeDriver?: boolean;
+    elevation?: number;
+    collapsedColor?: string;
+    createHeaderBackground?: (
+      params: createHeaderBackgroundParams
+    ) => React.ReactNode;
+  };
 };
 
 const useCollapsibleHeader = (
   options?: UseCollapsibleOptions,
   collapsibleHeaderType: CollapsibleHeaderType = CollapsibleHeaderType.Default
 ): Collapsible => {
+  const { navigationOptions = {}, config = {} } = options || {};
   const {
     useNativeDriver = true,
     elevation,
     collapsedColor,
-    headerStyle: userHeaderStyle = {},
     createHeaderBackground = createDefaultHeaderBackground,
-    customHeader,
-    headerBackground,
-  } = options || {};
+  } = config;
 
-  const [headerStyle, setHeaderStyle] = React.useState<
-    UseCollapsibleOptions['headerStyle']
-  >(userHeaderStyle);
+  const { headerStyle: userHeaderStyle = {} } = navigationOptions;
+  const [headerStyle, setHeaderStyle] = React.useState(userHeaderStyle);
   React.useEffect(() => {
     if (!shallowequal(headerStyle, userHeaderStyle))
       setHeaderStyle(userHeaderStyle);
@@ -129,10 +126,11 @@ const useCollapsibleHeader = (
 
     if (collapsibleHeaderType === CollapsibleHeaderType.Default) {
       const options = {
+        ...navigationOptions,
         headerStyle: {
+          ...headerStyle,
           transform: [{ translateY }],
           opacity,
-          ...headerStyle,
         },
         headerBackground: createHeaderBackground({
           translateY,
@@ -140,13 +138,15 @@ const useCollapsibleHeader = (
           backgroundColor: headerStyle?.backgroundColor,
           collapsedColor: collapsedColor || headerStyle?.backgroundColor,
           elevation,
-          headerBackground,
+          headerBackground: navigationOptions.headerBackground,
         }),
         headerTransparent: true,
       };
-      if (customHeader) {
+      if (navigationOptions.header) {
         Object.assign(options, {
-          header: createCollapsibleCustomHeaderAnimator(customHeader),
+          header: createCollapsibleCustomHeaderAnimator(
+            navigationOptions.header
+          ),
         });
       }
       navigation.setOptions(options);

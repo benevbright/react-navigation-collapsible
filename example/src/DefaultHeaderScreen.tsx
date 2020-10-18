@@ -22,11 +22,15 @@ const DefaultHeaderScreen = ({ navigation }: ScreenProps) => {
     containerPaddingTop,
     scrollIndicatorInsetTop,
   } = useCollapsibleHeader({
-    headerStyle: {
-      backgroundColor: 'green',
-      // height: 150,
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: 'green',
+        // height: 150,
+      },
     },
-    collapsedColor: 'red',
+    config: {
+      collapsedColor: 'red',
+    },
   });
 
   /* in case you want to use your listener
