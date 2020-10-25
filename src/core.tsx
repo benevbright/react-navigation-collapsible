@@ -96,10 +96,10 @@ const useCollapsibleHeader = (
   } = route.params || {};
 
   const showHeader = () => {
-      positionY.setValue(0);
-      // Forces to show the header again
-      setHeaderStyle({...headerStyle});
-  }
+    positionY.setValue(0);
+    // Forces to show the header again
+    setHeaderStyle({ ...headerStyle });
+  };
 
   React.useLayoutEffect(() => {
     let headerHeight = 0;
@@ -170,7 +170,7 @@ const useCollapsibleHeader = (
       translateY,
       progress,
       opacity,
-      showHeader
+      showHeader,
     };
     setCollapsible(collapsible);
   }, [isLandscape, headerStyle, subHeaderHeight, customHeaderHeight]);
@@ -184,7 +184,7 @@ const useCollapsibleHeader = (
       translateY: new Animated.Value(0),
       progress: new Animated.Value(0),
       opacity: new Animated.Value(1),
-      showHeader
+      showHeader,
     }
   );
 };
