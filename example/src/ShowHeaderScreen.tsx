@@ -21,7 +21,7 @@ const ShowHeaderScreen = ({ navigation }: ScreenProps) => {
     // onScrollWithListener,
     containerPaddingTop,
     scrollIndicatorInsetTop,
-    showHeader
+    showHeader,
   } = useCollapsibleHeader({
     navigationOptions: {
       headerStyle: {
@@ -49,18 +49,21 @@ const ShowHeaderScreen = ({ navigation }: ScreenProps) => {
       scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
       renderItem={({ item, index }: any) => {
         if (index === 10 || index === 50 || index === 70) {
-          return <View style={{
-              width: '100%',
-              height: 50,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottomColor: 'gray',
-              borderBottomWidth: 1,
-          }}>
-            <Button title="Show Header" onPress={showHeader}/>
-          </View>
+          return (
+            <View
+              style={{
+                width: '100%',
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderBottomColor: 'gray',
+                borderBottomWidth: 1,
+              }}>
+              <Button title="Show Header" onPress={showHeader} />
+            </View>
+          );
         }
-        return createRow(() => navigation.navigate('Detail'))({item});
+        return createRow(() => navigation.navigate('Detail'))({ item });
       }}
       keyExtractor={(item: any) => item.toString()}
     />
