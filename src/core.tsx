@@ -97,8 +97,6 @@ const useCollapsibleHeader = (
 
   const showHeader = () => {
     positionY.setValue(0);
-    // Forces to show the header again
-    setHeaderStyle({ ...headerStyle });
   };
 
   React.useLayoutEffect(() => {
