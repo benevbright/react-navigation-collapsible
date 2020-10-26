@@ -16,6 +16,7 @@ import {
   renderCustomHeader,
 } from './src/CustomHeaderScreen';
 import { DetailScreen } from './src/DetailScreen';
+import { ShowHeaderScreen } from './src/ShowHeaderScreen';
 
 export type StackParamList = {
   Home: undefined;
@@ -26,6 +27,7 @@ export type StackParamList = {
   SubHeader: undefined;
   WithCustomHeader: undefined;
   CustomHeaderDetail: undefined;
+  ShowHeaderScreen: undefined;
 };
 
 type ScreenProps = {
@@ -38,6 +40,7 @@ const samples: { title: string; routeName: keyof StackParamList }[] = [
   { title: 'Sample 1-3: Background Header', routeName: 'BackgroundHeader' },
   { title: 'Sample 2: Sub Header', routeName: 'SubHeader' },
   { title: 'Sample 3: Custom Header', routeName: 'WithCustomHeader' },
+  { title: 'Sample 4: Show Header Manually', routeName: 'ShowHeaderScreen' },
 ];
 
 function HomeScreen({ navigation }: ScreenProps) {
@@ -141,6 +144,15 @@ function App() {
           options={{
             title: 'Detail Screen',
             header: renderCustomHeader,
+          }}
+        />
+
+        <Stack.Screen
+          name="ShowHeaderScreen"
+          component={ShowHeaderScreen}
+          options={{
+            headerTintColor: 'white',
+            title: 'Default Header',
           }}
         />
       </Stack.Navigator>
