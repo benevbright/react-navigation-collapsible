@@ -171,7 +171,7 @@ const useCollapsibleHeader = (
         const startToVisible = 0.5;
         const defaultHeaderTranslateY = progress.interpolate({
           inputRange: [0, startToVisible, 1],
-          outputRange: [-1000, -heightMoveTo * 0.375, -heightMoveTo * 0.5],
+          outputRange: [-1000, -heightMoveTo * 0.25, -heightMoveTo * 0.5],
         });
         const defaultHeaderOpacity = progress.interpolate({
           inputRange: [0, startToVisible, 1],
