@@ -1,6 +1,6 @@
 {
   "name": "react-navigation-collapsible",
-  "version": "5.8.0",
+  "version": "5.8.1",
   "description": "An extension of react-navigation for the collapsible header",
   "repository": {
     "type": "git",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.9.50",
-    "@types/react-native": "^0.63.23",
+    "@types/react-native": "0.63.25",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
     "eslint": "^6.8.0",

@@ -34,6 +34,7 @@ export type Collapsible = {
   translateY: Animated.AnimatedInterpolation;
   progress: Animated.AnimatedInterpolation;
   opacity: Animated.AnimatedInterpolation;
+  showHeader: () => void;
 };
 
 export type UseCollapsibleOptions = {
@@ -93,6 +94,10 @@ const useCollapsibleHeader = (
     // @ts-ignore
     collapsibleCustomHeaderHeight: customHeaderHeight,
   } = route.params || {};
+
+  const showHeader = () => {
+    positionY.setValue(0);
+  };
 
   React.useLayoutEffect(() => {
     let headerHeight = 0;
@@ -208,6 +213,7 @@ const useCollapsibleHeader = (
       translateY,
       progress,
       opacity,
+      showHeader,
     };
     setCollapsible(collapsible);
   }, [isLandscape, headerStyle, subHeaderHeight, customHeaderHeight]);
@@ -221,6 +227,7 @@ const useCollapsibleHeader = (
       translateY: new Animated.Value(0),
       progress: new Animated.Value(0),
       opacity: new Animated.Value(1),
+      showHeader,
     }
   );
 };
