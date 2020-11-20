@@ -38,7 +38,7 @@ export type Collapsible = {
 };
 
 export type UseCollapsibleOptions = {
-  navigationOptions?: { [key: string]: any };
+  navigationOptions?: { header?: (props: StackHeaderProps) => React.ReactNode; [key: string]: any; };
   config?: {
     useNativeDriver?: boolean;
     elevation?: number;
