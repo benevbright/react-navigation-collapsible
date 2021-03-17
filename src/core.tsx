@@ -31,6 +31,7 @@ export type Collapsible = {
   ) => (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   containerPaddingTop: number;
   scrollIndicatorInsetTop: number;
+  positionY: Animated.AnimatedValue;
   translateY: Animated.AnimatedInterpolation;
   progress: Animated.AnimatedInterpolation;
   opacity: Animated.AnimatedInterpolation;
@@ -165,6 +166,7 @@ const useCollapsibleHeader = (
           ? headerHeight
           : getNavigationHeight(isLandscape, headerHeight),
       scrollIndicatorInsetTop: headerHeight,
+      positionY,
       translateY,
       progress,
       opacity,
@@ -179,6 +181,7 @@ const useCollapsibleHeader = (
       onScrollWithListener: e => null,
       containerPaddingTop: 0,
       scrollIndicatorInsetTop: 0,
+      positionY: new Animated.Value(0),
       translateY: new Animated.Value(0),
       progress: new Animated.Value(0),
       opacity: new Animated.Value(1),
