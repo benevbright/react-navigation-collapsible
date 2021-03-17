@@ -53,7 +53,9 @@ const MyScreen = ({ navigation, route }) => {
     onScrollWithListener /* Event handler creator */,
     containerPaddingTop /* number */,
     scrollIndicatorInsetTop /* number */,
-    /* Animated.AnimatedInterpolation by scrolling */
+    /* Animated.AnimatedValue contentOffset from scrolling */
+    positionY /* 0.0 ~ length of scrollable component (contentOffset)
+    /* Animated.AnimatedInterpolation by scrolling */,
     translateY /* 0.0 ~ -headerHeight */,
     progress /* 0.0 ~ 1.0 */,
     opacity /* 1.0 ~ 0.0 */,
