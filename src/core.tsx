@@ -5,7 +5,6 @@ import {
   NativeScrollEvent,
   useWindowDimensions,
 } from 'react-native';
-import { StackHeaderProps } from '@react-navigation/stack';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import shallowequal from 'shallowequal';
 
@@ -21,6 +20,7 @@ import { createCollapsibleCustomHeaderAnimator } from './createCollapsibleCustom
 
 enum CollapsibleHeaderType {
   Default,
+  BigHeader,
   SubHeader,
 }
 
@@ -115,6 +115,10 @@ const useCollapsibleHeader = (
       }
     }
     const safeBounceHeight = getSafeBounceHeight();
+    const minHeaderVisibleHeight =
+      collapsibleHeaderType === CollapsibleHeaderType.BigHeader
+        ? getDefaultHeaderHeight(isLandscape)
+        : 0;
 
     const animatedDiffClampY = Animated.diffClamp(
       positionY,
@@ -127,10 +131,14 @@ const useCollapsibleHeader = (
       outputRange: [0, 1],
       extrapolate: 'clamp',
     });
-    const translateY = Animated.multiply(progress, -headerHeight);
+    const heightMoveTo = -(headerHeight - minHeaderVisibleHeight);
+    const translateY = Animated.multiply(progress, heightMoveTo);
     const opacity = Animated.subtract(1, progress);
 
-    if (collapsibleHeaderType === CollapsibleHeaderType.Default) {
+    if (
+      collapsibleHeaderType === CollapsibleHeaderType.Default ||
+      collapsibleHeaderType === CollapsibleHeaderType.BigHeader
+    ) {
       const options = {
         ...navigationOptions,
         headerStyle: {
@@ -148,6 +156,7 @@ const useCollapsibleHeader = (
         }),
         headerTransparent: true,
       };
+
       if (navigationOptions.header) {
         Object.assign(options, {
           header: createCollapsibleCustomHeaderAnimator(
@@ -155,6 +164,37 @@ const useCollapsibleHeader = (
           ),
         });
       }
+
+      if (
+        navigationOptions.headerBackground &&
+        collapsibleHeaderType === CollapsibleHeaderType.BigHeader
+      ) {
+        const startToVisible = 0.5;
+        const defaultHeaderTranslateY = progress.interpolate({
+          inputRange: [0, startToVisible, 1],
+          outputRange: [-1000, -heightMoveTo * 0.25, -heightMoveTo * 0.5],
+        });
+        const defaultHeaderOpacity = progress.interpolate({
+          inputRange: [0, startToVisible, 1],
+          outputRange: [0, 0, 1],
+        });
+        options.headerStyle = {
+          ...options.headerStyle,
+          opacity: defaultHeaderOpacity,
+        };
+        Object.assign(options, {
+          headerTitleStyle: {
+            transform: [{ translateY: defaultHeaderTranslateY }],
+          },
+          headerLeftContainerStyle: {
+            transform: [{ translateY: defaultHeaderTranslateY }],
+          },
+          headerRightContainerStyle: {
+            transform: [{ translateY: defaultHeaderTranslateY }],
+          },
+        });
+      }
+
       navigation.setOptions(options);
     }
 
@@ -190,7 +230,14 @@ const useCollapsibleHeader = (
   );
 };
 
+const useCollapsibleBigHeader = (options?: UseCollapsibleOptions) =>
+  useCollapsibleHeader(options, CollapsibleHeaderType.BigHeader);
+
 const useCollapsibleSubHeader = (options?: UseCollapsibleOptions) =>
   useCollapsibleHeader(options, CollapsibleHeaderType.SubHeader);
 
-export { useCollapsibleHeader, useCollapsibleSubHeader };
+export {
+  useCollapsibleHeader,
+  useCollapsibleBigHeader,
+  useCollapsibleSubHeader,
+};

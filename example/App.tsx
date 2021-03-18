@@ -10,6 +10,7 @@ import 'react-native-gesture-handler';
 import { DefaultHeaderScreen } from './src/DefaultHeaderScreen';
 import { StickyHeaderScreen } from './src/StickyHeaderScreen';
 import { BackgroundHeaderScreen } from './src/BackgroundHeaderScreen';
+import { BigHeaderScreen } from './src/BigHeaderScreen';
 import { SubHeaderScreen } from './src/SubHeaderScreen';
 import {
   CustomHeaderScreen,
@@ -24,6 +25,7 @@ export type StackParamList = {
   DefaultHeader: undefined;
   StickyHeader: undefined;
   BackgroundHeader: undefined;
+  BigHeader: undefined;
   SubHeader: undefined;
   WithCustomHeader: undefined;
   CustomHeaderDetail: undefined;
@@ -38,9 +40,10 @@ const samples: { title: string; routeName: keyof StackParamList }[] = [
   { title: 'Sample 1-1: Default Header', routeName: 'DefaultHeader' },
   { title: 'Sample 1-2: Sticky Header', routeName: 'StickyHeader' },
   { title: 'Sample 1-3: Background Header', routeName: 'BackgroundHeader' },
-  { title: 'Sample 2: Sub Header', routeName: 'SubHeader' },
-  { title: 'Sample 3: Custom Header', routeName: 'WithCustomHeader' },
-  { title: 'Sample 4: Show Header Manually', routeName: 'ShowHeaderScreen' },
+  { title: 'Sample 2: Big Header', routeName: 'BigHeader' },
+  { title: 'Sample 3: Sub Header', routeName: 'SubHeader' },
+  { title: 'Sample 4: Custom Header', routeName: 'WithCustomHeader' },
+  { title: 'Sample 5: Show Header Manually', routeName: 'ShowHeaderScreen' },
 ];
 
 function HomeScreen({ navigation }: ScreenProps) {
@@ -109,7 +112,16 @@ function App() {
           }}
         />
 
-        {/* Sample 2: Sub Header */}
+        {/* Sample 2: Big Header */}
+        <Stack.Screen
+          name="BigHeader"
+          component={BigHeaderScreen}
+          options={{
+            title: 'Big Header',
+          }}
+        />
+
+        {/* Sample 3: Sub Header */}
         <Stack.Screen
           name="SubHeader"
           component={SubHeaderScreen}
@@ -120,13 +132,23 @@ function App() {
           }}
         />
 
-        {/* Sample 3: Custom Header */}
+        {/* Sample 4: Custom Header */}
         <Stack.Screen
           name="WithCustomHeader"
           component={CustomHeaderScreen}
           options={{
             headerTintColor: 'white',
             title: 'Custom Header',
+          }}
+        />
+
+        {/* Sample 5: Show Header Manually */}
+        <Stack.Screen
+          name="ShowHeaderScreen"
+          component={ShowHeaderScreen}
+          options={{
+            headerTintColor: 'white',
+            title: 'Default Header',
           }}
         />
 
@@ -144,15 +166,6 @@ function App() {
           options={{
             title: 'Detail Screen',
             header: renderCustomHeader,
-          }}
-        />
-
-        <Stack.Screen
-          name="ShowHeaderScreen"
-          component={ShowHeaderScreen}
-          options={{
-            headerTintColor: 'white',
-            title: 'Default Header',
           }}
         />
       </Stack.Navigator>

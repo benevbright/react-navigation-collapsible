@@ -1,5 +1,6 @@
 import {
   useCollapsibleHeader,
+  useCollapsibleBigHeader,
   useCollapsibleSubHeader,
   Collapsible,
   UseCollapsibleOptions,
@@ -14,6 +15,7 @@ import { CollapsibleSubHeaderAnimator } from './src/CollapsibleSubHeaderAnimator
 
 export {
   useCollapsibleHeader,
+  useCollapsibleBigHeader,
   useCollapsibleSubHeader,
   setSafeBounceHeight,
   disableExpoTranslucentStatusBar,
