@@ -29,8 +29,7 @@
     "lint": "eslint --ext '.js,.ts,.tsx' index.ts ./src",
     "build": "tsc && yarn flowgen",
     "clean": "rm -rf lib",
-    "build-publish": "yarn clean && yarn lint && yarn build && yarn publish && git push origin main --tags",
-    "postinstall": "cd example && yarn && cd .. && yarn tsc"
+    "build-publish": "yarn clean && yarn lint && yarn build && yarn publish && git push origin main --tags"
   },
   "peerDependencies": {
     "@react-navigation/native": "*",
