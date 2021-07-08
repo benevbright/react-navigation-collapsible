@@ -46,6 +46,7 @@ const MyScreen = ({ navigation, route }) => {
       collapsedColor: 'red' /* Optional */,
       useNativeDriver: true /* Optional, default: true */,
       elevation: 4 /* Optional */,
+      disableOpacity: true /* Optional, default: false */,
     },
   };
   const {
