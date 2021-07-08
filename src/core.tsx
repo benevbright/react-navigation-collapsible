@@ -44,6 +44,7 @@ export type UseCollapsibleOptions = {
     useNativeDriver?: boolean;
     elevation?: number;
     collapsedColor?: string;
+    disableOpacity?: boolean;
     createHeaderBackground?: (
       params: createHeaderBackgroundParams
     ) => React.ReactNode;
@@ -59,6 +60,7 @@ const useCollapsibleHeader = (
     useNativeDriver = true,
     elevation,
     collapsedColor,
+    disableOpacity = false,
     createHeaderBackground = createDefaultHeaderBackground,
   } = config;
 
@@ -128,7 +130,7 @@ const useCollapsibleHeader = (
       extrapolate: 'clamp',
     });
     const translateY = Animated.multiply(progress, -headerHeight);
-    const opacity = Animated.subtract(1, progress);
+    const opacity = Animated.subtract(1, disableOpacity ? 0 : progress);
 
     if (collapsibleHeaderType === CollapsibleHeaderType.Default) {
       const options = {
