@@ -17,6 +17,7 @@ const CollapsibleSubHeaderAnimator = ({
     },
   }) => {
     navigation.setParams({
+      // @ts-ignore
       collapsibleSubHeaderHeight: height,
     });
   };
