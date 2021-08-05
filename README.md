@@ -6,16 +6,6 @@ An extension of react-navigation that makes your header collapsible.
 
 Try out the demo on [Expo Snack](https://snack.expo.io/@benevbright/react-navigation-collapsible)
 
-## Compatibility 🚧
-
-📌 Everything has been migrated to use hooks in `v5.7.0`. Please apply the breaking changes according to this README.
-
-| `react-navigation` | `react-navigation-collapsible` | Documentation                                                                        |
-| ------------------ | ------------------------------ | ------------------------------------------------------------------------------------ |
-| ≥ v5 (`latest`)    | v5 (`latest`)                  | current                                                                              |
-| ≥ v3               | v3                             | [v3-4 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v3-4) |
-| v2                 | v2                             | [v2 branch](https://github.com/benevbright/react-navigation-collapsible/tree/v2)     |
-
 🏗 **The Collapsible Tab-navigator** is no longer supported due to the [Android bug from react-native](https://github.com/facebook/react-native/issues/21801).
 
 ## Usage
