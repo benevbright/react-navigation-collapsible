@@ -16,17 +16,12 @@ type ScreenProps = {
 };
 
 export const renderCustomHeader = ({
-  scene,
-  previous,
   navigation,
+  options,
+  route,
+  progress,
 }: StackHeaderProps) => {
-  const { options } = scene.descriptor;
-  const title =
-    options.headerTitle !== undefined
-      ? options.headerTitle
-      : options.title !== undefined
-      ? options.title
-      : scene.route.name;
+  const title = options.headerTitle || options.title || route.name;
 
   return (
     <View
@@ -52,7 +47,7 @@ export const renderCustomHeader = ({
           {title}
         </Text>
 
-        {previous && (
+        {progress?.previous && (
           <TouchableOpacity onPress={navigation.goBack}>
             <View>
               <Text

@@ -8,7 +8,7 @@ export const createCollapsibleCustomHeaderAnimator = (
   customHeader: CustomHeader
 ) => (headerProps: StackHeaderProps) => (
   <Animated.View
-    style={headerProps?.scene?.descriptor?.options?.headerStyle}
+    style={headerProps?.options?.headerStyle}
     onLayout={(e: LayoutChangeEvent) => {
       headerProps.navigation.setParams({
         collapsibleCustomHeaderHeight: e.nativeEvent.layout.height,
