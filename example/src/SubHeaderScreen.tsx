@@ -39,12 +39,8 @@ const MySearchBar = () => (
 );
 
 const SubHeaderScreen = ({ navigation }: ScreenProps) => {
-  const {
-    onScroll,
-    containerPaddingTop,
-    scrollIndicatorInsetTop,
-    translateY,
-  } = useCollapsibleSubHeader();
+  const { onScroll, containerPaddingTop, scrollIndicatorInsetTop, translateY } =
+    useCollapsibleSubHeader();
 
   return (
     <>
