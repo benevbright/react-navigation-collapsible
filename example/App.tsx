@@ -46,7 +46,7 @@ const samples: { title: string; routeName: keyof StackParamList }[] = [
 function HomeScreen({ navigation }: ScreenProps) {
   return (
     <View style={{ flex: 1, paddingTop: 50, alignItems: 'center' }}>
-      {samples.map((sample) => (
+      {samples.map(sample => (
         <Text
           key={sample.title}
           style={{ margin: 15 }}

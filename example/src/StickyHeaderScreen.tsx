@@ -16,18 +16,14 @@ type ScreenProps = {
 };
 
 const StickyHeaderScreen = ({ navigation }: ScreenProps) => {
-  const {
-    onScroll,
-    containerPaddingTop,
-    scrollIndicatorInsetTop,
-    translateY,
-  } = useCollapsibleHeader({
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: 'white',
+  const { onScroll, containerPaddingTop, scrollIndicatorInsetTop, translateY } =
+    useCollapsibleHeader({
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: 'white',
+        },
       },
-    },
-  });
+    });
 
   const stickyHeaderHeight = 100;
 

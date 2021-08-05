@@ -16,27 +16,23 @@ type ScreenProps = {
 };
 
 const BackgroundHeaderScreen = ({ navigation }: ScreenProps) => {
-  const {
-    onScroll,
-    containerPaddingTop,
-    scrollIndicatorInsetTop,
-  } = useCollapsibleHeader({
-    navigationOptions: {
-      headerStyle: {
-        height: 250,
+  const { onScroll, containerPaddingTop, scrollIndicatorInsetTop } =
+    useCollapsibleHeader({
+      navigationOptions: {
+        headerStyle: {
+          height: 250,
+        },
+        headerBackground: (
+          <Image
+            source={{
+              uri: 'https://artwork.wallartprints.com/media/catalog/category/mountain-pictures.jpg',
+            }}
+            style={{ flex: 1 }}
+          />
+        ),
       },
-      headerBackground: (
-        <Image
-          source={{
-            uri:
-              'https://artwork.wallartprints.com/media/catalog/category/mountain-pictures.jpg',
-          }}
-          style={{ flex: 1 }}
-        />
-      ),
-    },
-    config: { collapsedColor: 'red' },
-  });
+      config: { collapsedColor: 'red' },
+    });
 
   return (
     <Animated.FlatList

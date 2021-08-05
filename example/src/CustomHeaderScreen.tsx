@@ -60,7 +60,9 @@ export const renderCustomHeader = ({
                   fontSize: 16,
                   fontWeight: 'bold',
                   color: 'white',
-                }}>{`<< GO BACK`}</Text>
+                }}>
+                {'<< GO BACK'}
+              </Text>
             </View>
           </TouchableOpacity>
         )}
@@ -70,15 +72,12 @@ export const renderCustomHeader = ({
 };
 
 const CustomHeaderScreen = ({ navigation }: ScreenProps) => {
-  const {
-    onScroll,
-    containerPaddingTop,
-    scrollIndicatorInsetTop,
-  } = useCollapsibleHeader({
-    navigationOptions: {
-      header: renderCustomHeader,
-    },
-  });
+  const { onScroll, containerPaddingTop, scrollIndicatorInsetTop } =
+    useCollapsibleHeader({
+      navigationOptions: {
+        header: renderCustomHeader,
+      },
+    });
 
   return (
     <Animated.FlatList
