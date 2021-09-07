@@ -32,6 +32,7 @@ export type Collapsible = {
   containerPaddingTop: number;
   scrollIndicatorInsetTop: number;
   positionY: Animated.AnimatedValue;
+  offsetY: Animated.AnimatedValue;
   translateY: Animated.AnimatedInterpolation;
   progress: Animated.AnimatedInterpolation;
   opacity: Animated.AnimatedInterpolation;
@@ -91,16 +92,24 @@ const useCollapsibleHeader = (
       listener,
     });
 
+  const offsetY = React.useRef(new Animated.Value(0)).current;
+  const offsetYValue = React.useRef(0);
+  React.useEffect(() => {
+    const listener = offsetY.addListener(({ value }) => {
+      offsetYValue.current = value;
+    });
+
+    return () => {
+      offsetY.removeListener(listener);
+    };
+  }, []);
+
   const {
     // @ts-ignore
     collapsibleSubHeaderHeight: subHeaderHeight,
     // @ts-ignore
     collapsibleCustomHeaderHeight: customHeaderHeight,
   } = route.params || {};
-
-  const showHeader = () => {
-    positionY.setValue(0);
-  };
 
   React.useLayoutEffect(() => {
     let headerHeight = 0;
@@ -119,7 +128,7 @@ const useCollapsibleHeader = (
     const safeBounceHeight = getSafeBounceHeight();
 
     const animatedDiffClampY = Animated.diffClamp(
-      positionY,
+      Animated.add(positionY, offsetY),
       0,
       safeBounceHeight + headerHeight
     );
@@ -169,10 +178,13 @@ const useCollapsibleHeader = (
           : getNavigationHeight(isLandscape, headerHeight),
       scrollIndicatorInsetTop: headerHeight,
       positionY,
+      offsetY,
       translateY,
       progress,
       opacity,
-      showHeader,
+      showHeader: () => {
+        offsetY.setValue(offsetYValue.current - headerHeight);
+      },
     };
     setCollapsible(collapsible);
   }, [isLandscape, headerStyle, subHeaderHeight, customHeaderHeight]);
@@ -184,10 +196,13 @@ const useCollapsibleHeader = (
       containerPaddingTop: 0,
       scrollIndicatorInsetTop: 0,
       positionY: new Animated.Value(0),
+      offsetY: new Animated.Value(0),
       translateY: new Animated.Value(0),
       progress: new Animated.Value(0),
       opacity: new Animated.Value(1),
-      showHeader,
+      showHeader: () => {
+        // do nothing
+      },
     }
   );
 };
