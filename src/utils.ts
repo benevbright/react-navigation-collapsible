@@ -1,7 +1,7 @@
-/* global global */
-
 import { Platform, StatusBar, ViewStyle } from 'react-native';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+
+import { isExpo } from './platform';
 
 const SAFEBOUNCE_HEIGHT_IOS = 300;
 const SAFEBOUNCE_HEIGHT_ANDROID = 100;
@@ -43,8 +43,8 @@ const getStatusBarHeight = (isLandscape: boolean) => {
     if (isLandscape) return 0;
     return isIphoneX() ? 44 : 20;
   } else if (Platform.OS === 'android') {
-    // @ts-ignore
-    return global.Expo && !disabledExpoTranslucentStatusBar
+    // eslint-disable-next-line no-undef
+    return (global.Expo || isExpo()) && !disabledExpoTranslucentStatusBar
       ? StatusBar.currentHeight
       : 0;
   } else return 0;

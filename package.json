@@ -26,10 +26,11 @@
   "scripts": {
     "prettier": "prettier --write index.ts  ./src/**/* README.md",
     "flowgen": "sh flow.sh",
+    "patch-for-expo": "sh patch-for-expo.sh",
     "lint": "eslint --ext '.js,.ts,.tsx' index.ts ./src",
     "build": "tsc && yarn flowgen",
     "clean": "rm -rf lib",
-    "build-publish": "yarn clean && yarn lint && yarn build && yarn publish && git push origin main --tags"
+    "build-publish": "yarn clean && yarn lint && yarn build && yarn patch-for-expo && yarn publish && git push origin main --tags"
   },
   "peerDependencies": {
     "@react-navigation/native": ">=6",
