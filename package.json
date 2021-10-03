@@ -26,7 +26,7 @@
   "scripts": {
     "prettier": "prettier --write index.ts  ./src/**/* README.md",
     "flowgen": "sh flow.sh",
-    "patch-for-expo": "rm -f ./lib/src/platform/index.expo.js && echo 'export var isExpo = function () { return true; };' >> ./lib/src/platform/index.expo.js",
+    "patch-for-expo": "sh patch-for-expo.sh",
     "lint": "eslint --ext '.js,.ts,.tsx' index.ts ./src",
     "build": "tsc && yarn flowgen && yarn patch-for-expo",
     "clean": "rm -rf lib",
