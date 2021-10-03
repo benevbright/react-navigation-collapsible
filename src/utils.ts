@@ -43,7 +43,8 @@ const getStatusBarHeight = (isLandscape: boolean) => {
     if (isLandscape) return 0;
     return isIphoneX() ? 44 : 20;
   } else if (Platform.OS === 'android') {
-    return isExpo() && !disabledExpoTranslucentStatusBar
+    // eslint-disable-next-line no-undef
+    return (global.Expo || isExpo()) && !disabledExpoTranslucentStatusBar
       ? StatusBar.currentHeight
       : 0;
   } else return 0;
