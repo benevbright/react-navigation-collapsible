@@ -4,7 +4,7 @@ import { isIphoneX } from 'react-native-iphone-x-helper';
 let isExpo = false;
 try {
   // eslint-disable-next-line no-undef, @typescript-eslint/no-var-requires
-  const Constants = require('expo-constants');
+  const Constants = require('expo-constants').default;
   // True if the app is running in an `expo build` app or if it's running in Expo Go.
   isExpo =
     Constants.executionEnvironment === 'standalone' ||
