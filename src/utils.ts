@@ -1,7 +1,16 @@
 import { Platform, StatusBar, ViewStyle } from 'react-native';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
-import { isExpo } from './platform';
+let isExpo = false;
+try {
+  // eslint-disable-next-line no-undef, @typescript-eslint/no-var-requires
+  const Constants = require('expo-constants').default;
+  // True if the app is running in an `expo build` app or if it's running in Expo Go.
+  isExpo =
+    Constants.executionEnvironment === 'standalone' ||
+    Constants.executionEnvironment === 'storeClient';
+  // eslint-disable-next-line no-empty
+} catch {}
 
 const SAFEBOUNCE_HEIGHT_IOS = 300;
 const SAFEBOUNCE_HEIGHT_ANDROID = 100;
@@ -44,7 +53,7 @@ const getStatusBarHeight = (isLandscape: boolean) => {
     return isIphoneX() ? 44 : 20;
   } else if (Platform.OS === 'android') {
     // eslint-disable-next-line no-undef
-    return (global.Expo || isExpo()) && !disabledExpoTranslucentStatusBar
+    return (global.Expo || isExpo) && !disabledExpoTranslucentStatusBar
       ? StatusBar.currentHeight
       : 0;
   } else return 0;
